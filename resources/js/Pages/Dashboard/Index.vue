@@ -4,7 +4,7 @@
     <AuthenticatedLayout>
         <template #header> Dashboard </template>
 
-        <div class="overflow-hidden shadow-sm sm:rounded-lg min-h-screen p-4 space-y-3">
+        <div class="overflow-hidden shadow-sm sm:rounded-lg min-h-screen p-4">
            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Chart Components -->
                 <InventoryChart />
