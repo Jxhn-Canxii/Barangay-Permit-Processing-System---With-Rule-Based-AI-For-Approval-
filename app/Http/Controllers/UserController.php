@@ -3,15 +3,69 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
 class UserController extends Controller
 {
+    // Renders the User Management Page without the user list
     public function index()
     {
         return Inertia::render('Users/Index', [
-            'users' => User::paginate(),
             'status' => session('status'),
         ]);
+    }
+
+    // Fetch user list separately (API response)
+    public function list(Request $request)
+    {
+        $search = $request->input('search', '');
+        $itemsPerPage = (int) $request->input('itemsperpage', 10);
+        $page = (int) $request->input('page_num', 1);
+        $offset = ($page - 1) * $itemsPerPage;
+
+        $query = User::query();
+
+        // Apply search filter if provided
+        if ($search) {
+            $query->where('name', 'like', "%$search%")
+                  ->orWhere('email', 'like', "%$search%");
+        }
+
+        // Get total records before pagination
+        $total = $query->count();
+
+        // Apply manual pagination
+        $users = $query->skip($offset)->take($itemsPerPage)->get();
+
+        return response()->json([
+            'users' => $users,
+            'total' => $total,
+            'total_pages' => ceil($total / $itemsPerPage),
+            'page_num' => $page,
+            'itemsperpage' => $itemsPerPage,
+        ]);
+    }
+
+    // Add a new user
+    public function add(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email|max:255',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => 'required|integer|in:1,2,3', // Adjust roles as needed
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+        ]);
+
+        return redirect()->route('users.index')->with('status', 'User added successfully.');
     }
 }

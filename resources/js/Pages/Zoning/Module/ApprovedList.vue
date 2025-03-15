@@ -8,7 +8,7 @@
                 v-model="search.search"
                 @input.prevent="fetchData()"
                 placeholder="Search Zoning Permits"
-                class="mt-1 mb-2 p-2 border rounded w-full"
+                class="mt-1 mb-4 p-2 border rounded w-full text-black"
             />
 
             <!-- Table -->

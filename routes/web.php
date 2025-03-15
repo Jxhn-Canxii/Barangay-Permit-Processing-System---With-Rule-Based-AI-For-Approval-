@@ -49,6 +49,8 @@ Route::middleware('auth')->group(function () {
     });
     Route::prefix('users/')->group(function(){
         Route::get('', [UserController::class, 'index'])->name('users.index');
+        Route::post('list-users', [UserController::class, 'list'])->name('users.list');
+        Route::post('add-users', [UserController::class, 'add'])->name('users.add');
     });
     Route::prefix('profile/')->group(function(){
         Route::get('', [ProfileController::class, 'edit'])->name('profile.edit');
