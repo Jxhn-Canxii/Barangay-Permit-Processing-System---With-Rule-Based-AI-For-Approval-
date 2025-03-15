@@ -9,7 +9,6 @@
 
         <!-- Logo and title -->
         <div class="flex items-center space-x-1">
-           
         </div>
 
         <!-- Navigation Links with Dropdown Grouping -->
