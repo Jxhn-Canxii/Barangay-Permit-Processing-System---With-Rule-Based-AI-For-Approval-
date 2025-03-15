@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="inline-block min-w-full bg-white overflow-hidden rounded p-2">
-               
+             <p hidden> {{ sessionRole = $page.props.auth.user.role}} Plus 1 Happy kaarawan</p>
             <!-- Search Bar -->
             <input
                 type="text"
@@ -45,10 +45,10 @@
                         </td>
                         <td class="border-b border-gray-200 px-5 py-5 text-sm flex space-x-2">
                             <div class="inline-flex">
-                                <button v-if="permit.status_id === 1" @click="approvePermit(permit.id)" class="px-3 py-1 bg-green-500 text-white rounded">
+                                <button v-if="permit.status_id === 1 && sessionRole == 1" @click="approvePermit(permit.id)" class="px-3 py-1 bg-green-500 text-white rounded">
                                     <i class="fa fa-thumbs-up"></i> Approve
                                 </button>
-                                <button v-if="permit.status_id === 1" @click="rejectPermit(permit.id)" class="px-3 py-1 bg-red-500 text-white rounded">
+                                <button v-if="permit.status_id === 1 && sessionRole == 1" @click="rejectPermit(permit.id)" class="px-3 py-1 bg-red-500 text-white rounded">
                                     <i class="fa fa-thumbs-down"></i> Reject
                                 </button>
                                 <ViewForm :key="permit.id" :data="permit" />
@@ -88,7 +88,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 import ViewForm from './ViewForm.vue';
-
+const sessionRole = ref(0);
 const data = ref([]);
 const search = ref({
     page_num: 1,
