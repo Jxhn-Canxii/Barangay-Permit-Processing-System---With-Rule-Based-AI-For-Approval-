@@ -51,7 +51,7 @@ const activeTab = ref("Pending"); // Default to Pending
 
 // Filter tabs based on role
 const filteredTabs = computed(() => {
-    return sessionRole.value > 1 ? tabs.filter(tab => tab !== "Approved") : tabs;
+    return sessionRole.value == 3 ? tabs.filter(tab => tab !== "Approved") : tabs;
 });
 
 const updateKey = ref(0);

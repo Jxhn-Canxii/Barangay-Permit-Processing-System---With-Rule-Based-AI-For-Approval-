@@ -34,7 +34,7 @@
     <div class="text-center mt-3">
       <h2 class="text-2xl font-semibold text-white">{{ $page.props.auth.user.name }}</h2>
       <p class="text-sm text-gray-300">
-        {{ $page.props.auth.user.role === 1 ? 'SuperAdmin' : 'Admin' }}
+        {{ roleFormatter($page.props.auth.user.role) }}
       </p>
     </div>
     <!-- Navigation Links -->
@@ -51,7 +51,7 @@
         </template>
         Permit Processing
       </nav-link>
-      <nav-link :href="route('users.index')" :active="route().current('users.index')">
+      <nav-link v-if="sessionRole != 3" :href="route('users.index')" :active="route().current('users.index')">
         <template #icon>
           <i class="fa fa-users"></i>
         </template>
@@ -68,7 +68,24 @@ import NavLink from "@/Components/NavLink.vue";
 
 // Sidebar state (default: open)
 const isSidebarOpen = ref(true);
-
+const sessionRole = ref(0);
+const roleFormatter = (role_id) => {
+    sessionRole.value = role_id;
+    switch (role_id) {
+        case 1:
+            return 'SuperAdmin'
+            break;
+        case 2:
+            return 'Admin'
+            break;
+        case 3:
+            return 'User'
+            break;
+        default:
+            return 'Unassigned'
+            break;
+    }
+}
 const logOut = async () => {
     try {
         // Reload the page after successful login

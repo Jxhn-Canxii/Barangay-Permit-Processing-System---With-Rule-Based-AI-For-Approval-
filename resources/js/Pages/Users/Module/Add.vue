@@ -44,6 +44,7 @@
                             <option value="" disabled>Select Role</option>
                             <option value="1">SuperAdmin</option>
                             <option value="2">Admin</option>
+                            <option value="3">User</option>
                         </select>
                         <InputError :message="form.errors.role" />
                     </div>

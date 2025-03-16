@@ -38,8 +38,8 @@ class ZoningController extends Controller
                     ->orWhere('location_of_lot', 'LIKE', "%$search%");
             });
     
-        // If user is not an admin (role != 1), only show their requests
-        if ($userRole != 1) {
+        // If user is not an admin (role == 3), only show their requests
+        if ($userRole == 3) {
             $query->where('inputted_by', $userId);
         }
     
@@ -79,8 +79,8 @@ class ZoningController extends Controller
                     ->orWhere('location_of_lot', 'LIKE', "%$search%");
             });
     
-        // If user is not an admin (role != 1), only show their requests
-        if ($userRole != 1) {
+        // If user is not an admin (role == 3), only show their requests
+        if ($userRole == 3) {
             $query->where('inputted_by', $userId);
         }
     
@@ -120,8 +120,8 @@ class ZoningController extends Controller
                       ->orWhere('location_of_lot', 'LIKE', "%$search%");
             });
     
-        // If user is not an admin (role != 1), only show their requests
-        if ($userRole != 1) {
+        // If user is not an admin (role == 3), only show their requests
+        if ($userRole == 3) {
             $query->where('inputted_by', $userId);
         }
     

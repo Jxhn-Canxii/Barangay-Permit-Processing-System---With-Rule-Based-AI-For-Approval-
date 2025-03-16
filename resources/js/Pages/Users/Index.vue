@@ -36,7 +36,7 @@
                                 {{ user.email }}
                             </td>
                             <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                {{ user.role == 1 ? 'SuperAdmin' : 'Admin' }}
+                                {{ roleFormatter(user.role) }}
                             </td>
                         </tr>
                         <tr v-else>
@@ -86,7 +86,22 @@ const search = ref({
 onMounted(() => {
     fetchData();
 });
-
+const roleFormatter = (role_id) => {
+    switch (role_id) {
+        case 1:
+            return 'SuperAdmin'
+            break;
+        case 2:
+            return 'Admin'
+            break;
+        case 3:
+            return 'User'
+            break;
+        default:
+            return 'Unassigned'
+            break;
+    }
+}
 // Fetch the zoning permits data
 const fetchData = async () => {
     try {
