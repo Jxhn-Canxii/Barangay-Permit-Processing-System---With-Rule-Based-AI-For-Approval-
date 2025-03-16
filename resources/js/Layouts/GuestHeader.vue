@@ -34,6 +34,13 @@
                 Mapping
             </NavLink>
             <NavLink 
+                :href="route('complaint')" 
+                :active="route().current('complaint')" 
+                class="nav-link hover:bg-emerald-600 px-4 py-2 rounded-lg transition-all duration-200"
+            >
+                Issues And Complains
+            </NavLink>
+            <NavLink 
                 :href="route('login')" 
                 :active="route().current('login')" 
                 class="nav-link hover:bg-emerald-600 px-4 py-2 rounded-lg transition-all duration-200"

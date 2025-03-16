@@ -2,10 +2,10 @@
     <Head title="Login" />
     <!-- Insert Login Form into the Layout -->
     <GuestLayout>
-        <div class="flex justify-center items-center min-h-screen bg-emerald-800 px-4 py-8">
+        <div class="flex justify-center items-center min-h-screen px-4 py-8">
             <!-- Login Form Container -->
             <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
-                <div class="flex justify-center mb-6">
+                <div class="flex justify-center">
                     <ApplicationLogo class="h-16 w-16 text-gray-500" />
                 </div>
 

@@ -1,12 +1,12 @@
 <template>
     <!-- Header Section -->
     <Header />
-    <div class="min-h-screen min-wscreen">
+    <div class="min-h-screen min-wscreen bg-emerald-700">
             <!-- Slot for Dynamic Content -->
         <slot />
     </div>
     <!-- Optional Footer Section -->
-    <footer class="bg-emerald-800 text-white py-4">
+    <footer class="bg-emerald-900 text-white py-4">
         <div class="text-center">
         <p>&copy; 2025 Brgy. San Agustin. All rights reserved.</p>
         </div>

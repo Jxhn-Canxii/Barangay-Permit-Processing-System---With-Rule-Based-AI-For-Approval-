@@ -3,9 +3,9 @@
 
     <GuestLayout>
        
-        <div class="h-screen w-screen bg-emerald-800 pt-4">
-                <!-- Registration Form -->
-            <div class="max-w-md mx-auto bg-white p-6 mt-4 rounded-lg shadow-lg">
+      <div class="flex justify-center items-center min-h-screen px-4 py-8">
+            <!-- Login Form Container -->
+            <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
                 <!-- Logo Section -->
                 <div class="flex items-center justify-center">
                     <ApplicationLogo class="h-20 w-20 fill-current text-gray-500" />

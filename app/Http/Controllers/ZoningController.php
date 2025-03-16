@@ -149,7 +149,7 @@ class ZoningController extends Controller
         $request->validate([
             'date_of_application' => 'required|date',
             'or_date' => 'nullable|date',
-            'official_receipt_no' => 'nullable|string|max:255',
+            'official_receipt_no' => 'nullable|string|max:255|unique:zoning_permits',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -163,7 +163,7 @@ class ZoningController extends Controller
             'lot_area' => 'required|string|max:50',
             'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
-
+       
         // Store the uploaded file
         $filePath = $request->file('file')->store('zoning_permits', 'public');
 
