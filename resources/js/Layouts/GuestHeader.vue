@@ -14,7 +14,7 @@
                 alt="Profile Picture" 
                 class="w-16 h-16 rounded-full border-4 border-gray-600"
             />
-            <span class="text-white text-sm lg:text-4xl font-bold">Brgy. San Agustin</span>
+            <span class="text-white text-4xl font-bold">Brgy. San Agustin</span>
         </div>
 
         <!-- Desktop Navigation Links -->
