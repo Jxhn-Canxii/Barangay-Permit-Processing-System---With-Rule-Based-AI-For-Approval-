@@ -1,4 +1,5 @@
 <template>
+    <Head title="Login" />
     <!-- Insert Login Form into the Layout -->
     <GuestLayout>
         <div class="flex justify-center items-center min-h-screen bg-emerald-800 px-4 py-8">
@@ -66,7 +67,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 
 // Define props
 defineProps({
