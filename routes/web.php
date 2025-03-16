@@ -18,8 +18,11 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function () {
+    return redirect()->route('home');
+});
 
-Route::get('', function () {
+Route::get('login', function () {
     return Inertia::render('Auth/Login', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -28,9 +31,12 @@ Route::get('', function () {
     ]);
 });
 
-Route::middleware('auth')->group(function () {
 
-    
+Route::get('/home', function () { return Inertia::render('Home/Index'); })->name('home');
+Route::get('/mapping', function () { return Inertia::render('Mapping/Index'); })->name('mapping');
+
+
+Route::middleware('auth')->group(function () {
 
     Route::prefix('dashboard/')->group(function(){
         Route::get('', [DashboardController::class, 'index'])->name('dashboard.index');
