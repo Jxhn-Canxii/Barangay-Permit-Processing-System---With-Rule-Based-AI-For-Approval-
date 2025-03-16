@@ -1,6 +1,7 @@
 import './bootstrap';
 import '../css/app.css';
 import 'sweetalert2/src/sweetalert2.scss';
+import 'leaflet/dist/leaflet.css';
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';

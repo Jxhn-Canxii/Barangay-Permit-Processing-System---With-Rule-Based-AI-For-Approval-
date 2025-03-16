@@ -65,12 +65,8 @@
       </section>
 
       <!-- Contact Section -->
-      <section class="py-16 px-4 bg-emerald-900 text-white text-center">
-        <h2 class="text-3xl font-bold mb-6">Get In Touch</h2>
-        <p class="text-lg mb-6">Have questions about our zones or want to know more? Reach out to us through the contact form or visit us at our Barangay Hall.</p>
-        <a href="/contact" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-6 rounded-full text-lg font-semibold transition-all duration-300">
-          Contact Us
-        </a>
+      <section class="py-16 px-4 bg-emerald-900 text-white text-center min-h-full">
+        <Maps />
       </section>
     </div>
   </GuestLayout>
@@ -78,6 +74,7 @@
 
 <script setup>
 import GuestLayout from "@/Layouts/GuestLayout.vue";
+import Maps from "./Module/Maps.vue";
   // No specific script needed for this zonal mapping layout
 </script>
 
