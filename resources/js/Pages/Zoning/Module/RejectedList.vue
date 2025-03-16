@@ -44,12 +44,12 @@
                             </span>
                         </td>
                         <td class="border-b border-gray-200 px-5 py-5 text-sm flex space-x-2">
-                            <button v-if="permit.status_id === 1" @click="approvePermit(permit.id)" class="px-3 py-1 bg-green-500 text-white rounded">
+                            <!-- <button v-if="permit.status_id === 1" @click="approvePermit(permit.id)" class="px-3 py-1 bg-green-500 text-white rounded">
                                 Approve
                             </button>
                             <button v-if="permit.status_id === 1" @click="rejectPermit(permit.id)" class="px-3 py-1 bg-red-500 text-white rounded">
                                 Reject
-                            </button>
+                            </button> -->
                             <ViewForm :key="permit.id" :data="permit" />
                         </td>
                     </tr>
@@ -66,9 +66,9 @@
             <!-- Pagination -->
             <div class="flex w-full overflow-auto">
                 <Paginator
-                    v-if="data.total_count"
+                    v-if="data.total > 0"
                     :page_number="search.page_num"
-                    :total_rows="data.total_count ?? 0"
+                    :total_rows="data.total ?? 0"
                     :itemsperpage="search.itemsperpage"
                     @page_num="handlePagination"
                 />

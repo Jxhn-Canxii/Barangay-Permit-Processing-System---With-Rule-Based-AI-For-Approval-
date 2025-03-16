@@ -52,9 +52,9 @@
                 <!-- Pagination -->
                 <div class="flex w-full overflow-auto">
                     <Paginator
-                        v-if="data.total_count"
+                        v-if="data.total > 0"
                         :page_number="search.page_num"
-                        :total_rows="data.total_count ?? 0"
+                        :total_rows="data.total ?? 0"
                         :itemsperpage="search.itemsperpage"
                         @page_num="handlePagination"
                     />

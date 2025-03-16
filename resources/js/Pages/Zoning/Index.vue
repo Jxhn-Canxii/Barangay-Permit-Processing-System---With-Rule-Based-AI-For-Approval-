@@ -7,7 +7,7 @@
 
             <div class="bg-white rounded shadow p-4">
                 <!-- Add Permit Button -->
-                <Add @transaction_id="handleTransaction()" />
+                <Add v-if="sessionRole.value != 3" @transaction_id="handleTransaction()" />
 
                 <!-- Tabs Navigation -->
                 <div class="flex border-b">

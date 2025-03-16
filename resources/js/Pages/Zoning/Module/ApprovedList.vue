@@ -45,12 +45,12 @@
                         </td>
                         <td class="border-b border-gray-200 px-5 py-5 text-sm flex space-x-2">
                             <div class="flex justify-center">
-                                <button v-if="permit.status_id === 1" 
+                                <button v-if="permit.status_id === 1 && $page.props.auth.user.role != 3" 
                                 @click="approvePermit(permit.id)" 
                                 class="px-2 py-2 bg-green-500 font-bold mb-4 text-md float-end text-white rounded shadow">
                                     Approve
                                 </button>
-                                <button v-if="permit.status_id === 1" 
+                                <button v-if="permit.status_id === 1 && $page.props.auth.user.role != 3" 
                                 @click="rejectPermit(permit.id)" 
                                 class="px-2 py-2 bg-red-500 font-bold mb-4 text-md float-end text-white rounded shadow">
                                     Reject
@@ -72,9 +72,9 @@
             <!-- Pagination -->
             <div class="flex w-full overflow-auto">
                 <Paginator
-                    v-if="data.total_count"
+                    v-if="data.total > 0"
                     :page_number="search.page_num"
-                    :total_rows="data.total_count ?? 0"
+                    :total_rows="data.total ?? 0"
                     :itemsperpage="search.itemsperpage"
                     @page_num="handlePagination"
                 />

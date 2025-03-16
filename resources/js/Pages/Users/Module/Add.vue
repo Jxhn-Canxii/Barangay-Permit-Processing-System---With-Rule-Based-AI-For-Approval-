@@ -42,7 +42,7 @@
                         <label class="block text-sm font-medium text-gray-700">Role</label>
                         <select v-model="form.role" class="mt-1 p-2 border rounded-md w-full">
                             <option value="" disabled>Select Role</option>
-                            <option value="1">SuperAdmin</option>
+                            <option :disabled="$page.props.auth.user.role != 1" value="1">SuperAdmin</option>
                             <option value="2">Admin</option>
                             <option value="3">User</option>
                         </select>
