@@ -14,7 +14,7 @@
   <!-- Sidebar Content -->
   <div :class="isSidebarOpen ? 'translate-x-0' : '-translate-x-full'"
        class="fixed inset-y-0 left-0 z-30 w-64 bg-emerald-900 transition-transform duration-300 transform lg:translate-x-0 lg:static lg:inset-0">
-    <div class="flex flex-col justify-center items-center mt-8">
+    <div class="flex flex-col justify-center items-center p-3">
         <!-- Profile Picture -->
         <!-- <div class="relative block">
           <img 
