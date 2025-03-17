@@ -1,4 +1,5 @@
 <template>
+  <Head title="Home" />
   <GuestLayout>
     <div class="bg-gray-100 min-h-screen min-w-screen">
       <!-- Embed the iframe here -->
@@ -14,6 +15,7 @@
 </template>
 
 <script setup>
+import { Head } from "@inertiajs/vue3";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 // No specific script needed for this homepage layout
 </script>
