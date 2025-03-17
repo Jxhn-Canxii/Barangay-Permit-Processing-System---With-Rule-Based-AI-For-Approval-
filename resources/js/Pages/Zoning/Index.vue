@@ -1,34 +1,29 @@
 <template>
     <div>
         <Head title="Zoning Permits" />
-        <p hidden>{{ sessionRole = $page.props.auth.user.role }} Plus 1 Happy Kaarawan</p>
+        <p hidden> {{ sessionRole = $page.props.auth.user.role}} Plus 1 Happy kaarawan</p>
         <AuthenticatedLayout>
             <template #header> Zoning Permits </template>
 
             <div class="bg-white rounded shadow p-4">
-
                 <!-- Add Permit Button -->
                 <Add v-if="sessionRole.value != 3" @transaction_id="handleTransaction()" />
 
                 <!-- Tabs Navigation -->
-                <div class="flex flex-wrap px-3">
-                    <!-- Tab Buttons (Responsive) -->
+                <div class="flex border-b">
                     <button
                         v-for="tab in filteredTabs"
                         :key="tab"
                         @click="activeTab = tab"
-                        class="px-4 py-2 hover:bg-gray-200 focus:outline-none text-center w-full sm:w-auto"
-                        :class="{
-                            'border-b-2 border-blue-500 font-bold': activeTab === tab,
-                            'text-gray-600': activeTab !== tab
-                        }"
+                        class="px-4 py-2 focus:outline-none"
+                        :class="activeTab === tab ? 'border-b-2 border-blue-500 font-bold' : 'text-gray-600'"
                     >
                         {{ tab }}
                     </button>
                 </div>
 
                 <!-- Tab Content -->
-                <div class="mt-4 bg-gray-300">
+                <div class="mt-4">
                     <ApprovedList :key="updateKey" v-if="activeTab === 'Approved'" />
                     <PendingList :key="updateKey" v-if="activeTab === 'Pending'" />
                     <RejectedList :key="updateKey" v-if="activeTab === 'Rejected'" />

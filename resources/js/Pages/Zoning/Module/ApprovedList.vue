@@ -1,7 +1,7 @@
 <template>
-    <div class="">
-        <div class="block bg-white rounded min-w-full min-h-screen p-2">
-             <p hidden> {{ sessionRole = $page.props.auth.user.role}} Plus 1 Happy kaarawan</p>
+    <div>
+        <div class="inline-block min-w-full bg-white overflow-hidden rounded p-2">
+               
             <!-- Search Bar -->
             <input
                 type="text"
@@ -12,64 +12,67 @@
             />
 
             <!-- Table -->
-            <div class="min-w-screen min-h-full overflow-auto p-2">
-                <table class="w-full whitespace-no-wrap">
-                    <thead>
-                        <tr class="border-b bg-gray-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
-                            <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Applicant</th>
-                            <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Owner</th>
-                            <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Location</th>
-                            <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Status</th>
-                            <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="permit in data.data" v-if="data.total_pages" :key="permit.id" class="text-gray-700">
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                {{ permit.first_name }} {{ permit.middle_name }} {{ permit.last_name }}
-                            </td>
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                {{ permit.owner_name }}
-                            </td>
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                {{ permit.location_of_lot }}
-                            </td>
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                <span 
-                                    :class="{
-                                        'text-green-600': permit.status_id === 2,
-                                        'text-red-600': permit.status_id === 3,
-                                        'text-yellow-600': permit.status_id === 1
-                                    }">
-                                    {{ statusFormatter(permit.status_id) }}
-                                </span>
-                            </td>
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm flex space-x-2">
-                                <div class="inline-flex space-x-2">
-                                    <button v-if="permit.status_id === 1 && sessionRole == 1" @click="approvePermit(permit.id)" class="px-3 py-1 bg-green-500 text-white rounded">
-                                        <i class="fa fa-thumbs-up"></i> Approve
-                                    </button>
-                                    <button v-if="permit.status_id === 1 && sessionRole == 1" @click="rejectPermit(permit.id)" class="px-3 py-1 bg-red-500 text-white rounded">
-                                        <i class="fa fa-thumbs-down"></i> Reject
-                                    </button>
-                                    <ViewForm :key="permit.id" :data="permit" />
-                                </div>
-                            </td>
-                        </tr>
-                        <tr v-else>
-                            <td colspan="5" class="border-b text-center font-bold text-lg border-gray-200 bg-white px-5 py-5">
-                                <p class="text-red-500 whitespace-no-wrap">
-                                    No Data Found!
-                                </p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <table class="w-full whitespace-no-wrap">
+                <thead>
+                    <tr class="border-b bg-gray-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                        <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Applicant</th>
+                        <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Owner</th>
+                        <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Location</th>
+                        <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Status</th>
+                        <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="permit in data.data" v-if="data.total_pages" :key="permit.id" class="text-gray-700">
+                        <td class="border-b border-gray-200 px-5 py-5 text-sm">
+                            {{ permit.first_name }} {{ permit.middle_name }} {{ permit.last_name }}
+                        </td>
+                        <td class="border-b border-gray-200 px-5 py-5 text-sm">
+                            {{ permit.owner_name }}
+                        </td>
+                        <td class="border-b border-gray-200 px-5 py-5 text-sm">
+                            {{ permit.location_of_lot }}
+                        </td>
+                        <td class="border-b border-gray-200 px-5 py-5 text-sm">
+                            <span 
+                                :class="{
+                                    'text-green-600': permit.status_id === 2,
+                                    'text-red-600': permit.status_id === 3,
+                                    'text-yellow-600': permit.status_id === 1
+                                }">
+                                {{ statusFormatter(permit.status_id) }}
+                            </span>
+                        </td>
+                        <td class="border-b border-gray-200 px-5 py-5 text-sm flex space-x-2">
+                            <div class="flex justify-center">
+                                <button v-if="permit.status_id === 1 && $page.props.auth.user.role != 3" 
+                                @click="approvePermit(permit.id)" 
+                                class="px-2 py-2 bg-green-500 font-bold mb-4 text-md float-end text-white rounded shadow">
+                                    Approve
+                                </button>
+                                <button v-if="permit.status_id === 1 && $page.props.auth.user.role != 3" 
+                                @click="rejectPermit(permit.id)" 
+                                class="px-2 py-2 bg-red-500 font-bold mb-4 text-md float-end text-white rounded shadow">
+                                    Reject
+                                </button>
+                                <ViewForm :key="permit.id" :data="permit" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr v-else>
+                        <td colspan="5" class="border-b text-center font-bold text-lg border-gray-200 bg-white px-5 py-5">
+                            <p class="text-red-500 whitespace-no-wrap">
+                                No Data Found!
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
             <!-- Pagination -->
             <div class="flex w-full overflow-auto">
                 <Paginator
-                     v-if="data.total > 0"
+                    v-if="data.total > 0"
                     :page_number="search.page_num"
                     :total_rows="data.total ?? 0"
                     :itemsperpage="search.itemsperpage"
@@ -187,4 +190,5 @@ const rejectPermit = async (id) => {
         Swal.fire("Error!", "Failed to reject the zoning permit.", "error");
     }
 };
+
 </script>
