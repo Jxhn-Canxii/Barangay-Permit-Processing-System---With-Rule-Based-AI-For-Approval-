@@ -1,4 +1,5 @@
 <template>
+  <Head title="Mapping" />
   <GuestLayout>
     <div class="bg-gray-100">
       
@@ -27,7 +28,7 @@
 
         <!-- Displaying Zonal Map Image (replace with actual map image) -->
         <div class="max-w-4xl mx-auto mb-8">
-          <img src="/image/zonal-map.jpg" alt="Zonal Map of Brgy. San Agustin" class="w-full rounded-lg shadow-md" />
+          <img src="/image/hero.jpg" alt="Zonal Map of Brgy. San Agustin" class="w-full rounded-lg shadow-md" />
         </div>
 
         <!-- Zones Information (can be dynamically generated based on your data) -->
@@ -73,6 +74,7 @@
 </template>
 
 <script setup>
+import { Head } from "@inertiajs/vue3";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import Maps from "./Module/Maps.vue";
   // No specific script needed for this zonal mapping layout

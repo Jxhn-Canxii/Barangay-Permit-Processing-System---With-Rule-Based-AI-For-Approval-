@@ -1,9 +1,12 @@
 <template>
+  <Head title="Barangay Complaints"/>
   <GuestLayout>
    <div class="flex justify-center items-center min-h-screen px-4 py-8">
             <!-- Login Form Container -->
         <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
-            <h2 class="text-center text-xl font-bold mb-4">Barangay Complaint Form</h2>
+            <div class="flex justify-center mb-4">
+                <ApplicationLogo class="h-16 w-16 text-gray-500" />
+            </div>
 
             <form @submit.prevent="submitComplaint">
             <!-- Complaint Category Selection -->
@@ -62,8 +65,11 @@
 </template>
 
 <script setup>
-import GuestLayout from "@/Layouts/GuestLayout.vue"
+import { Head } from "@inertiajs/vue3";
 import { ref,watch } from 'vue';
+import GuestLayout from "@/Layouts/GuestLayout.vue"
+import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+
 
 const form = ref({
   complaint_type: '',
