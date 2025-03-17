@@ -1,5 +1,4 @@
 <?php
-use App\Http\Controllers\AuthController;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
@@ -21,20 +20,25 @@ use Inertia\Inertia;
 |
 */
 Route::get('/', function () {
-    return redirect()->route('dashboard.index');
+    return redirect()->route('home');
 });
 
-Route::get('/login', [AuthController::class, 'login'])->name('login'); //api auth controller for smartconnect
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout'); //api auth controller for smartconnect
+Route::get('login', function () {
+    return Inertia::render('Auth/Login', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+});
+
+Route::get('/register', function () { return Inertia::render('Auth/Register'); })->name('home');
+Route::get('/home', function () { return Inertia::render('Home/Index'); })->name('home');
+Route::get('/complaint', function () { return Inertia::render('Complaint/Index'); })->name('complaint');
+Route::get('/mapping', function () { return Inertia::render('Mapping/Index'); })->name('mapping');
 
 
-// Route::get('/register', function () { return Inertia::render('Auth/Register'); })->name('home');
-// Route::get('/home', function () { return Inertia::render('Home/Index'); })->name('home');
-// Route::get('/complaint', function () { return Inertia::render('Complaint/Index'); })->name('complaint');
-// Route::get('/mapping', function () { return Inertia::render('Mapping/Index'); })->name('mapping');
-
-//auth.check is a middleware specifically for handling login for external website
-Route::middleware('auth.check')->group(function () {
+Route::middleware('auth')->group(function () {
 
     Route::prefix('dashboard/')->group(function(){
         Route::get('', [DashboardController::class, 'index'])->name('dashboard.index');
@@ -43,10 +47,9 @@ Route::middleware('auth.check')->group(function () {
         Route::get('barangay-census', [BarangayCensusController::class, 'index'])->name('barangay.census.index');
         Route::post('barangay-census', [BarangayCensusController::class, 'addCensus'])->name('barangay.census.add');
         Route::post('barangay-census-list', [BarangayCensusController::class, 'listCensusData'])->name('barangay.census.list');
-        Route::put('barangay-census/{id}', [BarangayCensusController::class, 'updateCensus'])->name('barangay.census.update');
-        Route::delete('barangay-census/{id}', [BarangayCensusController::class, 'deleteCensus'])->name('barangay.census.delete');
+
         // API Route for Chart.js
-        Route::get('barangay-census-chart-data', [BarangayCensusController::class, 'chartData'])->name('barangay.census.chartData');
+        Route::get('barangay-census-chart-data', [BarangayCensusController::class, 'chartData']);
     });
  
     Route::prefix('zoning/')->group(function(){

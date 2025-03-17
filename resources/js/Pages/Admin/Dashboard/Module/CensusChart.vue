@@ -17,7 +17,7 @@ const censusData = ref([]);
 
 const fetchCensusData = async () => {
   try {
-    const response = await axios.get(route("barangay.census.chartData"));
+    const response = await axios.get(route("barangay.census.chart"));
     censusData.value = response.data;
     updateChart();
   } catch (error) {

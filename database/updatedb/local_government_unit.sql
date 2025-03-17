@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2025 at 04:12 AM
+-- Generation Time: Mar 17, 2025 at 03:44 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,34 @@ SET time_zone = "+00:00";
 --
 -- Database: `local_government_unit`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `barangay_census`
+--
+
+CREATE TABLE `barangay_census` (
+  `id` int(11) NOT NULL,
+  `year` int(11) NOT NULL,
+  `population` int(11) NOT NULL,
+  `households` int(11) NOT NULL,
+  `male` int(11) NOT NULL,
+  `female` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `barangay_census`
+--
+
+INSERT INTO `barangay_census` (`id`, `year`, `population`, `households`, `male`, `female`, `created_at`, `updated_at`) VALUES
+(1, 2021, 1030, 300, 230, 505, '2025-03-17 04:35:52', '2025-03-17 04:47:09'),
+(3, 2022, 1124, 344, 435, 345, '2025-03-17 04:47:49', '2025-03-17 04:47:49'),
+(4, 2023, 1260, 500, 200, 560, '2025-03-17 04:48:19', '2025-03-17 04:48:19'),
+(5, 2024, 1476, 230, 679, 567, '2025-03-17 04:48:31', '2025-03-17 04:48:31'),
+(6, 2025, 1300, 500, 500, 304, '2025-03-17 05:39:24', '2025-03-17 05:39:35');
 
 -- --------------------------------------------------------
 
@@ -59,7 +87,35 @@ INSERT INTO `logs` (`id`, `user_id`, `action`, `module`, `ip_address`, `details`
 (14, 1, 'Added zoning permit for Iusto ipsum dolorum Dolor magnam incidid', 'Zoning Application', NULL, NULL, '2025-03-15 06:27:12', '2025-03-15 14:27:12'),
 (15, 1, 'Approved zoning permit for Iusto ipsum dolorum Dolor magnam incidid', 'Zoning Application', NULL, NULL, '2025-03-15 06:27:19', '2025-03-15 14:27:19'),
 (16, 1, 'Rejected zoning permit for Et quis minus unde m Proident doloribus', 'Zoning Application', NULL, NULL, '2025-03-15 06:27:26', '2025-03-15 14:27:26'),
-(17, 1, 'Approved zoning permit for Repudiandae laborios Quis quis pariatur', 'Zoning Application', NULL, NULL, '2025-03-15 06:31:56', '2025-03-15 14:31:56');
+(17, 1, 'Approved zoning permit for Repudiandae laborios Quis quis pariatur', 'Zoning Application', NULL, NULL, '2025-03-15 06:31:56', '2025-03-15 14:31:56'),
+(18, 1, 'Added zoning permit for Accusantium aut nost Sed accusantium dese', 'Zoning Application', NULL, NULL, '2025-03-15 19:26:06', '2025-03-16 03:26:06'),
+(19, 1, 'Added zoning permit for Aut ut quo consequat Ad facilis commodo m', 'Zoning Application', NULL, NULL, '2025-03-15 19:26:19', '2025-03-16 03:26:19');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `registerlanding`
+--
+
+CREATE TABLE `registerlanding` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `session_token` varchar(255) NOT NULL,
+  `first_name` varchar(100) DEFAULT NULL,
+  `last_name` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -88,7 +144,8 @@ INSERT INTO `users` (`id`, `name`, `role`, `email`, `email_verified_at`, `passwo
 (2, 'Bruce Dale', 1, 'nudeweso@mailinator.com', NULL, '$2y$12$X12eI7jWnxS4A8HzGxPmleLIvEoD0VcLSRKrwys3A4o8tgjOMjJe6', NULL, '2025-03-15 06:49:01', '2025-03-15 06:49:01'),
 (3, 'Driscoll Francis', 2, 'nawuporore@mailinator.com', NULL, '$2y$12$r74j4sPlnUSIax4kpIuPb.wlHhKdrrZ9K4lmPGsvLMeQq3uxx3//u', NULL, '2025-03-15 06:49:26', '2025-03-15 06:49:26'),
 (4, 'Oscar Lancaster', 2, 'xilalyjaq@mailinator.com', NULL, '$2y$12$N.kqu4QOr9b9EZfVWqun5uP6re9h0dNS9u1azOxS7vBLxWMWbqD4u', NULL, '2025-03-15 06:57:27', '2025-03-15 06:57:27'),
-(5, 'Ullamco excepteur eo', 2, 'paguviwo@mailinator.com', NULL, '$2y$12$UwZxOB4O93kPd37VJIM7eu2euASR/EqINXjkYdUe7WYZ3jmsAZfMS', NULL, '2025-03-15 07:18:54', '2025-03-15 07:18:54');
+(5, 'Ullamco excepteur eo', 2, 'paguviwo@mailinator.com', NULL, '$2y$12$UwZxOB4O93kPd37VJIM7eu2euASR/EqINXjkYdUe7WYZ3jmsAZfMS', NULL, '2025-03-15 07:18:54', '2025-03-15 07:18:54'),
+(6, 'Josiah Gates', 3, 'rizi@mailinator.com', NULL, '$2y$12$EobDtUdFLvuMjILSj3F9fO6mkCvYWCFe9unqnOktWOeOlKUem/3HG', NULL, '2025-03-15 19:28:25', '2025-03-15 19:28:25');
 
 -- --------------------------------------------------------
 
@@ -133,16 +190,30 @@ INSERT INTO `zoning_permits` (`id`, `date_of_application`, `or_date`, `official_
 (7, '1974-06-01', '2000-11-25', 'Aspernatur accusamus', 'Non temporibus minim', 'Odio in quos repelle', 'Possimus quos disti', 'Qui ad nemo labore m', '300', 'Dolor recusandae Hi', 'Quis adipisicing exe', 'cuwa@mailinator.com', 'Ea praesentium ex si', 'Ipsum qui reiciendis', '20', 'zoning_permits/hYQgl3y0NRe8fYuJKg8ifWZr7bZagf2B5MYG1HrZ.jpg', 3, 1, '2025-03-15 06:16:51', '2025-03-15 06:23:46'),
 (8, '2024-01-01', '2013-09-24', 'Ab rerum consectetur', 'Repudiandae laborios', 'Molestiae aliquid ex', 'Quis quis pariatur', 'Excepturi eaque atqu', '1199', 'Dolores ipsa dolor', 'Deleniti aperiam odi', 'webibu@mailinator.com', 'Ea laboris ea rerum', 'Velit itaque odit si', '70', 'zoning_permits/AuEWu1EDsNZ3YReDI3E7vMqSHU0SSeQEMgmURYMd.jpg', 2, 1, '2025-03-15 06:24:31', '2025-03-15 06:31:56'),
 (9, '1978-04-19', '1998-05-25', 'Sit quibusdam lorem', 'Et quis minus unde m', 'Cumque nostrum illo', 'Proident doloribus', 'Occaecat ex eligendi', '5649', 'Ullamco porro perspi', 'Officia esse ut repr', 'myqiled@mailinator.com', 'Vitae rerum eos enim', 'In labore reprehende', '72', 'zoning_permits/OS3qqknH4TDkvw0YYz4rRRvfUyYxLuLGhR2VYgQ6.jpg', 3, 1, '2025-03-15 06:25:14', '2025-03-15 06:27:26'),
-(10, '2017-04-04', '1985-05-21', 'Omnis magni est volu', 'Iusto ipsum dolorum', 'Eiusmod sint ut nece', 'Dolor magnam incidid', 'Odit autem nisi exer', '1282', 'Ut ullam blanditiis', 'Neque molestias temp', 'jivigoloz@mailinator.com', 'Mollit consectetur', 'Harum quod vel maxim', '28', 'zoning_permits/tOzxz2OQeB3vcsf0Sf8svabTPUZP7gFiQNSKPUpo.jpg', 2, 1, '2025-03-15 06:27:12', '2025-03-15 06:27:19');
+(10, '2017-04-04', '1985-05-21', 'Omnis magni est volu', 'Iusto ipsum dolorum', 'Eiusmod sint ut nece', 'Dolor magnam incidid', 'Odit autem nisi exer', '1282', 'Ut ullam blanditiis', 'Neque molestias temp', 'jivigoloz@mailinator.com', 'Mollit consectetur', 'Harum quod vel maxim', '28', 'zoning_permits/tOzxz2OQeB3vcsf0Sf8svabTPUZP7gFiQNSKPUpo.jpg', 2, 1, '2025-03-15 06:27:12', '2025-03-15 06:27:19'),
+(11, '2011-03-16', '1995-09-20', 'Earum quis eos in v', 'Accusantium aut nost', 'Beatae cillum sed qu', 'Sed accusantium dese', 'Ut rerum nulla in do', '9262', 'Impedit eaque non v', 'Pariatur Delectus', 'giwupyl@mailinator.com', 'Fugiat non labore ni', 'Est exercitation ali', '56', 'zoning_permits/lr1L2MIcBUyogzuuMRtwutvyx82jWMYJ2aVCIaOE.jpg', 1, 1, '2025-03-15 19:26:06', '2025-03-15 19:26:06'),
+(12, '2013-09-25', '1978-10-26', 'Earum quis eos in v', 'Aut ut quo consequat', 'Maxime saepe eligend', 'Ad facilis commodo m', 'Est ut fugit rem la', '1832', 'Quia magnam omnis re', 'In eum qui adipisci', 'bilodi@mailinator.com', 'Tenetur cumque neces', 'Deserunt necessitati', '71', 'zoning_permits/KTRYABp26qDSCiUvJg5EKkxUlHYw6XYCGjHGLwjx.jpg', 1, 1, '2025-03-15 19:26:19', '2025-03-15 19:26:19');
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `barangay_census`
+--
+ALTER TABLE `barangay_census`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `logs`
 --
 ALTER TABLE `logs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -163,22 +234,34 @@ ALTER TABLE `zoning_permits`
 --
 
 --
+-- AUTO_INCREMENT for table `barangay_census`
+--
+ALTER TABLE `barangay_census`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `zoning_permits`
 --
 ALTER TABLE `zoning_permits`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

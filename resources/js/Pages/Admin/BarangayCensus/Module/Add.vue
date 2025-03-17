@@ -40,7 +40,7 @@
 
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Total Population</label>
-                        <small hidden>{{ form.population = form.male + form.female + form.households }}</small>
+                        <small hidden>{{ form.population = parseFloat(form.male) + parseFloat(form.female) + parseFloat(form.households) }}</small>
                         <input type="number" v-model="form.population" disabled placeholder="Enter population" class="bg-gray-200 mt-1 p-2 border rounded-md w-full" required />
                         <InputError :message="form.errors.population" />
                     </div>
