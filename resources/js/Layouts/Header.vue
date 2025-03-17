@@ -1,5 +1,5 @@
 <template>
-    <header class="flex items-center justify-between border-b-2 border-emerald-300 bg-emerald-900 px-4 py-4">
+    <header class="flex items-center justify-between border-b-2 border-emerald-300 bg-emerald-900 px-4 py-1">
        
         <!-- Logo and title -->
         <div class="flex justify-start items-center space-x-1">
@@ -11,12 +11,12 @@
             </button>
             <p class="">
                 <h2 class="text-md md:text-xl font-semibold text-start text-white">{{ $page.props.auth.user.name }}</h2>
-                <small>{{ roleFormatter($page.props.auth.user.role) }}</small>
+                <small class="text-slate-200">{{ roleFormatter($page.props.auth.user.role) }}</small>
             </p>
         </div>
         <div class="flex justify-end items-center space-x-1">
             <!-- Logout button -->
-            <dropdown-link class=" text-left text-white border p-2 rounded" :href="route('logout')" method="post" as="button">
+            <dropdown-link class=" text-left text-white border p-2 rounded hover:bg-red-300" :href="route('logout')" method="post" as="button">
                 <i class="fa fa-power-off text-red-500"></i> Logout
             </dropdown-link>
         </div>
@@ -29,24 +29,4 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import { roleFormatter } from "@/Utility/Formatter.js";
 
-
-// Define dropdown state
-const showHistoryDropdown = ref(false);
-
-
-// Function to close all dropdowns
-const closeAllDropdowns = () => {
-    showHistoryDropdown.value = false;
-   
-};
-
-// Function to toggle a specific dropdown
-const toggleDropdown = (dropdown) => {
-    closeAllDropdowns(); // Close all dropdowns first
-    switch (dropdown) {
-        case 'history':
-            showHistoryDropdown.value = !showHistoryDropdown.value;
-            break;
-    }
-};
 </script>

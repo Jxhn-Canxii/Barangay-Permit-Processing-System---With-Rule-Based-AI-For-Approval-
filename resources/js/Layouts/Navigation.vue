@@ -74,7 +74,7 @@ import { ref } from "vue";
 import NavLink from "@/Components/NavLink.vue";
 import { roleFormatter } from "@/Utility/Formatter.js";
 // Sidebar state (default: open)
-const isSidebarOpen = ref(true);
+const isSidebarOpen = ref(false);
 const sessionRole = ref(0);
 
 const logOut = async () => {

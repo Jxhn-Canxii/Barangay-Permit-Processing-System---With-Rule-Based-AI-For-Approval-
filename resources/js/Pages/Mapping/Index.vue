@@ -28,7 +28,7 @@
 
         <!-- Displaying Zonal Map Image (replace with actual map image) -->
         <div class="max-w-4xl mx-auto mb-8">
-          <img src="/image/zonal-map.jpg" alt="Zonal Map of Brgy. San Agustin" class="w-full rounded-lg shadow-md" />
+          <img src="/image/hero.jpg" alt="Zonal Map of Brgy. San Agustin" class="w-full rounded-lg shadow-md" />
         </div>
 
         <!-- Zones Information (can be dynamically generated based on your data) -->
