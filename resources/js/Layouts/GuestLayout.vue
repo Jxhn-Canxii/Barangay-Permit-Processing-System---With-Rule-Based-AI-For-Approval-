@@ -1,6 +1,6 @@
 <template>
     <!-- Header Section -->
-    <Header />
+     <Header />
     <div class="min-h-screen min-wscreen bg-emerald-700">
             <!-- Slot for Dynamic Content -->
         <slot />

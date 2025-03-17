@@ -1,7 +1,7 @@
 <template>
-    <header class="flex items-center justify-between bg-emerald-900 px-4 py-2 z-200">
+    <header class="flex items-center justify-start lg:justify-between bg-emerald-900 px-4 py-2 z-200">
         <!-- Mobile menu toggle button -->
-        <button @click="toggleMobileMenu" class="text-gray-500 focus:outline-none lg:hidden mr-2">
+        <button @click="toggleMobileMenu" class="text-white focus:outline-none lg:hidden mr-2">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4 6H20M4 12H20M4 18H11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
@@ -40,6 +40,13 @@
             >
                 Issues And Complains
             </NavLink>
+             <NavLink 
+                :href="route('about')" 
+                :active="route().current('about')" 
+                class="nav-link hover:bg-emerald-600 px-4 py-2 rounded-lg transition-all duration-200"
+            >
+                About Us?
+            </NavLink>
             <NavLink 
                 :href="route('login')" 
                 :active="route().current('login')" 
@@ -50,14 +57,25 @@
         </nav>
     </header>
  <!-- Mobile Navigation Links (Visible when mobile menu is active) -->
-        <nav v-if="showingMobileMenu" class="lg:hidden  bg-emerald-900 text-white shadow-lg space-y-4 p-4 z-50">
-            <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
+        <nav v-if="showingMobileMenu" class="lg:hidden  bg-emerald-800 shadow-lg space-y-4 p-4 z-50">
+            <ResponsiveNavLink :href="route('home')"  
+            class="nav-link hover:bg-emerald-600 text-black px-4 py-2 rounded-lg transition-all duration-200" 
+            :active="route().current('home')">
                 Home
             </ResponsiveNavLink>
-            <ResponsiveNavLink :href="route('mapping')" :active="route().current('mapping')">
+            <ResponsiveNavLink :href="route('mapping')" 
+            class="nav-link hover:bg-emerald-600 text-black px-4 py-2 rounded-lg transition-all duration-200" 
+            :active="route().current('mapping')">
                 Mapping
             </ResponsiveNavLink>
-            <ResponsiveNavLink :href="route('login')" :active="route().current('login')">
+            <ResponsiveNavLink :href="route('about')" 
+            class="nav-link hover:bg-emerald-600 text-black px-4 py-2 rounded-lg transition-all duration-200" 
+            :active="route().current('about')">
+                About Us?
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('login')" 
+            class="nav-link hover:bg-emerald-600 text-black px-4 py-2 rounded-lg transition-all duration-200" 
+            :active="route().current('login')">
                 Login
             </ResponsiveNavLink>
         </nav>
@@ -80,34 +98,6 @@ const toggleMobileMenu = () => {
 </script>
 
 <style scoped>
-/* Mobile Menu Styles */
-@media (max-width: 1024px) {
-    nav {
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background-color: #1F3A43; /* Darker background for the menu */
-        width: 100%;
-        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-        display: flex;
-        justify-content: center;
-        padding: 16px;
-    }
-
-    nav a {
-        width: 100%;
-        text-align: center;
-        padding: 12px;
-        display: block;
-        font-size: 1.2rem;
-    }
-
-    nav a:hover {
-        background-color: #2c6e71; /* Darken background on hover */
-    }
-}
-
 /* Optional: Close mobile menu when clicking on the link */
 nav a:hover {
     background-color: #2c6e71;

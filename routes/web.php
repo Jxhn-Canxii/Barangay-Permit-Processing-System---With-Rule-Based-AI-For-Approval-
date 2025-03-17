@@ -33,6 +33,7 @@ Route::get('login', function () {
 
 Route::get('/register', function () { return Inertia::render('Auth/Register'); })->name('home');
 Route::get('/home', function () { return Inertia::render('Home/Index'); })->name('home');
+Route::get('/about', function () { return Inertia::render('About/Index'); })->name('about');
 Route::get('/complaint', function () { return Inertia::render('Complaint/Index'); })->name('complaint');
 Route::get('/mapping', function () { return Inertia::render('Mapping/Index'); })->name('mapping');
 
