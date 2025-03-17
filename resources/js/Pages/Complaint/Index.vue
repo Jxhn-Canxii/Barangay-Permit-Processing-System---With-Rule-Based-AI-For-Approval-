@@ -1,4 +1,5 @@
 <template>
+  <Head title="Barangay Complaints"/>
   <GuestLayout>
    <div class="flex justify-center items-center min-h-screen px-4 py-8">
             <!-- Login Form Container -->
@@ -62,6 +63,7 @@
 </template>
 
 <script setup>
+import { Head } from "@inertiajs/vue3";
 import GuestLayout from "@/Layouts/GuestLayout.vue"
 import { ref,watch } from 'vue';
 

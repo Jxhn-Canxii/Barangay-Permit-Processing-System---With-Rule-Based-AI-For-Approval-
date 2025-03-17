@@ -11,6 +11,9 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
         <link rel="shortcut icon" href="public/image/logo.jpg" type="image/x-icon">
+
+        <!-- Favicon (Browser logo) -->
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
         @routes
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead

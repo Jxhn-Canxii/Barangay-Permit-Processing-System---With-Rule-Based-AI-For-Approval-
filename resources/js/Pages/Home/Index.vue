@@ -1,4 +1,5 @@
 <template>
+  <Head title="Home" />
   <GuestLayout>
     <div class="bg-gray-100">
       <!-- Hero Section -->
@@ -85,6 +86,7 @@
 </template>
 
 <script setup>
+import { Head } from "@inertiajs/vue3";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 // No specific script needed for this homepage layout
 </script>

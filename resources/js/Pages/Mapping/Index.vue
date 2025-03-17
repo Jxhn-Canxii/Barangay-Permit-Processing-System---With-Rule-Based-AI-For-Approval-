@@ -1,4 +1,5 @@
 <template>
+  <Head title="Mapping" />
   <GuestLayout>
     <div class="bg-gray-100">
       
@@ -73,6 +74,7 @@
 </template>
 
 <script setup>
+import { Head } from "@inertiajs/vue3";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import Maps from "./Module/Maps.vue";
   // No specific script needed for this zonal mapping layout

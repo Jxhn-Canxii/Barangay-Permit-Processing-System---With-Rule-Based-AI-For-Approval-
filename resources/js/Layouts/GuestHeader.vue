@@ -1,5 +1,5 @@
 <template>
-    <header class="flex items-center justify-between bg-emerald-900 px-4 py-2 z-200">
+    <header class="flex items-center justify-start md:justify-between bg-emerald-900 px-4 py-2 z-200">
         <!-- Mobile menu toggle button -->
         <button @click="toggleMobileMenu" class="text-gray-500 focus:outline-none lg:hidden mr-2">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
