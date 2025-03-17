@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ZoningController;
+use App\Http\Controllers\BarangayCensusController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,6 +43,16 @@ Route::middleware('auth')->group(function () {
     Route::prefix('dashboard/')->group(function(){
         Route::get('', [DashboardController::class, 'index'])->name('dashboard.index');
     });
+    Route::prefix('census/')->group(function(){
+        Route::get('barangay-census', [BarangayCensusController::class, 'index'])->name('barangay.census.index');
+        Route::post('barangay-census', [BarangayCensusController::class, 'addCensus'])->name('barangay.census.add');
+        Route::post('barangay-census-list', [BarangayCensusController::class, 'listCensusData'])->name('barangay.census.list');
+        Route::put('barangay-census/{id}', [BarangayCensusController::class, 'updateCensus'])->name('barangay.census.update');
+        Route::delete('barangay-census/{id}', [BarangayCensusController::class, 'deleteCensus'])->name('barangay.census.delete');
+        // API Route for Chart.js
+        Route::get('barangay-census-chart-data', [BarangayCensusController::class, 'chartData'])->name('barangay.census.chartData');
+    });
+ 
     Route::prefix('zoning/')->group(function(){
         Route::get('', [ZoningController::class, 'index'])->name('zoning.index');
         Route::post('list-rejected', [ZoningController::class, 'listRejected'])->name('zoning.rejected.list'); // List with pagination

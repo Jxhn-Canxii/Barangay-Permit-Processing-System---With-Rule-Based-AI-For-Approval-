@@ -13,7 +13,7 @@ class UserController extends Controller
     // Renders the User Management Page without the user list
     public function index()
     {
-        return Inertia::render('Users/Index', [
+        return Inertia::render('Admin/Users/Index', [
             'status' => session('status'),
         ]);
     }

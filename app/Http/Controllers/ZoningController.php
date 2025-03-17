@@ -11,7 +11,7 @@ class ZoningController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Zoning/Index', [
+        return Inertia::render('Admin/Zoning/Index', [
             'status' => session('status'),
         ]);
     }

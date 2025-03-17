@@ -10,7 +10,7 @@
                 <InventoryChart />
                 <SalesChart  />
                 <RevenueChart />
-                <BuildingDistribution />
+                <CensusChart />
             </div>
         </div>
     </AuthenticatedLayout>
@@ -28,7 +28,7 @@ import Paginator from "@/Components/Paginator.vue";
 import InventoryChart from "./Module/InventoryChart.vue";
 import SalesChart from "./Module/SalesChart.vue";
 import RevenueChart from "./Module/RevenueChart.vue";
-import BuildingDistribution from "./Module/BuildingDistribution.vue";
+import CensusChart from "./Module/CensusChart.vue";
 
 onMounted(() => {});
 </script>

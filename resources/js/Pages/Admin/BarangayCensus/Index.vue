@@ -1,9 +1,9 @@
 <template>
-    <Head title="Users" />
+    <Head title="Barangay Census" />
 
     <AuthenticatedLayout>
         <template #header>
-            Users
+            Census
         </template>
         <div class="bg-white rounded shadow p-4">
             <div class="inline-block min-w-full overflow-hidden rounded-lg p-4">
@@ -13,7 +13,7 @@
                         type="text"
                         v-model="search.search"
                         @input.prevent="fetchData()"
-                        placeholder="Search User"
+                        placeholder="Search Census"
                         class="px-2 py-2 font-bold mb-4 w-full text-md float-end text-black rounded shadow"
                     />
                     <Add :key="updateKey"  @transaction_id="handleTransaction()"/>
@@ -22,21 +22,36 @@
                 <table class="w-full whitespace-no-wrap">
                     <thead>
                         <tr class="border-b bg-gray-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
-                            <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Name</th>
-                            <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Email</th>
-                            <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Role</th>
+                            <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Year</th>
+                            <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Female</th>
+                            <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Male</th>
+                            <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Household</th>
+                            <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Total</th>
+                            <th class="border-b-2 border-gray-200 px-5 py-3 text-center">Total</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="user in data.users" v-if="data.total_pages" :key="user.id" class="text-gray-700">
+                        <tr v-for="cens in data.census" v-if="data.total_pages" :key="cens.id" class="text-gray-700">
                             <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                {{ user.name }}
+                                {{ cens.year }}
                             </td>
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                {{ user.email }}
+                            <td class="border-b border-gray-200 px-5 py-5 text-sm text-right">
+                                {{ cens.female }}
                             </td>
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                {{ roleFormatter(user.role) }}
+                             <td class="border-b border-gray-200 px-5 py-5 text-sm text-right">
+                                {{ cens.male }}
+                            </td>
+                            <td class="border-b border-gray-200 px-5 py-5 text-sm text-right">
+                                {{ cens.households }}
+                            </td>
+                            <td class="border-b border-gray-200 px-5 py-5 text-sm text-right">
+                                {{ cens.population }}
+                            </td>
+                            <td class="border-b border-gray-200 px-5 py-5 text-sm text-center">
+                                <div class="flex justify-center items-center">
+                                    <Edit :key="cens.id" @transaction_id="handleTransaction()" :data="cens" />
+                                    <Delete :key="cens.id" @transaction_id="handleTransaction()" :id="cens.id" />
+                                </div>
                             </td>
                         </tr>
                         <tr v-else>
@@ -73,6 +88,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 import Add from "./Module/Add.vue";
+import Edit from "./Module/Edit.vue";
+import Delete from "./Module/Delete.vue";
 
 const data = ref([]);
 const search = ref({
@@ -86,26 +103,11 @@ const search = ref({
 onMounted(() => {
     fetchData();
 });
-const roleFormatter = (role_id) => {
-    switch (role_id) {
-        case 1:
-            return 'SuperAdmin'
-            break;
-        case 2:
-            return 'Admin'
-            break;
-        case 3:
-            return 'User'
-            break;
-        default:
-            return 'Unassigned'
-            break;
-    }
-}
+
 // Fetch the zoning permits data
 const fetchData = async () => {
     try {
-        const response = await axios.post(route("users.list"), search.value);
+        const response = await axios.post(route("barangay.census.list"), search.value);
         data.value = response.data;
     } catch (error) {
         console.error("Error fetching zoning permits:", error);
@@ -119,7 +121,9 @@ const handlePagination = (page_num) => {
 };
 
 const updateKey = ref(0);
+
 const handleTransaction = (id) => {
+    fetchData();
     updateKey.value = id;
 };
 </script>

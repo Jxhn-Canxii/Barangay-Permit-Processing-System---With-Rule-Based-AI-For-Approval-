@@ -48,9 +48,15 @@
     <nav class="mt-10">
       <nav-link :href="route('dashboard.index')" :active="route().current('dashboard.index')">
         <template #icon>
-          <i class="fa fa-chart-line"></i>
+          <i class="fa fa-tachometer"></i>
         </template>
         Dashboard
+      </nav-link>
+      <nav-link :href="route('barangay.census.index')" :active="route().current('barangay.census.index')">
+        <template #icon>
+          <i class="fa fa-chart-line"></i>
+        </template>
+        Census
       </nav-link>
       <nav-link :href="route('zoning.index')" :active="route().current('zoning.index')">
         <template #icon>
