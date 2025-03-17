@@ -35,6 +35,7 @@
             class="w-16 h-16 rounded-full border-4 border-gray-600"
         />
         <p class="text-xl text-white">Brgy. San Agustin</p>
+        <p hidden>{{ sessionRole = $page.props.auth.user.role }} Plus 1 Happy Kaarawan</p>
     </div>
     <!-- User Info -->
     <!-- <div class="text-center mt-3">
@@ -71,27 +72,11 @@
 <script setup>
 import { ref } from "vue";
 import NavLink from "@/Components/NavLink.vue";
-
+import { roleFormatter } from "@/Utility/Formatter.js";
 // Sidebar state (default: open)
 const isSidebarOpen = ref(true);
 const sessionRole = ref(0);
-const roleFormatter = (role_id) => {
-    sessionRole.value = role_id;
-    switch (role_id) {
-        case 1:
-            return 'SuperAdmin'
-            break;
-        case 2:
-            return 'Admin'
-            break;
-        case 3:
-            return 'User'
-            break;
-        default:
-            return 'Unassigned'
-            break;
-    }
-}
+
 const logOut = async () => {
     try {
         // Reload the page after successful login
