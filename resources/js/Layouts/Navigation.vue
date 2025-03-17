@@ -14,29 +14,35 @@
   <!-- Sidebar Content -->
   <div :class="isSidebarOpen ? 'translate-x-0' : '-translate-x-full'"
        class="fixed inset-y-0 left-0 z-30 w-64 bg-emerald-900 transition-transform duration-300 transform lg:translate-x-0 lg:static lg:inset-0">
-    <div class="flex justify-center items-center mt-8">
+    <div class="flex flex-col justify-center items-center mt-8">
         <!-- Profile Picture -->
-      <div class="relative block">
+        <!-- <div class="relative block">
+          <img 
+            :src="$page.props.auth.user.profilePicture ?? '/image/profile.png'" 
+            alt="Profile Picture" 
+            class="w-24 h-24 rounded-full border-4 border-gray-600"
+          />
+          <span class="absolute bottom-0 right-3 bg-green-500 w-5 h-5 rounded-full border-2 border-gray-800"></span>
+        </div>
+        LGU Manager Branding
+        <div class="flex items-center justify-center mt-4 text-lg">
+          <i class="fa fa-institution text-yellow-400"></i>
+          <span class="mx-2 font-semibold">LGU MANAGER</span>
+        </div> -->
         <img 
-          :src="$page.props.auth.user.profilePicture ?? '/image/profile.png'" 
-          alt="Profile Picture" 
-          class="w-24 h-24 rounded-full border-4 border-gray-600"
+            src='/image/logo.jpg'
+            alt="Profile Picture" 
+            class="w-16 h-16 rounded-full border-4 border-gray-600"
         />
-        <span class="absolute bottom-0 right-3 bg-green-500 w-5 h-5 rounded-full border-2 border-gray-800"></span>
-      </div>
-      <!-- LGU Manager Branding
-      <div class="flex items-center justify-center mt-4 text-lg">
-        <i class="fa fa-institution text-yellow-400"></i>
-        <span class="mx-2 font-semibold">LGU MANAGER</span>
-      </div> -->
+        <p class="text-xl text-white">Brgy. San Agustin</p>
     </div>
     <!-- User Info -->
-    <div class="text-center mt-3">
+    <!-- <div class="text-center mt-3">
       <h2 class="text-2xl font-semibold text-white">{{ $page.props.auth.user.name }}</h2>
       <p class="text-sm text-gray-300">
         {{ roleFormatter($page.props.auth.user.role) }}
       </p>
-    </div>
+    </div> -->
     <!-- Navigation Links -->
     <nav class="mt-10">
       <nav-link :href="route('dashboard.index')" :active="route().current('dashboard.index')">
