@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
+use App\Mail\ZoningPermitApproved;
+use App\Mail\ZoningPermitRejected;
+use Illuminate\Support\Facades\Mail;
 
 class ZoningController extends Controller
 {
@@ -201,49 +204,73 @@ class ZoningController extends Controller
     public function approve(Request $request, $id)
     {
         $userId = $request->user()->id;
-
-        $permit = DB::table('zoning_permits')->where('id', $id)->first(['first_name', 'last_name']);
-
+    
+        $permit = DB::table('zoning_permits')->where('id', $id)->first(['first_name', 'last_name', 'email']);
+    
         if (!$permit) {
             return response()->json(['message' => 'Permit not found'], 404);
         }
-
+    
         // Update permit status
         DB::table('zoning_permits')->where('id', $id)->update([
             'status_id' => 2,
             'updated_at' => now(),
         ]);
-
+    
         // Log the transaction
         $message = "Approved zoning permit for {$permit->first_name} {$permit->last_name}";
         $this->logs($userId, "Zoning Application", $message);
+    
+        // Send email notification
+        try {
+            if (!empty($permit->email)) {
+                Mail::to($permit->email)->send(new ZoningPermitApproved($permit));
+            }
+        } catch (\Exception $e) {
 
-        return response()->json(['message' => 'Zoning permit approved'], 200);
+            return response()->json([
+                'message' => 'Zoning permit approved, but email notification failed.',
+                'error' => $e->getMessage(),
+            ], 200);
+        }
+    
+        return response()->json(['message' => 'Zoning permit approved and email sent'], 200);
     }
-
+    
     public function reject(Request $request, $id)
     {
         $userId = $request->user()->id;
-
-        $permit = DB::table('zoning_permits')->where('id', $id)->first(['first_name', 'last_name']);
-
+    
+        $permit = DB::table('zoning_permits')->where('id', $id)->first(['first_name', 'last_name', 'email']);
+    
         if (!$permit) {
             return response()->json(['message' => 'Permit not found'], 404);
         }
-
+    
         // Update permit status
         DB::table('zoning_permits')->where('id', $id)->update([
             'status_id' => 3,
             'updated_at' => now(),
         ]);
-
+    
         // Log the transaction
         $message = "Rejected zoning permit for {$permit->first_name} {$permit->last_name}";
         $this->logs($userId, "Zoning Application", $message);
-
-        return response()->json(['message' => 'Zoning permit rejected'], 200);
+    
+        // Send email notification
+        try {
+            if (!empty($permit->email)) {
+                Mail::to($permit->email)->send(new ZoningPermitRejected($permit));
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Zoning permit rejected, but email notification failed.',
+                'error' => $e->getMessage(),
+            ], 200);
+        }
+    
+        return response()->json(['message' => 'Zoning permit rejected and email sent'], 200);
     }
-
     public function logs($userId, $module, $message)
     {
         DB::table('logs')->insert([

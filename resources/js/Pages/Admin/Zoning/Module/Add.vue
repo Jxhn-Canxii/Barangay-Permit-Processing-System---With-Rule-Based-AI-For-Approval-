@@ -89,19 +89,19 @@
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Location of Lot</label>
                         <input type="text" v-model="form.location_of_lot" placeholder="Enter location" class="mt-1 p-2 border rounded-md w-full" />
-                        <p v-if="errors.file" class="text-red-500 text-xs mt-1">{{ errors.location_of_lot[0] }}</p>
+                        <p v-if="errors.location_of_lot" class="text-red-500 text-xs mt-1">{{ errors.location_of_lot[0] }}</p>
                     </div>
 
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Right Over Land</label>
                         <input type="text" v-model="form.right_over_land" placeholder="Enter land rights" class="mt-1 p-2 border rounded-md w-full" />
-                        <p v-if="errors.file" class="text-red-500 text-xs mt-1">{{ errors.right_over_land[0] }}</p>
+                        <p v-if="errors.right_over_land" class="text-red-500 text-xs mt-1">{{ errors.right_over_land[0] }}</p>
                     </div>
 
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Lot Area</label>
                         <input type="number" v-model="form.lot_area" placeholder="Enter lot area" class="mt-1 p-2 border rounded-md w-full" />
-                        <p v-if="errors.file" class="text-red-500 text-xs mt-1">{{ errors.lot_area[0] }}</p>
+                        <p v-if="errors.lot_area" class="text-red-500 text-xs mt-1">{{ errors.lot_area[0] }}</p>
                     </div>
 
                     <div class="mb-4">
