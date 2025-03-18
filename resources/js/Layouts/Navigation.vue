@@ -58,13 +58,13 @@
         </template>
         Permit Processing
       </nav-link>
-      <nav-link :href="route('landmarks.index')" :active="route().current('landmarks.index')">
+      <nav-link v-if="sessionRole != 3" :href="route('landmarks.index')" :active="route().current('landmarks.index')">
         <template #icon>
           <i class="fa fa-landmark"></i>
         </template>
         Landmarks
       </nav-link>
-      <nav-link :href="route('barangay.census.index')" :active="route().current('barangay.census.index')">
+      <nav-link v-if="sessionRole != 3" :href="route('barangay.census.index')" :active="route().current('barangay.census.index')">
         <template #icon>
           <i class="fa fa-chart-line"></i>
         </template>
