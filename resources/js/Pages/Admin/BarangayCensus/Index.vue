@@ -21,13 +21,13 @@
                 <!-- Table -->
                 <table class="w-full whitespace-no-wrap">
                     <thead>
-                        <tr class="border-b bg-gray-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                        <tr class="border-b bg-green-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
                             <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Year</th>
                             <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Female</th>
                             <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Male</th>
                             <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Household</th>
                             <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Total</th>
-                            <th class="border-b-2 border-gray-200 px-5 py-3 text-center">Total</th>
+                            <th class="border-b-2 border-gray-200 px-5 py-3 text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>

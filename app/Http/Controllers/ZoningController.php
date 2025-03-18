@@ -43,7 +43,8 @@ class ZoningController extends Controller
             $query->where('inputted_by', $userId);
         }
     
-        $permits = $query->orderBy('created_at', 'desc')
+        // Apply sorting and pagination
+        $permits = $query->orderBy('updated_at', 'desc')
             ->offset($offset)
             ->limit($itemsPerPage)
             ->get();
@@ -149,7 +150,7 @@ class ZoningController extends Controller
         $request->validate([
             'date_of_application' => 'required|date',
             'or_date' => 'nullable|date',
-            'official_receipt_no' => 'nullable|string|max:255|unique:zoning_permits',
+            'official_receipt_no' => 'required|string|max:255|unique:zoning_permits',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',

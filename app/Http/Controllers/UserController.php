@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
@@ -31,14 +32,14 @@ class UserController extends Controller
         // Apply search filter if provided
         if ($search) {
             $query->where('name', 'like', "%$search%")
-                  ->orWhere('email', 'like', "%$search%");
+                ->orWhere('email', 'like', "%$search%");
         }
 
         // Get total records before pagination
         $total = $query->count();
 
-        // Apply manual pagination
-        $users = $query->skip($offset)->take($itemsPerPage)->get();
+        // Sort by latest ID first and apply manual pagination
+        $users = $query->orderBy('id', 'desc')->skip($offset)->take($itemsPerPage)->get();
 
         return response()->json([
             'users' => $users,
@@ -48,6 +49,7 @@ class UserController extends Controller
             'itemsperpage' => $itemsPerPage,
         ]);
     }
+
 
     // Add a new user
     public function add(Request $request)
@@ -67,5 +69,15 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('users.index')->with('status', 'User added successfully.');
+    }
+    public function deleteUser($id)
+    {
+        $deleted = DB::table('users')->where('id', $id)->delete();
+
+        if ($deleted) {
+            return response()->json(['message' => 'User deleted successfully!']);
+        }
+
+        return response()->json(['message' => 'Failed to delete record.'], 500);
     }
 }

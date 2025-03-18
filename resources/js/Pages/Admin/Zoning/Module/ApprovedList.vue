@@ -15,16 +15,20 @@
             <div class="min-w-screen min-h-full overflow-auto p-2">
                 <table class="w-full whitespace-no-wrap">
                     <thead>
-                        <tr class="border-b bg-gray-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                        <tr class="border-b bg-green-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                            <th class="border-b-2 border-gray-200 px-5 py-3 text-center">Approval ID</th>
                             <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Applicant</th>
                             <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Owner</th>
                             <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Location</th>
                             <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Status</th>
-                            <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Actions</th>
+                            <th class="border-b-2 border-gray-200 px-5 py-3 text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="permit in data.data" v-if="data.total_pages" :key="permit.id" class="text-gray-700">
+                            <td class="border-b border-gray-200 px-5 py-5 text-sm text-center">
+                                {{ permit.id }}
+                            </td>
                             <td class="border-b border-gray-200 px-5 py-5 text-sm">
                                 {{ permit.first_name }} {{ permit.middle_name }} {{ permit.last_name }}
                             </td>
@@ -44,8 +48,8 @@
                                     {{ statusFormatter(permit.status_id) }}
                                 </span>
                             </td>
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm flex space-x-2">
-                                <div class="inline-flex space-x-2">
+                            <td class="border-b border-gray-200 px-5 py-5 text-sm">
+                                <div class="flex justify-center space-x-2">
                                     <button v-if="permit.status_id === 1 && sessionRole == 1" @click="approvePermit(permit.id)" class="px-3 py-1 bg-green-500 text-white rounded">
                                         <i class="fa fa-thumbs-up"></i> Approve
                                     </button>
@@ -57,7 +61,7 @@
                             </td>
                         </tr>
                         <tr v-else>
-                            <td colspan="5" class="border-b text-center font-bold text-lg border-gray-200 bg-white px-5 py-5">
+                            <td colspan="6" class="border-b text-center font-bold text-lg border-gray-200 bg-white px-5 py-5">
                                 <p class="text-red-500 whitespace-no-wrap">
                                     No Data Found!
                                 </p>

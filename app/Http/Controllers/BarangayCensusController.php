@@ -77,17 +77,6 @@ class BarangayCensusController extends Controller
         return response()->json(['message' => 'Census record added successfully!'], 201);
     }
 
-    // Fetch census data for editing
-    public function editCensus($id)
-    {
-        $census = DB::table('barangay_census')->where('id', $id)->first();
-
-        if (!$census) {
-            return response()->json(['message' => 'Census record not found.'], 404);
-        }
-
-        return response()->json($census);
-    }
 
     // Update census record
     public function updateCensus(Request $request, $id)

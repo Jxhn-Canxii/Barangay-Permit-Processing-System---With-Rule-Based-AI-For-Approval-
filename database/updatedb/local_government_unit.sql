@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 17, 2025 at 03:44 PM
+-- Generation Time: Mar 18, 2025 at 04:41 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,11 +43,9 @@ CREATE TABLE `barangay_census` (
 --
 
 INSERT INTO `barangay_census` (`id`, `year`, `population`, `households`, `male`, `female`, `created_at`, `updated_at`) VALUES
-(1, 2021, 1030, 300, 230, 505, '2025-03-17 04:35:52', '2025-03-17 04:47:09'),
 (3, 2022, 1124, 344, 435, 345, '2025-03-17 04:47:49', '2025-03-17 04:47:49'),
 (4, 2023, 1260, 500, 200, 560, '2025-03-17 04:48:19', '2025-03-17 04:48:19'),
-(5, 2024, 1476, 230, 679, 567, '2025-03-17 04:48:31', '2025-03-17 04:48:31'),
-(6, 2025, 1300, 500, 500, 304, '2025-03-17 05:39:24', '2025-03-17 05:39:35');
+(5, 2024, 1476, 230, 679, 567, '2025-03-17 04:48:31', '2025-03-17 04:48:31');
 
 -- --------------------------------------------------------
 
@@ -65,31 +63,6 @@ CREATE TABLE `logs` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `logs`
---
-
-INSERT INTO `logs` (`id`, `user_id`, `action`, `module`, `ip_address`, `details`, `created_at`, `updated_at`) VALUES
-(1, NULL, 'Added zoning permit for Laboriosam non rati Est enim qui offici', 'Zoning Application', NULL, NULL, '2025-03-15 13:15:44', '2025-03-15 13:15:44'),
-(2, 1, 'Added zoning permit for Hic voluptatem Nam Quas ut nesciunt in', 'Zoning Application', NULL, NULL, '2025-03-15 05:52:25', '2025-03-15 13:52:25'),
-(3, 1, 'Approved zoning permit for Laboriosam non rati Est enim qui offici', 'Zoning Application', NULL, NULL, '2025-03-15 05:58:51', '2025-03-15 13:58:51'),
-(4, 1, 'Approved zoning permit for Laboriosam non rati Est enim qui offici', 'Zoning Application', NULL, NULL, '2025-03-15 05:58:56', '2025-03-15 13:58:56'),
-(5, 1, 'Approved zoning permit for Laboriosam non rati Est enim qui offici', 'Zoning Application', NULL, NULL, '2025-03-15 05:59:04', '2025-03-15 13:59:04'),
-(6, 1, 'Approved zoning permit for Hic voluptatem Nam Quas ut nesciunt in', 'Zoning Application', NULL, NULL, '2025-03-15 05:59:06', '2025-03-15 13:59:06'),
-(7, 1, 'Approved zoning permit for Ipsa expedita nihil Dolorum assumenda hi', 'Zoning Application', NULL, NULL, '2025-03-15 05:59:08', '2025-03-15 13:59:08'),
-(8, 1, 'Added zoning permit for Ipsam ad occaecat om Consequatur sed aut', 'Zoning Application', NULL, NULL, '2025-03-15 05:59:31', '2025-03-15 13:59:31'),
-(9, 1, 'Rejected zoning permit for Ipsam ad occaecat om Consequatur sed aut', 'Zoning Application', NULL, NULL, '2025-03-15 05:59:37', '2025-03-15 13:59:37'),
-(10, 1, 'Added zoning permit for Non temporibus minim Possimus quos disti', 'Zoning Application', NULL, NULL, '2025-03-15 06:16:51', '2025-03-15 14:16:51'),
-(11, 1, 'Rejected zoning permit for Non temporibus minim Possimus quos disti', 'Zoning Application', NULL, NULL, '2025-03-15 06:23:46', '2025-03-15 14:23:46'),
-(12, 1, 'Added zoning permit for Repudiandae laborios Quis quis pariatur', 'Zoning Application', NULL, NULL, '2025-03-15 06:24:32', '2025-03-15 14:24:32'),
-(13, 1, 'Added zoning permit for Et quis minus unde m Proident doloribus', 'Zoning Application', NULL, NULL, '2025-03-15 06:25:14', '2025-03-15 14:25:14'),
-(14, 1, 'Added zoning permit for Iusto ipsum dolorum Dolor magnam incidid', 'Zoning Application', NULL, NULL, '2025-03-15 06:27:12', '2025-03-15 14:27:12'),
-(15, 1, 'Approved zoning permit for Iusto ipsum dolorum Dolor magnam incidid', 'Zoning Application', NULL, NULL, '2025-03-15 06:27:19', '2025-03-15 14:27:19'),
-(16, 1, 'Rejected zoning permit for Et quis minus unde m Proident doloribus', 'Zoning Application', NULL, NULL, '2025-03-15 06:27:26', '2025-03-15 14:27:26'),
-(17, 1, 'Approved zoning permit for Repudiandae laborios Quis quis pariatur', 'Zoning Application', NULL, NULL, '2025-03-15 06:31:56', '2025-03-15 14:31:56'),
-(18, 1, 'Added zoning permit for Accusantium aut nost Sed accusantium dese', 'Zoning Application', NULL, NULL, '2025-03-15 19:26:06', '2025-03-16 03:26:06'),
-(19, 1, 'Added zoning permit for Aut ut quo consequat Ad facilis commodo m', 'Zoning Application', NULL, NULL, '2025-03-15 19:26:19', '2025-03-16 03:26:19');
 
 -- --------------------------------------------------------
 
@@ -140,12 +113,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `role`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Hernan John Canciller', 1, 'greygreygrey35@gmail.com', NULL, '$2y$12$i5rzyoRK3x7IKP7SsJdymuF1B1vWBm0M2u8wV0PynTB0VgiIEM64W', NULL, '2025-03-13 03:07:21', '2025-03-13 03:07:21'),
-(2, 'Bruce Dale', 1, 'nudeweso@mailinator.com', NULL, '$2y$12$X12eI7jWnxS4A8HzGxPmleLIvEoD0VcLSRKrwys3A4o8tgjOMjJe6', NULL, '2025-03-15 06:49:01', '2025-03-15 06:49:01'),
-(3, 'Driscoll Francis', 2, 'nawuporore@mailinator.com', NULL, '$2y$12$r74j4sPlnUSIax4kpIuPb.wlHhKdrrZ9K4lmPGsvLMeQq3uxx3//u', NULL, '2025-03-15 06:49:26', '2025-03-15 06:49:26'),
-(4, 'Oscar Lancaster', 2, 'xilalyjaq@mailinator.com', NULL, '$2y$12$N.kqu4QOr9b9EZfVWqun5uP6re9h0dNS9u1azOxS7vBLxWMWbqD4u', NULL, '2025-03-15 06:57:27', '2025-03-15 06:57:27'),
-(5, 'Ullamco excepteur eo', 2, 'paguviwo@mailinator.com', NULL, '$2y$12$UwZxOB4O93kPd37VJIM7eu2euASR/EqINXjkYdUe7WYZ3jmsAZfMS', NULL, '2025-03-15 07:18:54', '2025-03-15 07:18:54'),
-(6, 'Josiah Gates', 3, 'rizi@mailinator.com', NULL, '$2y$12$EobDtUdFLvuMjILSj3F9fO6mkCvYWCFe9unqnOktWOeOlKUem/3HG', NULL, '2025-03-15 19:28:25', '2025-03-15 19:28:25');
+(1, 'Hernan John Canciller', 1, 'greygreygrey35@gmail.com', NULL, '$2y$12$i5rzyoRK3x7IKP7SsJdymuF1B1vWBm0M2u8wV0PynTB0VgiIEM64W', NULL, '2025-03-13 03:07:21', '2025-03-13 03:07:21');
 
 -- --------------------------------------------------------
 
@@ -175,24 +143,6 @@ CREATE TABLE `zoning_permits` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `zoning_permits`
---
-
-INSERT INTO `zoning_permits` (`id`, `date_of_application`, `or_date`, `official_receipt_no`, `first_name`, `middle_name`, `last_name`, `address`, `zip`, `owner_name`, `contact_number`, `email`, `location_of_lot`, `right_over_land`, `lot_area`, `uploaded_file`, `status_id`, `inputted_by`, `created_at`, `updated_at`) VALUES
-(1, '2000-03-13', '1988-04-19', 'Deserunt ad et et ul', 'Ipsa expedita nihil', 'Id sed sequi dolor v', 'Dolorum assumenda hi', 'Consequatur consect', '300', 'A consectetur vel d', 'Quis esse eiusmod in', 'jixavyti@mailinator.com', 'Do labore accusantiu', 'Quis et aliquid labo', '77', 'zoning_permits/ReLWwTlB3ZoXeeTuwJ9BrzqAjkBmsGlbY3fFK5k6.jpg', 2, 0, '2025-03-15 13:04:12', '2025-03-15 05:59:08'),
-(2, '1991-10-06', '1979-12-07', 'Corporis vel assumen', 'Laboriosam non rati', 'Reprehenderit dolor', 'Est enim qui offici', 'Omnis deserunt labor', '400', 'Quia est autem venia', 'Ad dolor velit est f', 'vegenuqase@mailinator.com', 'Qui voluptatum error', 'Laboriosam quis ven', '30', 'zoning_permits/4VZihxPA8Zd0Qbdp39AGprHFjbdtgea9fKplHM4K.jpg', 2, 0, '2025-03-15 13:09:07', '2025-03-15 05:59:04'),
-(3, '1991-10-06', '1979-12-07', 'Corporis vel assumen', 'Laboriosam non rati', 'Reprehenderit dolor', 'Est enim qui offici', 'Omnis deserunt labor', '400', 'Quia est autem venia', 'Ad dolor velit est f', 'vegenuqase@mailinator.com', 'Qui voluptatum error', 'Laboriosam quis ven', '30', 'zoning_permits/MsL7Yj13Sjs8066Hn0w2eSBXqakZgrYaqm5KyfCH.jpg', 2, 0, '2025-03-15 13:10:19', '2025-03-15 05:58:56'),
-(4, '1991-10-06', '1979-12-07', 'Corporis vel assumen', 'Laboriosam non rati', 'Reprehenderit dolor', 'Est enim qui offici', 'Omnis deserunt labor', '400', 'Quia est autem venia', 'Ad dolor velit est f', 'vegenuqase@mailinator.com', 'Qui voluptatum error', 'Laboriosam quis ven', '30', 'zoning_permits/9GnGrbK19My4PlWmybavIFKVgNGVx9V43vQtqxFt.jpg', 2, 0, '2025-03-15 13:15:44', '2025-03-15 05:58:51'),
-(5, '1977-09-21', '1974-06-17', 'Nisi in dolor offici', 'Hic voluptatem Nam', 'Autem quibusdam prov', 'Quas ut nesciunt in', 'Dolore et culpa cons', '234234234', 'Omnis sint aut asper', 'Suscipit excepturi p', 'nida@mailinator.com', 'Laboriosam sit rec', 'Proident saepe magn', '63', 'zoning_permits/BNbvs406bQtDYUCfafIVt0tOGwhT4JRENAUUiEqc.jpg', 2, 1, '2025-03-15 05:52:25', '2025-03-15 05:59:06'),
-(6, '1970-10-13', '2010-06-21', 'Nostrud omnis commod', 'Ipsam ad occaecat om', 'Explicabo Dolor dol', 'Consequatur sed aut', 'At dolor doloribus a', '2300', 'Quisquam deserunt do', 'Consectetur qui mole', 'favivutazy@mailinator.com', 'Et aliquip iure exer', 'Sit nostrum obcaecat', '14', 'zoning_permits/di4okOcF96jfvV4leOF5jj1lL0x2F5qRQlOjELUh.jpg', 3, 1, '2025-03-15 05:59:31', '2025-03-15 05:59:37'),
-(7, '1974-06-01', '2000-11-25', 'Aspernatur accusamus', 'Non temporibus minim', 'Odio in quos repelle', 'Possimus quos disti', 'Qui ad nemo labore m', '300', 'Dolor recusandae Hi', 'Quis adipisicing exe', 'cuwa@mailinator.com', 'Ea praesentium ex si', 'Ipsum qui reiciendis', '20', 'zoning_permits/hYQgl3y0NRe8fYuJKg8ifWZr7bZagf2B5MYG1HrZ.jpg', 3, 1, '2025-03-15 06:16:51', '2025-03-15 06:23:46'),
-(8, '2024-01-01', '2013-09-24', 'Ab rerum consectetur', 'Repudiandae laborios', 'Molestiae aliquid ex', 'Quis quis pariatur', 'Excepturi eaque atqu', '1199', 'Dolores ipsa dolor', 'Deleniti aperiam odi', 'webibu@mailinator.com', 'Ea laboris ea rerum', 'Velit itaque odit si', '70', 'zoning_permits/AuEWu1EDsNZ3YReDI3E7vMqSHU0SSeQEMgmURYMd.jpg', 2, 1, '2025-03-15 06:24:31', '2025-03-15 06:31:56'),
-(9, '1978-04-19', '1998-05-25', 'Sit quibusdam lorem', 'Et quis minus unde m', 'Cumque nostrum illo', 'Proident doloribus', 'Occaecat ex eligendi', '5649', 'Ullamco porro perspi', 'Officia esse ut repr', 'myqiled@mailinator.com', 'Vitae rerum eos enim', 'In labore reprehende', '72', 'zoning_permits/OS3qqknH4TDkvw0YYz4rRRvfUyYxLuLGhR2VYgQ6.jpg', 3, 1, '2025-03-15 06:25:14', '2025-03-15 06:27:26'),
-(10, '2017-04-04', '1985-05-21', 'Omnis magni est volu', 'Iusto ipsum dolorum', 'Eiusmod sint ut nece', 'Dolor magnam incidid', 'Odit autem nisi exer', '1282', 'Ut ullam blanditiis', 'Neque molestias temp', 'jivigoloz@mailinator.com', 'Mollit consectetur', 'Harum quod vel maxim', '28', 'zoning_permits/tOzxz2OQeB3vcsf0Sf8svabTPUZP7gFiQNSKPUpo.jpg', 2, 1, '2025-03-15 06:27:12', '2025-03-15 06:27:19'),
-(11, '2011-03-16', '1995-09-20', 'Earum quis eos in v', 'Accusantium aut nost', 'Beatae cillum sed qu', 'Sed accusantium dese', 'Ut rerum nulla in do', '9262', 'Impedit eaque non v', 'Pariatur Delectus', 'giwupyl@mailinator.com', 'Fugiat non labore ni', 'Est exercitation ali', '56', 'zoning_permits/lr1L2MIcBUyogzuuMRtwutvyx82jWMYJ2aVCIaOE.jpg', 1, 1, '2025-03-15 19:26:06', '2025-03-15 19:26:06'),
-(12, '2013-09-25', '1978-10-26', 'Earum quis eos in v', 'Aut ut quo consequat', 'Maxime saepe eligend', 'Ad facilis commodo m', 'Est ut fugit rem la', '1832', 'Quia magnam omnis re', 'In eum qui adipisci', 'bilodi@mailinator.com', 'Tenetur cumque neces', 'Deserunt necessitati', '71', 'zoning_permits/KTRYABp26qDSCiUvJg5EKkxUlHYw6XYCGjHGLwjx.jpg', 1, 1, '2025-03-15 19:26:19', '2025-03-15 19:26:19');
 
 --
 -- Indexes for dumped tables
@@ -243,7 +193,7 @@ ALTER TABLE `barangay_census`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -255,13 +205,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `zoning_permits`
 --
 ALTER TABLE `zoning_permits`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

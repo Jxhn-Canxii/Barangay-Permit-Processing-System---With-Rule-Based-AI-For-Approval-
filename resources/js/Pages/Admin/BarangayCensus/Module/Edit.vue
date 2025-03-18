@@ -6,7 +6,7 @@
             :disabled="isModalOpen"
             class="px-2 py-2 bg-yellow-500 font-bold mb-4 text-md float-end text-white rounded shadow"
         >
-            <i class="fa fa-edit"></i> Edit Census
+            <i class="fa fa-edit"></i> Edit
         </button>
 
         <Modal :show="isModalOpen" :maxWidth="'2xl'" :title="'Edit Census Record'" @close="isModalOpen = false">
@@ -20,23 +20,27 @@
                     <div class="grid grid-cols-3 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Households</label>
-                            <input type="number" v-model="form.households" class="mt-1 p-2 border rounded-md w-full" required />
+                            <input type="number" v-model="form.households" class="mt-1 p-2 border rounded-md w-full" required @input="calculatePopulation" />
+                            <p v-if="errors.households" class="text-red-500 text-xs mt-1">{{ errors.households[0] }}</p>
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Male Population</label>
-                            <input type="number" v-model="form.male" class="mt-1 p-2 border rounded-md w-full" required />
+                            <input type="number" v-model="form.male" class="mt-1 p-2 border rounded-md w-full" required @input="calculatePopulation" />
+                            <p v-if="errors.male" class="text-red-500 text-xs mt-1">{{ errors.male[0] }}</p>
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Female Population</label>
-                            <input type="number" v-model="form.female" class="mt-1 p-2 border rounded-md w-full" required />
+                            <input type="number" v-model="form.female" class="mt-1 p-2 border rounded-md w-full" required @input="calculatePopulation" />
+                            <p v-if="errors.female" class="text-red-500 text-xs mt-1">{{ errors.female[0] }}</p>
                         </div>
                     </div>
 
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Total Population</label>
                         <input type="number" v-model="form.population" class="bg-gray-200 mt-1 p-2 border rounded-md w-full" disabled />
+                        <p v-if="errors.population" class="text-red-500 text-xs mt-1">{{ errors.population[0] }}</p>
                     </div>
 
                     <div class="flex items-center mt-4">
@@ -62,9 +66,10 @@ const props = defineProps({
 });
 const emits = defineEmits(["transaction_id"]);
 const isModalOpen = ref(false);
+const errors = ref({}); // Store validation errors
 
 const form = useForm({
-    id: "", // For updating
+    id: "",
     year: "",
     population: "",
     households: "",
@@ -88,20 +93,31 @@ watch(
     { immediate: true }
 );
 
-// Open modal and set data
+// Open modal
 const openModal = () => {
     isModalOpen.value = true;
+};
+
+// Calculate total population
+const calculatePopulation = () => {
+    form.population = (parseInt(form.male) || 0) + (parseInt(form.female) || 0) + (parseInt(form.households) || 0);
 };
 
 // Update census record
 const updateCensus = async () => {
     try {
-        await axios.put(route("barangay.census.update", { id: form.id }), form);
+        await axios.patch(route("barangay.census.update", { id: form.id }), form);
         Swal.fire("Success!", "Census record updated successfully.", "success");
         isModalOpen.value = false;
-        emits("transaction_id",Math.random());
+        errors.value = {}; // Clear errors after successful submission
+        emits("transaction_id", Math.random());
     } catch (error) {
-        Swal.fire("Error!", error.response?.data?.message || "Something went wrong.", "error");
+        console.log(error);
+       if (error.response && error.response.data.errors) {
+            errors.value = error.response.data.errors; // Store Laravel validation errors
+        }else{
+            Swal.fire("Error!", error.response?.data?.message || "Something went wrong.", "error");
+        }
     }
 };
 </script>

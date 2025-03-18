@@ -21,10 +21,11 @@
                 <!-- Table -->
                 <table class="w-full whitespace-no-wrap">
                     <thead>
-                        <tr class="border-b bg-gray-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                        <tr class="border-b bg-green-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
                             <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Name</th>
                             <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Email</th>
                             <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Role</th>
+                            <th class="border-b-2 border-gray-200 px-5 py-3 text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,6 +38,11 @@
                             </td>
                             <td class="border-b border-gray-200 px-5 py-5 text-sm">
                                 {{ roleFormatter(user.role) }}
+                            </td>
+                            <td class="border-b border-gray-200 px-5 py-5 text-sm text-center">
+                                <div class="flex justify-center items-center">
+                                    <Delete :key="user.id" @transaction_id="handleTransaction()" :id="user.id" />
+                                </div>
                             </td>
                         </tr>
                         <tr v-else>
@@ -73,6 +79,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 import Add from "./Module/Add.vue";
+import Delete from "./Module/Delete.vue";
 
 const data = ref([]);
 const search = ref({

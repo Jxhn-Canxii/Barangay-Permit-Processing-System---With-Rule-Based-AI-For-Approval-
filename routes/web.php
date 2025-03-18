@@ -19,9 +19,7 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return redirect()->route('home');
-});
+
 
 Route::get('login', function () {
     return Inertia::render('Auth/Login', [
@@ -45,9 +43,11 @@ Route::middleware('auth')->group(function () {
     });
     Route::prefix('census/')->group(function(){
         Route::get('barangay-census', [BarangayCensusController::class, 'index'])->name('barangay.census.index');
-        Route::post('barangay-census', [BarangayCensusController::class, 'addCensus'])->name('barangay.census.add');
-        Route::post('barangay-census-list', [BarangayCensusController::class, 'listCensusData'])->name('barangay.census.list');
-
+        Route::post('barangay-census', [BarangayCensusController::class, 'listCensusData'])->name('barangay.census.list');
+       
+        Route::post('add', [BarangayCensusController::class, 'addCensus'])->name('barangay.census.add');
+        Route::patch('update/{id}', [BarangayCensusController::class, 'updateCensus'])->name('barangay.census.update');
+        Route::delete('delete/{id}', [BarangayCensusController::class, 'deleteCensus'])->name('barangay.census.delete');
         // API Route for Chart.js
         Route::get('barangay-census-chart-data', [BarangayCensusController::class, 'chartData'])->name('barangay.census.chart');
     });
@@ -57,6 +57,7 @@ Route::middleware('auth')->group(function () {
         Route::post('list-rejected', [ZoningController::class, 'listRejected'])->name('zoning.rejected.list'); // List with pagination
         Route::post('list-approved', [ZoningController::class, 'listApproved'])->name('zoning.approved.list'); // List with pagination
         Route::post('list-pending', [ZoningController::class, 'listPending'])->name('zoning.pending.list'); // List with pagination
+        
         Route::post('add', [ZoningController::class, 'add'])->name('zoning.add'); // Add new zoning permit with file upload
         Route::put('approve/{id}', [ZoningController::class, 'approve'])->name('zoning.approve'); // Approve permit
         Route::put('reject/{id}', [ZoningController::class, 'reject'])->name('zoning.reject'); // Reject permit
@@ -66,8 +67,10 @@ Route::middleware('auth')->group(function () {
     });
     Route::prefix('users/')->group(function(){
         Route::get('', [UserController::class, 'index'])->name('users.index');
-        Route::post('list-users', [UserController::class, 'list'])->name('users.list');
-        Route::post('add-users', [UserController::class, 'add'])->name('users.add');
+        Route::post('users-list', [UserController::class, 'list'])->name('users.list');
+        Route::post('users-add', [UserController::class, 'add'])->name('users.add');
+        
+        Route::delete('users/{id}', [UserController::class, 'deleteUser'])->name('users.delete');
     });
     Route::prefix('profile/')->group(function(){
         Route::get('', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -9,32 +9,32 @@
             <i class="fa fa-user"></i> Add User
         </button>
 
-        <Modal :show="isAddModalOpen" :maxWidth="'2xl'" title="Add User" @close="isAddModalOpen = false">
+        <Modal :show="isAddModalOpen" :maxWidth="'2xl'" title="Add User" @close="isAddModalOpen = false,errors = false">
             <div class="grid grid-cols-1 gap-6 p-6">
                 <form class="mt-4" @submit.prevent="addUser">
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Full Name</label>
                         <input type="text" v-model="form.name" placeholder="Enter full name" class="mt-1 p-2 border rounded-md w-full" />
-                        <InputError :message="form.errors.name" />
+                        <p v-if="errors.name" class="text-red-500 text-xs mt-1">{{ errors.name[0] }}</p>
                     </div>
 
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Email</label>
                         <input type="email" v-model="form.email" placeholder="Enter email" class="mt-1 p-2 border rounded-md w-full" />
-                        <InputError :message="form.errors.email" />
+                        <p v-if="errors.email" class="text-red-500 text-xs mt-1">{{ errors.email[0] }}</p>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Password</label>
                             <input type="password" v-model="form.password" placeholder="Enter password" class="mt-1 p-2 border rounded-md w-full" />
-                            <InputError :message="form.errors.password" />
+                            <p v-if="errors.password" class="text-red-500 text-xs mt-1">{{ errors.password[0] }}</p>
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Confirm Password</label>
                             <input type="password" v-model="form.password_confirmation" placeholder="Confirm password" class="mt-1 p-2 border rounded-md w-full" />
-                            <InputError :message="form.errors.password_confirmation" />
+                            <p v-if="errors.password_confirmation" class="text-red-500 text-xs mt-1">{{ errors.password_confirmation[0] }}</p>
                         </div>
                     </div>
 
@@ -46,7 +46,7 @@
                             <option value="2">Admin</option>
                             <option value="3">User</option>
                         </select>
-                        <InputError :message="form.errors.role" />
+                        <p v-if="errors.role" class="text-red-500 text-xs mt-1">{{ errors.role[0] }}</p>
                     </div>
 
                     <div class="flex items-center">
@@ -63,13 +63,13 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
 import Modal from "@/Components/Modal.vue";
-import InputError from "@/Components/InputError.vue";
-import Swal from "sweetalert2";
 import { ref } from "vue";
+import Swal from "sweetalert2";
 import axios from "axios";
 
-const emits = defineEmits(["user_added"]);
+const emits = defineEmits(["transaction_id"]);
 const isAddModalOpen = ref(false);
+const errors = ref({});
 
 const form = useForm({
     name: "",
@@ -85,9 +85,14 @@ const addUser = async () => {
         Swal.fire("Success!", "User added successfully.", "success");
         form.reset();
         isAddModalOpen.value = false;
-        emits("user_added");
+        errors.value = {}; // Reset errors
+        emits("transaction_id");
     } catch (error) {
-        Swal.fire("Error!", error.response?.data?.message || "Something went wrong.", "error");
+        if (error.response && error.response.data.errors) {
+            errors.value = error.response.data.errors; // Laravel returns errors as an object of arrays
+        } else {
+            Swal.fire("Error!", error.response?.data?.message || "Something went wrong.", "error");
+        }
     }
 };
 </script>
