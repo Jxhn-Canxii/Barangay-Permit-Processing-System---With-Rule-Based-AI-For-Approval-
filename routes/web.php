@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ZoningController;
+use App\Http\Controllers\LogsController;
 use App\Http\Controllers\BarangayCensusController;
 use App\Http\Controllers\LandmarkController;
 use Illuminate\Foundation\Application;
@@ -60,6 +61,11 @@ Route::middleware('auth')->group(function () {
     Route::prefix('zonal-map/')->group(function(){
         Route::get('', [ZoningController::class, 'map'])->name('maps.index');
     });
+    Route::prefix('logs/')->group(function(){
+        Route::get('', [LogsController::class, 'index'])->name('logs.index');
+        Route::post('list', [LogsController::class, 'listLogs'])->name('logs.list');
+    });
+    
     Route::prefix('zoning/')->group(function(){
         Route::get('', [ZoningController::class, 'index'])->name('zoning.index');
         Route::post('list-rejected', [ZoningController::class, 'listRejected'])->name('zoning.rejected.list'); // List with pagination

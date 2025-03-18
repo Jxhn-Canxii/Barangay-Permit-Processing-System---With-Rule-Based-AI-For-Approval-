@@ -15,96 +15,92 @@
   <div :class="isSidebarOpen ? 'translate-x-0' : '-translate-x-full'"
        class="fixed inset-y-0 left-0 z-30 w-64 bg-emerald-900 transition-transform duration-300 transform lg:translate-x-0 lg:static lg:inset-0">
     <div class="flex flex-col justify-center items-center p-3">
-        <!-- Profile Picture -->
-        <!-- <div class="relative block">
-          <img 
-            :src="$page.props.auth.user.profilePicture ?? '/image/profile.png'" 
-            alt="Profile Picture" 
-            class="w-24 h-24 rounded-full border-4 border-gray-600"
-          />
-          <span class="absolute bottom-0 right-3 bg-green-500 w-5 h-5 rounded-full border-2 border-gray-800"></span>
-        </div>
-        LGU Manager Branding
-        <div class="flex items-center justify-center mt-4 text-lg">
-          <i class="fa fa-institution text-yellow-400"></i>
-          <span class="mx-2 font-semibold">LGU MANAGER</span>
-        </div> -->
         <img 
             src='/image/logo.jpg'
-            alt="Profile Picture" 
+            alt="Logo" 
             class="w-16 h-16 rounded-full border-4 border-gray-600"
         />
         <p class="text-xl text-white">Brgy. San Agustin</p>
-        <p hidden>{{ sessionRole = $page.props.auth.user.role }} Plus 1 Happy Kaarawan</p>
+        <p hidden>{{ sessionRole = $page.props.auth.user.role }}</p>
     </div>
-    <!-- User Info -->
-    <!-- <div class="text-center mt-3">
-      <h2 class="text-2xl font-semibold text-white">{{ $page.props.auth.user.name }}</h2>
-      <p class="text-sm text-gray-300">
-        {{ roleFormatter($page.props.auth.user.role) }}
-      </p>
-    </div> -->
+
     <!-- Navigation Links -->
-    <nav class="mt-10">
+    <nav class="mt-5">
+      <!-- Dashboard -->
+      <p class="px-4 text-xs text-gray-400 uppercase mt-4">Dashboard</p>
       <nav-link :href="route('dashboard.index')" :active="route().current('dashboard.index')">
         <template #icon>
           <i class="fa fa-tachometer"></i>
         </template>
         Dashboard
       </nav-link>
+
+      <!-- Permit Processing Section -->
+      <p class="px-4 text-xs text-gray-400 uppercase mt-4">Permit Processing</p>
       <nav-link :href="route('zoning.index')" :active="route().current('zoning.index')">
         <template #icon>
           <i class="fa fa-file-contract"></i>
         </template>
         Permit Processing
       </nav-link>
-      <nav-link v-if="sessionRole != 3" :href="route('landmarks.index')" :active="route().current('landmarks.index')">
+
+      <!-- Barangay Management Section (Visible only for non-role 3 users) -->
+      <template v-if="sessionRole != 3">
+        <p class="px-4 text-xs text-gray-400 uppercase mt-4">Barangay Management</p>
+        <nav-link :href="route('landmarks.index')" :active="route().current('landmarks.index')">
+          <template #icon>
+            <i class="fa fa-landmark"></i>
+          </template>
+          Landmarks
+        </nav-link>
+        <nav-link :href="route('barangay.census.index')" :active="route().current('barangay.census.index')">
+          <template #icon>
+            <i class="fa fa-chart-line"></i>
+          </template>
+          Census
+        </nav-link>
+        <nav-link :href="route('maps.index')" :active="route().current('maps.index')">
+          <template #icon>
+            <i class="fa fa-map"></i>
+          </template>
+          Zonal Map
+        </nav-link>
+        <nav-link :href="route('users.index')" :active="route().current('users.index')">
+          <template #icon>
+            <i class="fa fa-users"></i>
+          </template>
+          Users
+        </nav-link>
+      </template>
+
+      <!-- System Logs Section -->
+      <p class="px-4 text-xs text-gray-400 uppercase mt-4">System Logs</p>
+      <nav-link :href="route('logs.index')" :active="route().current('logs.index')">
         <template #icon>
-          <i class="fa fa-landmark"></i>
+          <i class="fa fa-history"></i>
         </template>
-        Landmarks
-      </nav-link>
-      <nav-link v-if="sessionRole != 3" :href="route('barangay.census.index')" :active="route().current('barangay.census.index')">
-        <template #icon>
-          <i class="fa fa-chart-line"></i>
-        </template>
-        Census
-      </nav-link>
-      <nav-link v-if="sessionRole != 3" :href="route('maps.index')" :active="route().current('maps.index')">
-        <template #icon>
-          <i class="fa fa-map"></i>
-        </template>
-        Zonal Map
-      </nav-link>
-      <nav-link v-if="sessionRole != 3" :href="route('users.index')" :active="route().current('users.index')">
-        <template #icon>
-          <i class="fa fa-users"></i>
-        </template>
-        Users
+        User Logs
       </nav-link>
     </nav>
-    
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import NavLink from "@/Components/NavLink.vue";
-import { roleFormatter } from "@/Utility/Formatter.js";
-// Sidebar state (default: open)
+
+// Sidebar state (default: closed)
 const isSidebarOpen = ref(false);
 const sessionRole = ref(0);
 
 const logOut = async () => {
     try {
-        // Reload the page after successful login
         const response = axios.get(route('logout'));
-        if(response){
+        if (response) {
             localStorage.clear();
             sessionStore.clearSession();
             location.reload();
         }
-       
     } catch (error) {
         console.error('Error logging out:', error);
     }
