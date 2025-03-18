@@ -22,3 +22,10 @@ export const moneyFormatter = (amount) => {
     // Convert amount to number and format with commas for thousands separator
     return Number(amount).toLocaleString('en-US', {maximumFractionDigits: 2});
 }
+
+export const convertWebMercatorToLatLng = (x, y) => {
+    const R = 6378137; // Earth’s radius in meters
+    const lng = (x / R) * (180 / Math.PI);
+    const lat = (2 * Math.atan(Math.exp(y / R)) - Math.PI / 2) * (180 / Math.PI);
+    return [lat, lng]; // Returns [latitude, longitude]
+}

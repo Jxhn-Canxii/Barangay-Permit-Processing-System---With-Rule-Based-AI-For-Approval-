@@ -6,7 +6,7 @@
 import { onMounted } from 'vue';
 import L from 'leaflet';
 import axios from 'axios';
-
+import { convertWebMercatorToLatLng } from "@/Utility/Formatter.js";
 // Custom Icon for Landmarks
 const landmarkIcon = L.icon({
   iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png', // Default Leaflet marker icon
@@ -51,6 +51,16 @@ onMounted(async () => {
 
   map.fitBounds(brgyArea.getBounds());
 
+  // Function to detect and convert Web Mercator if necessary
+  const processLandmarkCoordinates = (latitude, longitude) => {
+    if (Math.abs(latitude) > 90 || Math.abs(longitude) > 180) {
+      // If numbers are large, they are in Web Mercator (x, y) → Convert to LatLng
+      return convertWebMercatorToLatLng(latitude, longitude);
+    }
+    // Already in LatLng format, return as is
+    return { lat: latitude, lng: longitude };
+  };
+
   // Fetch landmarks from API
   try {
     const response = await axios.get(route('landmarks.list.all'));
@@ -59,7 +69,9 @@ onMounted(async () => {
 
     landmarks.forEach(landmark => {
       if (landmark.latitude && landmark.longitude) {
-        L.marker([landmark.latitude, landmark.longitude], { icon: landmarkIcon }) // Use custom icon
+        const { lat, lng } = processLandmarkCoordinates(landmark.latitude, landmark.longitude);
+        
+        L.marker([lat, lng], { icon: landmarkIcon }) // Use custom icon
           .addTo(map)
           .bindPopup(`<strong>${landmark.name}</strong><br>${landmark.description ?? 'No description'}`);
       }

@@ -39,13 +39,13 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Latitude</label>
-                            <input type="number" step="any" v-model="form.latitude" placeholder="Enter latitude" class="mt-1 p-2 border rounded-md w-full" />
+                            <input type="text" v-model="form.latitude" placeholder="Enter latitude" class="mt-1 p-2 border rounded-md w-full" />
                             <p v-if="errors.latitude" class="text-red-500 text-xs mt-1">{{ errors.latitude[0] }}</p>
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Longitude</label>
-                            <input type="number" step="any" v-model="form.longitude" placeholder="Enter longitude" class="mt-1 p-2 border rounded-md w-full" />
+                            <input type="text" v-model="form.longitude" placeholder="Enter longitude" class="mt-1 p-2 border rounded-md w-full" />
                             <p v-if="errors.longitude" class="text-red-500 text-xs mt-1">{{ errors.longitude[0] }}</p>
                         </div>
                     </div>
