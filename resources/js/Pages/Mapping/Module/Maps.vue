@@ -7,81 +7,61 @@ import { onMounted } from 'vue';
 import L from 'leaflet';
 
 onMounted(() => {
-  // Initialize map centered on Brgy. San Agustin, Novaliches
-  const map = L.map('map').setView([14.7253, 121.0379], 16); // Adjust zoom level
+  // Initialize the map
+  const map = L.map('map');
 
   // Base Map Layer
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
-  // Barangay San Agustin Marker
-  const barangayMarker = L.marker([14.7253, 121.0379]).bindPopup("<strong>Brgy. San Agustin, Novaliches</strong><br>Population: Approx. 50,000").addTo(map);
+  // Barangay Border Coordinates
+  const brgyBorder = [
+    [14.7259071, 121.0305371], [14.7257488, 121.0305529], [14.7257024, 121.0311666], 
+    [14.7260136, 121.0313704], [14.7251615, 121.03278], [14.7251584, 121.0328827], 
+    [14.7251677, 121.0334697], [14.7251149, 121.0335915], [14.7250318, 121.0336986], 
+    [14.7247737, 121.0337791], [14.7242198, 121.0337986], [14.7240648, 121.0337475], 
+    [14.7238841, 121.0337262], [14.7237829, 121.0337991], [14.7238923, 121.0339548], 
+    [14.7239494, 121.0340238], [14.7241666, 121.0343209], [14.7245091, 121.0345247], 
+    [14.7244987, 121.0348466], [14.7244468, 121.0350397], [14.7243223, 121.0351899], 
+    [14.7241053, 121.0352766], [14.7240297, 121.0353129], [14.7240308, 121.0358589], 
+    [14.7252793, 121.0357821], [14.7253211, 121.0358157], [14.7256467, 121.0360202], 
+    [14.7258101, 121.0361597], [14.7260979, 121.0363294], [14.7261798, 121.0373104], 
+    [14.7259099, 121.0374644], [14.7257789, 121.0375542], [14.725845, 121.0378052], 
+    [14.7258975, 121.0380048], [14.7262017, 121.0382155], [14.7262665, 121.0386285], 
+    [14.7263639, 121.0389222], [14.7262977, 121.0390348], [14.7265209, 121.0394521], 
+    [14.7268438, 121.0397334], [14.7269708, 121.039594], [14.7269442, 121.0392642], 
+    [14.7271199, 121.0392783], [14.7259071, 121.0305371] // Closing the polygon
+  ];
 
-  // Industrial Zone Polygon (Sample Coordinates)
-  const industrialArea = L.polygon([
-    [14.7265, 121.0345],
-    [14.7278, 121.0367],
-    [14.7289, 121.0392],
-    [14.7269, 121.0411],
-    [14.7253, 121.0388]
-  ], {
+  // Create the polygon
+  const brgyArea = L.polygon(brgyBorder, {
     color: "red",
     fillColor: "#ff4d4d",
     fillOpacity: 0.5
-  }).bindPopup("<strong>Industrial Zone</strong>").addTo(map);
+  }).bindPopup("<strong>San Agustin, 5th District, Quezon City, Eastern Manila District, Metro Manila, 1117, Philippines</strong>").addTo(map);
 
-  // Residential Zone Polygon (Sample Coordinates)
-  const residentialArea = L.polygon([
-    [14.7235, 121.0330],
-    [14.7248, 121.0352],
-    [14.7259, 121.0377],
-    [14.7239, 121.0396],
-    [14.7223, 121.0373]
-  ], {
-    color: "blue",
-    fillColor: "#4d79ff",
-    fillOpacity: 0.5
-  }).bindPopup("<strong>Residential Zone</strong>").addTo(map);
+  // Auto-fit map to the polygon bounds
+  map.fitBounds(brgyArea.getBounds());
 
-  // Add Legend
-  const legend = L.control({ position: "bottomright" });
+  // Resize map when window resizes
+  window.addEventListener('resize', () => {
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 400);
+  });
 
-  legend.onAdd = function () {
-    const div = L.DomUtil.create("div", "legend");
-    div.innerHTML = `
-      <h4>Land Use Legend</h4>
-      <div><i style="background: #ff4d4d"></i> Industrial Area</div>
-      <div><i style="background: #4d79ff"></i> Residential Area</div>
-    `;
-    return div;
-  };
-  legend.addTo(map);
 });
 </script>
 
 <style scoped>
 #map {
-  height: 100vh; /* Make sure the map takes up the full viewport height */
+  height: 100vh; /* Full viewport height */
+  width: 100%;
 }
 
 .map-container {
   width: 100%;
   height: 100%;
-}
-
-.legend {
-  padding: 10px;
-  background: white;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  font-size: 14px;
-  line-height: 18px;
-}
-
-.legend i {
-  width: 18px;
-  height: 18px;
-  display: inline-block;
-  margin-right: 8px;
 }
 </style>
