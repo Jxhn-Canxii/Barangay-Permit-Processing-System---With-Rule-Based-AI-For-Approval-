@@ -11,7 +11,7 @@ class LandmarkController extends Controller
     // Get all landmarks
     public function index()
     {
-        return Inertia::render('Admin/Dashboard/Index', [
+        return Inertia::render('Admin/Landmarks/Index', [
             'status' => session('status'),
         ]);
     }
