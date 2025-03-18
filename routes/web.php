@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ZoningController;
 use App\Http\Controllers\BarangayCensusController;
+use App\Http\Controllers\LandmarkController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -45,13 +46,19 @@ Route::middleware('auth')->group(function () {
         Route::get('barangay-census', [BarangayCensusController::class, 'index'])->name('barangay.census.index');
         Route::post('barangay-census', [BarangayCensusController::class, 'listCensusData'])->name('barangay.census.list');
        
-        Route::post('add', [BarangayCensusController::class, 'addCensus'])->name('barangay.census.add');
-        Route::patch('update/{id}', [BarangayCensusController::class, 'updateCensus'])->name('barangay.census.update');
-        Route::delete('delete/{id}', [BarangayCensusController::class, 'deleteCensus'])->name('barangay.census.delete');
+        Route::post('', [BarangayCensusController::class, 'addCensus'])->name('barangay.census.add');
+        Route::patch('/{id}', [BarangayCensusController::class, 'updateCensus'])->name('barangay.census.update');
+        Route::delete('/{id}', [BarangayCensusController::class, 'deleteCensus'])->name('barangay.census.delete');
         // API Route for Chart.js
         Route::get('barangay-census-chart-data', [BarangayCensusController::class, 'chartData'])->name('barangay.census.chart');
     });
- 
+    Route::prefix('landmarks/')->group(function () {
+        Route::get('', [LandmarkController::class, 'index'])->name('landmarks.index');
+        Route::get('list', [LandmarkController::class, 'listLandmarks'])->name('landmarks.list');
+        Route::post('', [LandmarkController::class, 'add'])->name('landmarks.add');
+        Route::put('{id}', [LandmarkController::class, 'update'])->name('landmarks.update');
+        Route::delete('{id}', [LandmarkController::class, 'deleteLandmarks'])->name('landmarks.delete');
+    });
     Route::prefix('zoning/')->group(function(){
         Route::get('', [ZoningController::class, 'index'])->name('zoning.index');
         Route::post('list-rejected', [ZoningController::class, 'listRejected'])->name('zoning.rejected.list'); // List with pagination
@@ -70,7 +77,7 @@ Route::middleware('auth')->group(function () {
         Route::post('users-list', [UserController::class, 'list'])->name('users.list');
         Route::post('users-add', [UserController::class, 'add'])->name('users.add');
         
-        Route::delete('users/{id}', [UserController::class, 'deleteUser'])->name('users.delete');
+        Route::delete('{id}', [UserController::class, 'deleteUser'])->name('users.delete');
     });
     Route::prefix('profile/')->group(function(){
         Route::get('', [ProfileController::class, 'edit'])->name('profile.edit');
