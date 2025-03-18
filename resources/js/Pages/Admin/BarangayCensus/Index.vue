@@ -55,7 +55,7 @@
                             </td>
                         </tr>
                         <tr v-else>
-                            <td colspan="5" class="border-b text-center font-bold text-lg border-gray-200 bg-white px-5 py-5">
+                            <td colspan="6" class="border-b text-center font-bold text-lg border-gray-200 bg-white px-5 py-5">
                                 <p class="text-red-500 whitespace-no-wrap">
                                     No Data Found!
                                 </p>

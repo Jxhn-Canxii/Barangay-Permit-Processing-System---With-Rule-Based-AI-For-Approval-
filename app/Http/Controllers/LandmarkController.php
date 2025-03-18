@@ -34,7 +34,7 @@ class LandmarkController extends Controller
             });
 
         // Fetch paginated results
-        $censusData = $query->orderBy('year', 'desc')
+        $censusData = $query->orderBy('id', 'desc')
             ->offset($offset)
             ->limit($itemsPerPage)
             ->get();
@@ -59,9 +59,10 @@ class LandmarkController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'building_type' => 'nullable|string',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
+            'latitude' => 'required|numeric|regex:/^-?\d{1,2}\.\d{6,}$/',
+            'longitude' => 'required|numeric|regex:/^-?\d{1,3}\.\d{6,}$/',
         ]);
+        
 
         $id = DB::table('landmarks')->insertGetId($validatedData);
 
@@ -89,12 +90,13 @@ class LandmarkController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'name' => 'sometimes|required|string|max:255',
+            'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'building_type' => 'nullable|string',
-            'latitude' => 'sometimes|required|numeric',
-            'longitude' => 'sometimes|required|numeric',
+            'latitude' => 'required|numeric|regex:/^-?\d{1,2}\.\d{6,}$/',
+            'longitude' => 'required|numeric|regex:/^-?\d{1,3}\.\d{6,}$/',
         ]);
+        
 
         $affected = DB::table('landmarks')->where('id', $id)->update($validatedData);
 

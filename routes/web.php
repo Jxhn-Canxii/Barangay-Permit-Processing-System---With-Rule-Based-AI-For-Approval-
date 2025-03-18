@@ -20,8 +20,6 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
 Route::get('login', function () {
     return Inertia::render('Auth/Login', [
         'canLogin' => Route::has('login'),
@@ -54,10 +52,13 @@ Route::middleware('auth')->group(function () {
     });
     Route::prefix('landmarks/')->group(function () {
         Route::get('', [LandmarkController::class, 'index'])->name('landmarks.index');
-        Route::get('list', [LandmarkController::class, 'listLandmarks'])->name('landmarks.list');
+        Route::post('list', [LandmarkController::class, 'listLandmarks'])->name('landmarks.list');
         Route::post('', [LandmarkController::class, 'add'])->name('landmarks.add');
-        Route::put('{id}', [LandmarkController::class, 'update'])->name('landmarks.update');
+        Route::patch('{id}', [LandmarkController::class, 'update'])->name('landmarks.update');
         Route::delete('{id}', [LandmarkController::class, 'deleteLandmarks'])->name('landmarks.delete');
+    });
+    Route::prefix('zonal-map/')->group(function(){
+        Route::get('', [ZoningController::class, 'map'])->name('maps.index');
     });
     Route::prefix('zoning/')->group(function(){
         Route::get('', [ZoningController::class, 'index'])->name('zoning.index');

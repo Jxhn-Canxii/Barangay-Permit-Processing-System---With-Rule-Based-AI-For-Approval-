@@ -18,6 +18,13 @@ class ZoningController extends Controller
             'status' => session('status'),
         ]);
     }
+
+    public function map()
+    {
+        return Inertia::render('Admin/ZonalMap/Index', [
+            'status' => session('status'),
+        ]);
+    }
     // status legend....
     // 1 = pending
     // 2 = approved

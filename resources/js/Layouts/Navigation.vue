@@ -70,6 +70,12 @@
         </template>
         Census
       </nav-link>
+      <nav-link v-if="sessionRole != 3" :href="route('maps.index')" :active="route().current('maps.index')">
+        <template #icon>
+          <i class="fa fa-map"></i>
+        </template>
+        Zonal Map
+      </nav-link>
       <nav-link v-if="sessionRole != 3" :href="route('users.index')" :active="route().current('users.index')">
         <template #icon>
           <i class="fa fa-users"></i>
