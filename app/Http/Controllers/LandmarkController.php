@@ -34,7 +34,7 @@ class LandmarkController extends Controller
             });
 
         // Fetch paginated results
-        $censusData = $query->orderBy('id', 'desc')
+        $landmarksData = $query->orderBy('id', 'desc')
             ->offset($offset)
             ->limit($itemsPerPage)
             ->get();
@@ -43,7 +43,7 @@ class LandmarkController extends Controller
         $total = $query->count();
 
         return response()->json([
-            'landmarks' => $censusData,
+            'landmarks' => $landmarksData,
             'total' => $total,
             'total_pages' => ceil($total / $itemsPerPage),
             'page_num' => $page,
@@ -51,7 +51,18 @@ class LandmarkController extends Controller
             'search' => $search,
         ]);
     }
-
+    public function listAllLandmarks(Request $request)
+    {
+        // Query landmarks data
+        $query = DB::table('landmarks'); // Added missing semicolon
+    
+        $landmarksData = $query->orderBy('id', 'desc')->get();
+    
+        return response()->json([
+            'landmarks' => $landmarksData,
+        ]);
+    }
+    
     // Store a new landmark
     public function add(Request $request)
     {

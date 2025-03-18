@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('landmarks/')->group(function () {
         Route::get('', [LandmarkController::class, 'index'])->name('landmarks.index');
         Route::post('list', [LandmarkController::class, 'listLandmarks'])->name('landmarks.list');
+        Route::get('all-landmarks', [LandmarkController::class, 'listAllLandmarks'])->name('landmarks.list.all');
         Route::post('', [LandmarkController::class, 'add'])->name('landmarks.add');
         Route::patch('{id}', [LandmarkController::class, 'update'])->name('landmarks.update');
         Route::delete('{id}', [LandmarkController::class, 'deleteLandmarks'])->name('landmarks.delete');

@@ -5,17 +5,26 @@
 <script setup>
 import { onMounted } from 'vue';
 import L from 'leaflet';
+import axios from 'axios';
 
-onMounted(() => {
-  // Initialize the map
+// Custom Icon for Landmarks
+const landmarkIcon = L.icon({
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png', // Default Leaflet marker icon
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+  shadowSize: [41, 41]
+});
+
+onMounted(async () => {
   const map = L.map('map');
 
-  // Base Map Layer
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
-  // Barangay Border Coordinates
+  // Barangay Border Polygon
   const brgyBorder = [
     [14.7259071, 121.0305371], [14.7257488, 121.0305529], [14.7257024, 121.0311666], 
     [14.7260136, 121.0313704], [14.7251615, 121.03278], [14.7251584, 121.0328827], 
@@ -34,17 +43,32 @@ onMounted(() => {
     [14.7271199, 121.0392783], [14.7259071, 121.0305371] // Closing the polygon
   ];
 
-  // Create the polygon
   const brgyArea = L.polygon(brgyBorder, {
     color: "red",
     fillColor: "#ff4d4d",
     fillOpacity: 0.5
   }).bindPopup("<strong>San Agustin, 5th District, Quezon City, Eastern Manila District, Metro Manila, 1117, Philippines</strong>").addTo(map);
 
-  // Auto-fit map to the polygon bounds
   map.fitBounds(brgyArea.getBounds());
 
-  // Resize map when window resizes
+  // Fetch landmarks from API
+  try {
+    const response = await axios.get(route('landmarks.list.all'));
+    const landmarks = response.data.landmarks;
+    console.log("Fetched landmarks:", landmarks);
+
+    landmarks.forEach(landmark => {
+      if (landmark.latitude && landmark.longitude) {
+        L.marker([landmark.latitude, landmark.longitude], { icon: landmarkIcon }) // Use custom icon
+          .addTo(map)
+          .bindPopup(`<strong>${landmark.name}</strong><br>${landmark.description ?? 'No description'}`);
+      }
+    });
+
+  } catch (error) {
+    console.error("Error fetching landmarks:", error);
+  }
+
   window.addEventListener('resize', () => {
     setTimeout(() => {
       map.invalidateSize();
@@ -56,12 +80,7 @@ onMounted(() => {
 
 <style scoped>
 #map {
-  height: 100vh; /* Full viewport height */
+  height: 100vh;
   width: 100%;
-}
-
-.map-container {
-  width: 100%;
-  height: 100%;
 }
 </style>
