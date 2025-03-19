@@ -70,8 +70,8 @@ class LandmarkController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'building_type' => 'nullable|string',
-            'latitude' => 'required|numeric|regex:/^-?\d{1,2}\.\d{6,}$/',
-            'longitude' => 'required|numeric|regex:/^-?\d{1,3}\.\d{6,}$/',
+            'latitude' => 'required|numeric|regex:/^-?([1-8]?\d(\.\d{6})?|90(\.0{6})?)$/',
+            'longitude' => 'required|numeric|regex:/^-?(1[0-7]?\d(\.\d{6})?|180(\.0{6})?)$/',
         ]);
         
 
@@ -104,8 +104,8 @@ class LandmarkController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'building_type' => 'nullable|string',
-            'latitude' => 'required|numeric|regex:/^-?\d{1,2}\.\d{6,}$/',
-            'longitude' => 'required|numeric|regex:/^-?\d{1,3}\.\d{6,}$/',
+            'latitude' => 'required|numeric|regex:/^-?([1-8]?\d(\.\d{6})?|90(\.0{6})?)$/',
+            'longitude' => 'required|numeric|regex:/^-?(1[0-7]?\d(\.\d{6})?|180(\.0{6})?)$/',
         ]);
         
 
