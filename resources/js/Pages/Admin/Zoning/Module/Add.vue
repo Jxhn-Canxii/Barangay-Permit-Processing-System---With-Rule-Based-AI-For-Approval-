@@ -12,7 +12,7 @@
         <Modal :show="isAddModalOpen" :maxWidth="'2xl'" title="Add Zoning Permit" @close="isAddModalOpen = false,errors = false">
             <div class="grid grid-cols-1 gap-6 p-6">
                 <form class="mt-4" @submit.prevent="addPermit">
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Date of Application</label>
                             <input type="date" v-model="form.date_of_application" class="mt-1 p-2 border rounded-md w-full" />
@@ -58,7 +58,7 @@
                         <p v-if="errors.zip" class="text-red-500 text-xs mt-1">{{ errors.address[0] }}</p>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">ZIP Code</label>
                             <input type="number" max="9999" v-model="form.zip" placeholder="Enter ZIP code" class="mt-1 p-2 border rounded-md w-full" />
@@ -72,7 +72,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Contact Number</label>
                             <input type="text" v-model="form.contact_number" placeholder="Enter contact number" class="mt-1 p-2 border rounded-md w-full" />
