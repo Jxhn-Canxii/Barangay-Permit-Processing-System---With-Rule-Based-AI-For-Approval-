@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2025 at 12:50 AM
+-- Generation Time: Mar 19, 2025 at 01:36 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -75,7 +75,7 @@ INSERT INTO `landmarks` (`id`, `name`, `building_type`, `description`, `latitude
 (3, 'San Agustin Covered Court', 'Sports Facility', 'Covered basketball court', '14.6461', '121.0435', '2025-03-18 23:33:17', '2025-03-18 23:33:17'),
 (4, 'Barangay Health Center (San Agustin)', 'Health Center', 'Local health center', '14.6462', '121.0433', '2025-03-18 23:33:17', '2025-03-18 23:33:17'),
 (5, 'Public Market (Near San Agustin)', 'Market', 'Public market near barangay', '14.6459', '121.0438', '2025-03-18 23:33:17', '2025-03-18 23:33:17'),
-(6, 'BCP', 'Unknown', 'No description available', '13473731.48', '1657718.51', '2025-03-18 23:33:17', '2025-03-18 23:33:17'),
+(6, 'Best Link College - Philippines', 'Residential', 'No description available', '13473731.48', '1657718.51', '2025-03-18 23:33:17', '2025-03-19 00:34:59'),
 (7, 'Amaia Series Village', 'Residential', 'Housing subdivision', '13473893.34', '1659107.29', '2025-03-18 23:33:17', '2025-03-18 23:33:17'),
 (8, 'Novaliches Highschool', 'School', 'High school in the area', '13473292.65', '1657743.05', '2025-03-18 23:33:17', '2025-03-18 23:33:17');
 

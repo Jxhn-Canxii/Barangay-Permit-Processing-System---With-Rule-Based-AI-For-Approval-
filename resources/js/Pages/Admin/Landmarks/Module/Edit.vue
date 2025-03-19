@@ -32,6 +32,11 @@
                             <option value="Commercial">Commercial</option>
                             <option value="Industrial">Industrial</option>
                             <option value="Religious">Religious</option>
+                            <option value="School">School</option>
+                            <option value="Government">Government</option>
+                            <option value="Market">Market</option>
+                            <option value="Sports Facility">Sports Facility</option>
+                            <option value="Health Center">Health Center</option>
                         </select>
                         <p v-if="errors.building_type" class="text-red-500 text-xs mt-1">{{ errors.building_type[0] }}</p>
                     </div>

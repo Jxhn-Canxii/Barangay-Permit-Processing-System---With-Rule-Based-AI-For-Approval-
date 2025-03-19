@@ -63,7 +63,7 @@ onMounted(async () => {
 
         L.marker(mercatorPoints, { icon: landmarkIcon }) // Use custom icon
           .addTo(map)
-          .bindPopup(`<strong>${landmark.name}</strong><br>${landmark.description ?? 'No description'}`);
+          .bindPopup(`<strong>${landmark.name}</strong><br>${landmark.building_type ?? 'Not available'}<br><br>${landmark.description ?? 'No description'}`);
       }
     });
 
