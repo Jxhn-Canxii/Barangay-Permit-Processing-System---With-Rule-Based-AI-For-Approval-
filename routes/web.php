@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('dashboard/')->group(function(){
         Route::get('', [DashboardController::class, 'index'])->name('dashboard.index');
+        Route::get('zoning-processing', [DashboardController::class, 'processingStats'])->name('zoning.processing.stats');
     });
     Route::prefix('census/')->group(function(){
         Route::get('barangay-census', [BarangayCensusController::class, 'index'])->name('barangay.census.index');
