@@ -4,7 +4,7 @@
             @click.prevent="isAddModalOpen = true"
             :class="{ 'opacity-25': isAddModalOpen }"
             :disabled="isAddModalOpen"
-            class="px-2 py-2 bg-blue-500 font-bold mb-4 text-md float-end text-white rounded shadow"
+            class="px-2 py-2 bg-blue-500 text-nowrap font-bold mb-4 text-md float-end text-white rounded shadow"
         >
             <i class="fa fa-plus"></i> Add Landmark
         </button>

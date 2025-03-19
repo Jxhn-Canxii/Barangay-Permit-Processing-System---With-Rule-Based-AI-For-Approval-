@@ -4,7 +4,7 @@
             @click.prevent="openModal()"
             :class="{ 'opacity-25': isModalOpen }"
             :disabled="isModalOpen"
-            class="px-2 py-2 bg-yellow-500 font-bold mb-4 text-md float-end text-white rounded shadow"
+            class="px-2 py-2 bg-yellow-500 text-nowrap font-bold mb-4 text-md float-end text-white rounded shadow"
         >
             <i class="fa fa-edit"></i> Edit
         </button>

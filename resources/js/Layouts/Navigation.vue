@@ -1,8 +1,9 @@
 <template>
   <!-- Sidebar Toggle Button -->
   <button @click="isSidebarOpen = !isSidebarOpen"
-          class="fixed top-2 left-2 z-40 p-2 bg-lime-700 text-white rounded-md lg:hidden">
-    <i class="fa" :class="isSidebarOpen ? 'fa-times' : 'fa-bars'"></i>
+          :class="isSidebarOpen ? 'bg-red-700' : 'bg-lime-700'"
+          class="fixed top-2 left-2 z-40 p-2 text-white rounded-md lg:hidden">
+    <i class="fa" :class="isSidebarOpen ? 'fa-times' : 'fa-home'"></i>
   </button>
 
   <!-- Sidebar Overlay (for mobile view) -->

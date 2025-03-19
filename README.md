@@ -173,6 +173,11 @@ This will reset and re-run the migrations.
 
 This project is open-source and available under the MIT License. For more details, check the LICENSE file.
 
+
+7. Installation of AI Rubix ML
+
+composer require rubix/ml
+
 Conclusion
 
 You should now have the AI-Driven Zoning Permit Processing system up and running on your local machine, both the Laravel back-end and the Vue.js front-end. If you encounter any issues, refer to the troubleshooting section or seek support from the community.

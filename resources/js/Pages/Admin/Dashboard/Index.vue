@@ -4,7 +4,7 @@
     <AuthenticatedLayout>
         <template #header> Dashboard </template>
 
-        <div class="overflow-hidden shadow-sm sm:rounded-lg min-h-screen p-4">
+        <div class="bg-white rounded shadow p-4">
            <div class="grid grid-cols-1 gap-6">
                 <ProcessingStats />
             </div>

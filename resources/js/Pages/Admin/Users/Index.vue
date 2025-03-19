@@ -6,7 +6,7 @@
             Users
         </template>
         <div class="bg-white rounded shadow p-4">
-            <div class="inline-block min-w-full overflow-hidden rounded-lg p-4">
+            <div class="block bg-white rounded min-w-full min-h-screen p-2">
                 <!-- Search Bar -->
                 <div class="flex justify-between text-nowrap gap-5 mb-3">
                     <input
@@ -19,42 +19,43 @@
                     <Add :key="updateKey"  @transaction_id="handleTransaction()"/>
                 </div>
                 <!-- Table -->
-                <table class="w-full whitespace-no-wrap">
-                    <thead>
-                        <tr class="border-b bg-green-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
-                            <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Name</th>
-                            <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Email</th>
-                            <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Role</th>
-                            <th class="border-b-2 border-gray-200 px-5 py-3 text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="user in data.users" v-if="data.total_pages" :key="user.id" class="text-gray-700">
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                {{ user.name }}
-                            </td>
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                {{ user.email }}
-                            </td>
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                {{ roleFormatter(user.role) }}
-                            </td>
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm text-center">
-                                <div class="flex justify-center items-center">
-                                    <Delete :key="user.id" @transaction_id="handleTransaction()" :id="user.id" />
-                                </div>
-                            </td>
-                        </tr>
-                        <tr v-else>
-                            <td colspan="5" class="border-b text-center font-bold text-lg border-gray-200 bg-white px-5 py-5">
-                                <p class="text-red-500 whitespace-no-wrap">
-                                    No Data Found!
-                                </p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
+                <div class="min-w-screen min-h-full overflow-auto p-2">
+                    <table class="w-full whitespace-no-wrap">
+                        <thead>
+                            <tr class="border-b bg-green-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Name</th>
+                                <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Email</th>
+                                <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Role</th>
+                                <th class="border-b-2 border-gray-200 px-5 py-3 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="user in data.users" v-if="data.total_pages" :key="user.id" class="text-gray-700">
+                                <td class="border-b border-gray-200 px-5 py-5 text-sm">
+                                    {{ user.name }}
+                                </td>
+                                <td class="border-b border-gray-200 px-5 py-5 text-sm">
+                                    {{ user.email }}
+                                </td>
+                                <td class="border-b border-gray-200 px-5 py-5 text-sm">
+                                    {{ roleFormatter(user.role) }}
+                                </td>
+                                <td class="border-b border-gray-200 px-5 py-5 text-sm text-center">
+                                    <div class="flex justify-center items-center">
+                                        <Delete :key="user.id" @transaction_id="handleTransaction()" :id="user.id" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr v-else>
+                                <td colspan="5" class="border-b text-center font-bold text-lg border-gray-200 bg-white px-5 py-5">
+                                    <p class="text-red-500 whitespace-no-wrap">
+                                        No Data Found!
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <!-- Pagination -->
                 <div class="flex w-full overflow-auto">
                     <Paginator

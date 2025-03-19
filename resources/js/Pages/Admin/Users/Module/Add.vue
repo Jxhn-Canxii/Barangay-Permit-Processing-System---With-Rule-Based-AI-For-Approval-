@@ -24,7 +24,7 @@
                         <p v-if="errors.email" class="text-red-500 text-xs mt-1">{{ errors.email[0] }}</p>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Password</label>
                             <input type="password" v-model="form.password" placeholder="Enter password" class="mt-1 p-2 border rounded-md w-full" />
