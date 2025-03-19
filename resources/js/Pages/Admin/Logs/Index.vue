@@ -6,7 +6,7 @@
             System Logs
         </template>
         <div class="bg-white rounded shadow p-4">
-            <div class="inline-block min-w-full overflow-hidden rounded-lg p-4">
+            <div class="block bg-white rounded min-w-full min-h-screen p-2">
                 <!-- Search Bar -->
                 <div class="flex justify-start text-nowrap gap-5 mb-3">
                     <input
@@ -18,48 +18,49 @@
                     />
                 </div>
                 <!-- Table -->
-                <table class="w-full whitespace-no-wrap">
-                    <thead>
-                        <tr class="border-b bg-green-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
-                            <th class="border-b-2 border-gray-200 px-5 py-3">User ID</th>
-                            <th class="border-b-2 border-gray-200 px-5 py-3">Action</th>
-                            <th class="border-b-2 border-gray-200 px-5 py-3">Module</th>
-                            <!-- <th class="border-b-2 border-gray-200 px-5 py-3">IP Address</th>
-                            <th class="border-b-2 border-gray-200 px-5 py-3">Details</th> -->
-                            <th class="border-b-2 border-gray-200 px-5 py-3">Timestamp</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="log in data.logs" v-if="data.total_pages" :key="log.id" class="text-gray-700">
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                {{ log.user_name }}
-                            </td>
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                {{ log.action }}
-                            </td>
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                {{ log.module }}
-                            </td>
-                            <!-- <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                {{ log.ip_address }}
-                            </td>
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                {{ log.details }}
-                            </td> -->
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                {{ formatDate(log.created_at) }}
-                            </td>
-                        </tr>
-                        <tr v-else>
-                            <td colspan="4" class="border-b text-center font-bold text-lg border-gray-200 bg-white px-5 py-5">
-                                <p class="text-red-500 whitespace-no-wrap">
-                                    No Logs Found!
-                                </p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
+                <div class="min-w-screen min-h-full overflow-auto p-2">
+                    <table class="w-full whitespace-no-wrap">
+                        <thead>
+                            <tr class="border-b bg-green-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                <th class="border-b-2 border-gray-200 px-5 py-3">User ID</th>
+                                <th class="border-b-2 border-gray-200 px-5 py-3">Action</th>
+                                <th class="border-b-2 border-gray-200 px-5 py-3">Module</th>
+                                <!-- <th class="border-b-2 border-gray-200 px-5 py-3">IP Address</th>
+                                <th class="border-b-2 border-gray-200 px-5 py-3">Details</th> -->
+                                <th class="border-b-2 border-gray-200 px-5 py-3">Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="log in data.logs" v-if="data.total_pages" :key="log.id" class="text-gray-700">
+                                <td class="border-b border-gray-200 px-5 py-5 text-sm">
+                                    {{ log.user_name }}
+                                </td>
+                                <td class="border-b border-gray-200 px-5 py-5 text-sm">
+                                    {{ log.action }}
+                                </td>
+                                <td class="border-b border-gray-200 px-5 py-5 text-sm">
+                                    {{ log.module }}
+                                </td>
+                                <!-- <td class="border-b border-gray-200 px-5 py-5 text-sm">
+                                    {{ log.ip_address }}
+                                </td>
+                                <td class="border-b border-gray-200 px-5 py-5 text-sm">
+                                    {{ log.details }}
+                                </td> -->
+                                <td class="border-b border-gray-200 px-5 py-5 text-sm">
+                                    {{ formatDate(log.created_at) }}
+                                </td>
+                            </tr>
+                            <tr v-else>
+                                <td colspan="4" class="border-b text-center font-bold text-lg border-gray-200 bg-white px-5 py-5">
+                                    <p class="text-red-500 whitespace-no-wrap">
+                                        No Logs Found!
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <!-- Pagination -->
                 <div class="flex w-full overflow-auto">
                     <Paginator
