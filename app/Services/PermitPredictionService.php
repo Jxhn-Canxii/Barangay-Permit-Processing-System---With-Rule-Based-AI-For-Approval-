@@ -21,7 +21,7 @@ class PermitPredictionService
 
     public function trainModel($data)
     {
-        // Train the model with the data
+        // Create a dataset object using your input data
         $dataset = Dataset::fromArray($data['inputs'], $data['labels']);
         
         // Pre-process the data (optional)
@@ -29,7 +29,7 @@ class PermitPredictionService
         $transformer->fit($dataset);
         $transformer->transform($dataset);
 
-        // Create a model (Random Forest in this case)
+        // Create a Random Forest model
         $this->model = new RandomForest();
 
         // Train the model
@@ -42,7 +42,7 @@ class PermitPredictionService
     public function predict($data)
     {
         // Predict whether the zoning permit will be approved or rejected
-        $dataset = Dataset::fromArray([$data], []);
+        $dataset = Dataset::fromArray([$data], []); // wrap input in array for prediction
         $transformer = new Standardizer();
         $transformer->transform($dataset);
         
