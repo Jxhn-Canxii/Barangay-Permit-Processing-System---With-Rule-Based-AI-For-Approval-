@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\PermitPredictionService; // Include the PermitPredictionService
 use Illuminate\Http\Request;
 use App\Models\User;
 use Inertia\Inertia;
@@ -12,6 +13,14 @@ use Illuminate\Support\Facades\Mail;
 
 class ZoningController extends Controller
 {
+
+    protected $predictionService;
+
+    public function __construct(PermitPredictionService $predictionService)
+    {
+        $this->predictionService = $predictionService;
+    }
+
     public function index()
     {
         return Inertia::render('Admin/Zoning/Index', [
@@ -211,37 +220,47 @@ class ZoningController extends Controller
     public function approve(Request $request, $id)
     {
         $userId = $request->user()->id;
-    
-        $permit = DB::table('zoning_permits')->where('id', $id)->first(['first_name', 'last_name', 'email']);
-    
+
+        // Get the permit details
+        $permit = DB::table('zoning_permits')->where('id', $id)->first(['first_name', 'last_name', 'email', 'location_of_lot', 'lot_area']);
+        
         if (!$permit) {
             return response()->json(['message' => 'Permit not found'], 404);
         }
-    
-        // Update permit status
-        DB::table('zoning_permits')->where('id', $id)->update([
-            'status_id' => 2,
-            'updated_at' => now(),
-        ]);
-    
-        // Log the transaction
-        $message = "Approved zoning permit for {$permit->first_name} {$permit->last_name}";
-        $this->logs($userId, "Zoning Application", $message);
-    
-        // Send email notification
-        try {
-            if (!empty($permit->email)) {
-                Mail::to($permit->email)->send(new ZoningPermitApproved($permit));
-            }
-        } catch (\Exception $e) {
 
-            return response()->json([
-                'message' => 'Zoning permit approved, but email notification failed.',
-                'error' => $e->getMessage(),
-            ], 200);
+        // Predict the status based on the permit data
+        $prediction = $this->predictionService->predict([
+            $permit->location_of_lot, 
+            $permit->lot_area
+        ]);
+
+        // If the model predicts 'approved', proceed with approval
+        if ($prediction[0] == 2) {
+            DB::table('zoning_permits')->where('id', $id)->update([
+                'status_id' => 2,
+                'updated_at' => now(),
+            ]);
+
+            // Log the action
+            $message = "Approved zoning permit for {$permit->first_name} {$permit->last_name}";
+            $this->logs($userId, "Zoning Application", $message);
+
+            // Send email notification
+            try {
+                if (!empty($permit->email)) {
+                    Mail::to($permit->email)->send(new ZoningPermitApproved($permit));
+                }
+            } catch (\Exception $e) {
+                return response()->json([
+                    'message' => 'Zoning permit approved, but email notification failed.',
+                    'error' => $e->getMessage(),
+                ], 200);
+            }
+
+            return response()->json(['message' => 'Zoning permit approved and email sent'], 200);
+        } else {
+            return response()->json(['message' => 'Permit prediction rejected, status remains pending.'], 400);
         }
-    
-        return response()->json(['message' => 'Zoning permit approved and email sent'], 200);
     }
     
     public function reject(Request $request, $id)
