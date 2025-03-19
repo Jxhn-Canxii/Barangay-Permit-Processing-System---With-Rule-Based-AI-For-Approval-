@@ -20,7 +20,7 @@
                 </div>
                 <!-- Table -->
                 <div class="min-w-screen min-h-full overflow-auto p-2">
-                    <table class="w-full whitespace-no-wrap">
+                    <table class="w-full whitespace-no-wrap text-nowrap">
                         <thead>
                             <tr class="border-b bg-green-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
                                 <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Name</th>
@@ -33,7 +33,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="landmark in data.landmarks" v-if="data.total_pages" :key="landmark.id" class="text-gray-700">
-                                <td class="border-b border-gray-200 px-5 py-5 text-sm">
+                                <td class="border-b border-gray-200 px-5 py-5 text-wrap text-sm">
                                     {{ landmark.name }}
                                 </td>
                                 <td class="border-b border-gray-200 px-5 py-5 text-sm">

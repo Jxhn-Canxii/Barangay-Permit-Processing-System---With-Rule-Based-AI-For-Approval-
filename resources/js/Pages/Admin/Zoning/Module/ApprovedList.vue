@@ -13,7 +13,7 @@
 
             <!-- Table -->
             <div class="min-w-screen min-h-full overflow-auto p-2">
-                <table class="w-full whitespace-no-wrap">
+                <table class="w-full whitespace-no-wrap text-nowrap">
                     <thead>
                         <tr class="border-b bg-green-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
                             <th class="border-b-2 border-gray-200 px-5 py-3 text-center">Approval ID</th>
@@ -29,7 +29,7 @@
                             <td class="border-b border-gray-200 px-5 py-5 text-sm text-center">
                                 {{ permit.id }}
                             </td>
-                            <td class="border-b border-gray-200 px-5 py-5 text-sm">
+                            <td class="border-b border-gray-200 px-5 py-5 text-sm text-wrap">
                                 {{ permit.first_name }} {{ permit.middle_name }} {{ permit.last_name }}
                             </td>
                             <td class="border-b border-gray-200 px-5 py-5 text-sm">

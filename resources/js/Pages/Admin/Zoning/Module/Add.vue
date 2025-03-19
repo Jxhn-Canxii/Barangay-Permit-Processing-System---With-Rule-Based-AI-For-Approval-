@@ -54,7 +54,7 @@
 
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Address</label>
-                        <textarea v-model="form.description" placeholder="Enter Address" class="mt-1 p-2 border rounded-md w-full"></textarea>
+                        <textarea v-model="form.address" placeholder="Enter Address" class="mt-1 p-2 border rounded-md w-full"></textarea>
                         <p v-if="errors.address" class="text-red-500 text-xs mt-1">{{ errors.address[0] }}</p>
                     </div>
 
@@ -176,6 +176,7 @@ const addPermit = async () => {
         Swal.fire("Success!", "Zoning permit added successfully.", "success");
         form.reset();
         form.file = null;
+        errors.value = {};
         isAddModalOpen.value = false;
         emits("transaction_id", Math.random());
     } catch (error) {
