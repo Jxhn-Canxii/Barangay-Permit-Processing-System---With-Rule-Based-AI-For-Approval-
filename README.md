@@ -174,9 +174,13 @@ This will reset and re-run the migrations.
 This project is open-source and available under the MIT License. For more details, check the LICENSE file.
 
 
-7. Installation of AI Rubix ML
+7. Installation of Phyton Tensor Flow Ai
 
 composer require rubix/ml
+
+8. run training data command for zoning approval decision maker - AI
+
+php artisan model:train
 
 Conclusion
 

@@ -97,6 +97,7 @@
                             <option value="">Select Type</option>
                             <option value="Own">Own</option>
                             <option value="Rent">Rent</option>
+                            <option value="Leased">Leased</option>
                         </select>
                         <p v-if="errors.right_over_land" class="text-red-500 text-xs mt-1">{{ errors.right_over_land[0] }}</p>
                     </div>

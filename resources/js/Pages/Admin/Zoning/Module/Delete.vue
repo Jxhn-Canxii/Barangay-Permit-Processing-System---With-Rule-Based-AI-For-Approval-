@@ -2,7 +2,7 @@
     <div>
         <button
             @click.prevent="Delete()"
-            class="px-2 py-2 bg-red-500 font-bold text-wrap text-md float-center text-white shadow"
+            class="px-2 py-2 bg-red-500 font-bold text-nowrap text-md float-center text-white shadow"
         >
             <i class="fa fa-trash"></i> Remove
         </button>

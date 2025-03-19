@@ -79,20 +79,25 @@
                     <label class="font-bold">Lot Area:</label>
                     <p class="border px-2 py-1 rounded">{{ data.lot_area }}</p>
                 </div>
-            </div>
-
-            <div class="mt-4">
-                <label class="font-bold">Uploaded File:</label>
-                <div v-if="data.uploaded_file">
-                    <a :href="fileUrl" target="_blank" class="text-blue-500 underline">View File</a>
+                <div>
+                    <label class="font-bold">Zoning District:</label>
+                    <p class="border px-2 py-1 rounded">{{ data.zoning_district ?? '-' }}</p>
                 </div>
-                <p v-else class="border px-2 py-1 rounded">No file uploaded</p>
-            </div>
-
-            <div class="mt-6 text-right">
-                <button @click="isViewModalOpen = false" class="px-4 py-2 bg-gray-500 text-white rounded shadow">
-                    Close
-                </button>
+                <div>
+                    <label class="font-bold">Existing Structures:</label>
+                    <p class="border px-2 py-1 rounded">{{ data.existing_structures ?? 0 }}</p>
+                </div>
+                 <div>
+                    <label class="font-bold">Compliant with setback regulations:</label>
+                    <p class="border px-2 py-1 rounded">{{ data.setback_compliance == 1 ? 'Compliant' : 'Non-compliant' }}</p>
+                </div>
+                <div>
+                    <label class="font-bold">Uploaded File:</label>
+                    <div v-if="data.uploaded_file">
+                        <a :href="fileUrl" target="_blank" class="text-blue-500 underline">View File</a>
+                    </div>
+                    <p v-else class="border px-2 py-1 rounded">No file uploaded</p>
+                </div>
             </div>
         </div>
     </Modal>
@@ -129,6 +134,6 @@ const fileUrl = computed(() => {
 
 <style scoped>
 p {
-    background-color: #f8f9fa;
+    background-color:rgb(220, 247, 225);
 }
 </style>

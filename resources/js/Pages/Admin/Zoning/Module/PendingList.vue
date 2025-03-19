@@ -165,7 +165,7 @@ const approvePermit = async (id) => {
         }
     } catch (error) {
         console.error("Error approving zoning permit:", error);
-        Swal.fire("Error!", "Failed to approve the zoning permit.", "error");
+        Swal.fire("Error!", error.response.data.error, "error");
     }
 };
 
@@ -189,7 +189,7 @@ const rejectPermit = async (id) => {
         }
     } catch (error) {
         console.error("Error rejecting zoning permit:", error);
-        Swal.fire("Error!", "Failed to reject the zoning permit.", "error");
+        Swal.fire("Error!", error.response.data.error, "error");
     }
 };
 

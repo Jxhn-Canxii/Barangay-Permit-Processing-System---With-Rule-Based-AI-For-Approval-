@@ -97,8 +97,54 @@
                             <option value="">Select Type</option>
                             <option value="Own">Own</option>
                             <option value="Rent">Rent</option>
+                            <option value="Leased">Leased</option>
                         </select>
                         <p v-if="errors.right_over_land" class="text-red-500 text-xs mt-1">{{ errors.right_over_land[0] }}</p>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Zoning District</label>
+                        <select v-model="form.zoning_district" class="mt-1 p-2 border rounded-md w-full">
+                            <option value="">Select District</option>
+                            <option value="residential">Residential</option>
+                            <option value="commercial">Commercial</option>
+                            <option value="industrial">Industrial</option>
+                        </select>
+                        <p v-if="errors.zoning_district" class="text-red-500 text-xs mt-1">{{ errors.zoning_district[0] }}</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Proposed Use</label>
+                        <select v-model="form.proposed_use" class="mt-1 p-2 border rounded-md w-full">
+                            <option value="">Select Proposed Use</option>
+                            <option value="single-family">Single Family Home</option>
+                            <option value="multi-family">Multi-Family Housing</option>
+                            <option value="retail">Retail Business</option>
+                            <option value="office">Office Space</option>
+                            <option value="mixed-use">Mixed Use</option>
+                        </select>
+                        <p v-if="errors.proposed_use" class="text-red-500 text-xs mt-1">{{ errors.proposed_use[0] }}</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Existing Structures</label>
+                            <input type="number" v-model="form.existing_structures" min="0" 
+                                placeholder="Number of existing structures" 
+                                class="mt-1 p-2 border rounded-md w-full" />
+                            <p v-if="errors.existing_structures" class="text-red-500 text-xs mt-1">{{ errors.existing_structures[0] }}</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Setback Compliance</label>
+                            <div class="mt-2">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" v-model="form.setback_compliance" 
+                                        class="form-checkbox h-5 w-5 text-blue-600" />
+                                    <span class="ml-2 text-gray-700">Compliant with setback regulations</span>
+                                </label>
+                            </div>
+                            <p v-if="errors.setback_compliance" class="text-red-500 text-xs mt-1">{{ errors.setback_compliance[0] }}</p>
+                        </div>
                     </div>
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Lot Area (sqm)</label>
@@ -149,6 +195,10 @@ const form = useForm({
     location_of_lot: "",
     right_over_land: "",
     lot_area: "",
+    zoning_district: '',
+    proposed_use: '',
+    existing_structures: 0,
+    setback_compliance: false,
     file: null,
 });
 

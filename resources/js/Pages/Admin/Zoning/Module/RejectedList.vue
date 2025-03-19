@@ -50,12 +50,6 @@
                             </td>
                             <td class="border-b border-gray-200 px-5 py-5 text-sm">
                                 <div class="flex justify-center space-x-2">
-                                    <button v-if="permit.status_id === 1 && sessionRole == 1" @click="approvePermit(permit.id)" class="px-3 py-1 bg-green-500 text-white rounded">
-                                        <i class="fa fa-thumbs-up"></i> Approve
-                                    </button>
-                                    <button v-if="permit.status_id === 1 && sessionRole == 1" @click="rejectPermit(permit.id)" class="px-3 py-1 bg-red-500 text-white rounded">
-                                        <i class="fa fa-thumbs-down"></i> Reject
-                                    </button>
                                     <ViewForm :key="permit.id" :data="permit" />
                                 </div>
                             </td>
@@ -142,53 +136,5 @@ const statusFormatter = (status_id) => {
             break;
     }
 }
-
-// Approve Zoning Permit
-const approvePermit = async (id) => {
-    try {
-        const result = await Swal.fire({
-            title: "Are you sure?",
-            text: "You are about to approve this zoning permit.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, approve it!",
-        });
-
-        if (result.isConfirmed) {
-            await axios.put(route("zoning.approve", id));
-            Swal.fire("Approved!", "The zoning permit has been approved.", "success");
-            fetchData();
-        }
-    } catch (error) {
-        console.error("Error approving zoning permit:", error);
-        Swal.fire("Error!", "Failed to approve the zoning permit.", "error");
-    }
-};
-
-// Reject Zoning Permit
-const rejectPermit = async (id) => {
-    try {
-        const result = await Swal.fire({
-            title: "Are you sure?",
-            text: "You are about to reject this zoning permit.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
-            confirmButtonText: "Yes, reject it!",
-        });
-
-        if (result.isConfirmed) {
-            await axios.put(route("zoning.reject", id));
-            Swal.fire("Rejected!", "The zoning permit has been rejected.", "success");
-            fetchData();
-        }
-    } catch (error) {
-        console.error("Error rejecting zoning permit:", error);
-        Swal.fire("Error!", "Failed to reject the zoning permit.", "error");
-    }
-};
 
 </script>

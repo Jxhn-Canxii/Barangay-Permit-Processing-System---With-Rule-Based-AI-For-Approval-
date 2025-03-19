@@ -8,6 +8,7 @@ return new class extends Migration {
     public function up() {
         Schema::create('zoning_permits', function (Blueprint $table) {
             $table->id();
+            // Existing fields
             $table->date('date_of_application');
             $table->date('or_date')->nullable();
             $table->string('official_receipt_no')->nullable();
@@ -19,13 +20,25 @@ return new class extends Migration {
             $table->string('owner_name');
             $table->string('contact_number');
             $table->string('email')->nullable();
+            
+            // Enhanced zoning-specific fields
             $table->string('location_of_lot');
+            $table->string('zoning_district')->default('residential'); // Added
             $table->string('right_over_land')->nullable();
-            $table->string('lot_area')->nullable();
+            $table->decimal('lot_area', 10, 2)->nullable(); // Changed to decimal
+            $table->string('proposed_use')->nullable(); // Added
+            $table->integer('existing_structures')->default(0); // Added
+            $table->boolean('setback_compliance')->default(false); // Added
+            
+            // Status and tracking
             $table->integer('status_id')->default(1);
-            $table->string('uploaded_file')->nullable(); // Path to uploaded file
-            $table->integer('inputted_by')->nullable(); // Path to uploaded file
+            $table->string('uploaded_file')->nullable();
+            $table->integer('inputted_by')->nullable();
             $table->timestamps();
+
+            // Indexes for faster queries
+            $table->index('status_id');
+            $table->index('zoning_district');
         });
     }
 

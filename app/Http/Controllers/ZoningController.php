@@ -181,6 +181,10 @@ class ZoningController extends Controller
             'location_of_lot' => 'required|string|max:255',
             'right_over_land' => 'required|string|max:50',
             'lot_area' => 'required|string|max:50',
+            'zoning_district' => 'required|string|in:residential,commercial,industrial',
+            'proposed_use' => 'required|string|max:255',
+            'existing_structures' => 'required|integer|min:0',
+            'setback_compliance' => 'required|string',
             'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
        
@@ -203,6 +207,10 @@ class ZoningController extends Controller
             'location_of_lot' => $request->location_of_lot,
             'right_over_land' => $request->right_over_land,
             'lot_area' => $request->lot_area,
+            'zoning_district' => $request->zoning_district,
+            'proposed_use' => $request->proposed_use,
+            'existing_structures' => $request->existing_structures,
+            'setback_compliance' => (Boolean) $request->setback_compliance,
             'uploaded_file' => $filePath,
             'status_id' => 1,
             'inputted_by' => $userId,
@@ -216,32 +224,73 @@ class ZoningController extends Controller
 
         return response()->json(['message' => 'Zoning permit submitted successfully'], 201);
     }
-
+    
+    //approve zoning with ai decision making
     public function approve(Request $request, $id)
     {
         $userId = $request->user()->id;
 
-        // Get the permit details
-        $permit = DB::table('zoning_permits')->where('id', $id)->first(['first_name', 'last_name', 'email', 'location_of_lot', 'lot_area']);
-        
+        // Get all required fields for prediction
+        $permit = DB::table('zoning_permits')
+            ->where('id', $id)
+            ->first([
+                'zip',
+                'right_over_land',
+                'lot_area',
+                'zoning_district',
+                'proposed_use',
+                'existing_structures',
+                'setback_compliance',
+                'first_name',
+                'last_name',
+                'email'
+            ]);
+
         if (!$permit) {
             return response()->json(['message' => 'Permit not found'], 404);
         }
 
-        // Predict the status based on the permit data
-        $prediction = $this->predictionService->predict([
-            $permit->location_of_lot, 
-            $permit->lot_area
-        ]);
+        // Prepare input data for prediction
+        $input = [
+            (int) $this->normalizeZip($permit->zip),
+            (int) $this->encodeLandRight($permit->right_over_land),
+            (float) $permit->lot_area,
+            (int) $this->encodeZoneType($permit->zoning_district),
+            (int) $this->encodeProposedUse($permit->proposed_use),
+            (int) $permit->existing_structures,
+            (int) $permit->setback_compliance
+        ];
 
-        // If the model predicts 'approved', proceed with approval
-        if ($prediction[0] == 2) {
+        try {
+            // Ensure prediction service is working
+            if (!isset($this->predictionService)) {
+                throw new \Exception("Prediction service is not initialized.");
+            }
+
+            // Debug: Log input for prediction
+            \Log::info("Prediction Input: ", $input);
+
+            // Get prediction
+            $prediction = $this->predictionService->predict($input);
+
+            // Debug: Log prediction output
+            \Log::info("Prediction Output: ", $prediction);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Prediction failed',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+
+        // Handle prediction result
+        if ($prediction[0] === 'approved') {
             DB::table('zoning_permits')->where('id', $id)->update([
                 'status_id' => 2,
                 'updated_at' => now(),
             ]);
 
-            // Log the action
+            // Log the transaction
             $message = "Approved zoning permit for {$permit->first_name} {$permit->last_name}";
             $this->logs($userId, "Zoning Application", $message);
 
@@ -259,10 +308,61 @@ class ZoningController extends Controller
 
             return response()->json(['message' => 'Zoning permit approved and email sent'], 200);
         } else {
-            return response()->json(['message' => 'Permit prediction rejected, status remains pending.'], 400);
+            // Handle rejection case
+            $message = "Rejected zoning permit for {$permit->first_name} {$permit->last_name}";
+            $this->logs($userId, "Zoning Application", $message);
+
+            // Send rejection email
+            try {
+                if (!empty($permit->email)) {
+                    Mail::to($permit->email)->send(new ZoningPermitRejected($permit));
+                }
+            } catch (\Exception $e) {
+                return response()->json([
+                    'message' => 'Zoning permit rejected, but email notification failed.',
+                    'error' => $e->getMessage(),
+                ], 200);
+            }
+
+            return response()->json(['message' => 'Zoning permit rejected and email sent'], 200);
         }
     }
+
+    //approve zoning without ai intervention
+    public function approvev1(Request $request, $id)
+    {
+        $userId = $request->user()->id;
     
+        $permit = DB::table('zoning_permits')->where('id', $id)->first(['first_name', 'last_name', 'email']);
+    
+        if (!$permit) {
+            return response()->json(['message' => 'Permit not found'], 404);
+        }
+    
+        // Update permit status
+        DB::table('zoning_permits')->where('id', $id)->update([
+            'status_id' => 2,
+            'updated_at' => now(),
+        ]);
+    
+        // Log the transaction
+        $message = "Approved zoning permit for {$permit->first_name} {$permit->last_name}";
+        $this->logs($userId, "Zoning Application", $message);
+    
+        // Send email notification
+        try {
+            if (!empty($permit->email)) {
+                Mail::to($permit->email)->send(new ZoningPermitApproved($permit));
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Zoning permit approved, but email notification failed.',
+                'error' => $e->getMessage(),
+            ], 200);
+        }
+    
+        return response()->json(['message' => 'Zoning permit approved and email sent'], 200);
+    }
     public function reject(Request $request, $id)
     {
         $userId = $request->user()->id;
@@ -306,5 +406,62 @@ class ZoningController extends Controller
             'created_at' => now(),
         ]);
     }
+    
+        /**
+     * Sends a zoning permit email based on status.
+     */
+    private function sendPermitEmail($permit, $status)
+    {
+        if (empty($permit->email)) {
+            return response()->json(['message' => "Zoning permit {$status}, but no email provided"], 200);
+        }
+    
+        try {
+            $emailClass = ($status === 'approved') ? ZoningPermitApproved::class : ZoningPermitRejected::class;
+            Mail::to($permit->email)->send(new $emailClass($permit));
+    
+            return response()->json(['message' => "Zoning permit {$status} and email sent"], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => "Zoning permit {$status}, but email notification failed.",
+                'error' => $e->getMessage(),
+            ], 200);
+        }
+    }
+    
+    private function normalizeZip($zip)
+    {
+        return (int) substr(preg_replace('/[^0-9]/', '', $zip), 0, 3);
+    }
 
+    private function encodeLandRight($right)
+    {
+        return match(strtolower($right)) {
+            'owned'     => 0,
+            'leased'    => 1,
+            'inherited' => 2,
+            default     => 0
+        };
+    }
+
+    private function encodeZoneType($zone)
+    {
+        return match(strtolower($zone)) {
+            'residential' => 0,
+            'commercial'  => 1,
+            'industrial'  => 2,
+            default       => 0
+        };
+    }
+
+    private function encodeProposedUse($use)
+    {
+        return match(strtolower($use)) {
+            'single-family' => 0,
+            'multi-family'  => 1,
+            'retail'        => 2,
+            'office'        => 3,
+            default         => 0
+        };
+    }
 }
