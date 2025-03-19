@@ -18,7 +18,7 @@
                         <p v-if="errors.year" class="text-red-500 text-xs mt-1">{{ errors.year[0] }}</p>
                     </div>
 
-                    <div class="grid grid-cols-3 gap-4">
+                    <div class="grid grid-cols-3 gap-4 mb-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Households</label>
                             <input type="number" v-model="form.households" placeholder="Enter number of households" class="mt-1 p-2 border rounded-md w-full"  @input="calculatePopulation" />

@@ -17,7 +17,7 @@
                         <input type="number" v-model="form.year" class="mt-1 p-2 border rounded-md w-full bg-gray-200" disabled />
                     </div>
 
-                    <div class="grid grid-cols-3 gap-4">
+                    <div class="grid grid-cols-3 gap-4 mb-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Households</label>
                             <input type="number" v-model="form.households" class="mt-1 p-2 border rounded-md w-full" required @input="calculatePopulation" />
