@@ -13,23 +13,26 @@ class TrainModelCommand extends Command
 
     public function handle()
     {
-        $trainingData = collect(DB::table('zoning_permits')
-            ->whereIn('status_id', [2, 3])
-            ->get())
-            ->map(function ($permit) {
-                return [
-                    'inputs' => [
-                        $this->normalizeZip($permit->zip),
-                        $this->encodeLandRight($permit->right_over_land),
-                        (float)$permit->lot_area,
-                        $this->encodeZoneType($permit->zoning_district),
-                        $this->encodeProposedUse($permit->proposed_use),
-                        (int)$permit->existing_structures,
-                        (int)$permit->setback_compliance
-                    ],
-                    'labels' => $permit->status_id === 2 ? 'approved' : 'rejected'
-                ];
-            });
+        $trainingData = DB::table('zoning_permits')
+            ->whereIn('status_id', [2, 3]) // 2 = Approved, 3 = Rejected
+            ->get()
+            ->map(fn($permit) => [
+                'inputs' => [
+                    $this->normalizeZip($permit->zip),
+                    $this->encodeLandRight($permit->right_over_land ?? 'owned'),
+                    (float) ($permit->lot_area ?? 0), // Default to 0 if null
+                    $this->encodeZoneType($permit->zoning_district ?? 'residential'),
+                    $this->encodeProposedUse($permit->proposed_use ?? 'other'),
+                    (int) ($permit->existing_structures ?? 0),
+                    (int) ($permit->setback_compliance ?? 0)
+                ],
+                'labels' => $permit->status_id === 2 ? 'approved' : 'rejected'
+            ]);
+
+        if ($trainingData->isEmpty()) {
+            $this->error('No valid training data found. Ensure zoning permits exist.');
+            return;
+        }
 
         $formatted = [
             'inputs' => $trainingData->pluck('inputs')->toArray(),
@@ -37,9 +40,8 @@ class TrainModelCommand extends Command
         ];
 
         (new PermitPredictionService())->trainModel($formatted);
-        // $this->info(json_encode($formatted, JSON_PRETTY_PRINT));
 
-        $this->info('Model trained and saved successfully');
+        $this->info("✅ Model training completed with " . count($formatted['inputs']) . " samples.");
     }
     
     private function normalizeZip($zip)
@@ -74,7 +76,11 @@ class TrainModelCommand extends Command
             'multi-family'  => 1,
             'retail'        => 2,
             'office'        => 3,
-            default         => 0
+            'warehouse'     => 4,
+            'manufacturing' => 5,
+            'agriculture'   => 6,
+            'mixed-use'     => 7,
+            default         => 8 // 'other' category
         };
     }
 }
