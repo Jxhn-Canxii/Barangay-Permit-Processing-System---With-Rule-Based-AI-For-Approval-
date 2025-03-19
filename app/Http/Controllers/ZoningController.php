@@ -168,7 +168,7 @@ class ZoningController extends Controller
 
         $request->validate([
             'date_of_application' => 'required|date',
-            'or_date' => 'nullable|date',
+            'or_date' => 'required|date',
             'official_receipt_no' => 'required|string|max:255|unique:zoning_permits',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
@@ -177,7 +177,7 @@ class ZoningController extends Controller
             'zip' => 'nullable|string|max:10',
             'owner_name' => 'required|string|max:255',
             'contact_number' => 'required|string|max:20',
-            'email' => 'nullable|email|max:255',
+            'email' => 'required|email|max:255',
             'location_of_lot' => 'required|string|max:255',
             'right_over_land' => 'required|string|max:50',
             'lot_area' => 'required|string|max:50',

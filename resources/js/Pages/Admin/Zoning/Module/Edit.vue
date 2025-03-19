@@ -9,10 +9,10 @@
             <i class="fa fa-plus"></i> Add Zoning Permit
         </button>
 
-        <Modal :show="isAddModalOpen" :maxWidth="'2xl'" title="Add Zoning Permit" @close="isAddModalOpen = false">
+        <Modal :show="isAddModalOpen" :maxWidth="'2xl'" title="Edit Zoning Permit" @close="isAddModalOpen = false">
             <div class="grid grid-cols-1 gap-6 p-6">
                 <form class="mt-4" @submit.prevent="editPermit">
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Date of Application</label>
                             <input type="date" v-model="form.date_of_application" class="mt-1 p-2 border rounded-md w-full" />
@@ -32,7 +32,7 @@
                         <p v-if="errors.official_receipt_no" class="text-red-500 text-xs mt-1">{{ errors.official_receipt_no[0] }}</p>
                     </div>
 
-                    <div class="grid grid-cols-3 gap-4">
+                    <div class="grid grid-cols-3 gap-4 mb-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">First Name</label>
                             <input type="text" v-model="form.first_name" placeholder="Enter first name" class="mt-1 p-2 border rounded-md w-full" />
@@ -42,23 +42,23 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Middle Name</label>
                             <input type="text" v-model="form.middle_name" placeholder="Enter middle name" class="mt-1 p-2 border rounded-md w-full" />
-                            <p v-if="errors.zip" class="text-red-500 text-xs mt-1">{{ errors.middle_name[0] }}</p>
+                            <p v-if="errors.middle_name" class="text-red-500 text-xs mt-1">{{ errors.middle_name[0] }}</p>
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Last Name</label>
                             <input type="text" v-model="form.last_name" placeholder="Enter last name" class="mt-1 p-2 border rounded-md w-full" />
-                            <p v-if="errors.zip" class="text-red-500 text-xs mt-1">{{ errors.last_name[0] }}</p>
+                            <p v-if="errors.last_name" class="text-red-500 text-xs mt-1">{{ errors.last_name[0] }}</p>
                         </div>
                     </div>
 
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Address</label>
-                        <input type="text" v-model="form.address" placeholder="Enter address" class="mt-1 p-2 border rounded-md w-full" />
-                        <p v-if="errors.zip" class="text-red-500 text-xs mt-1">{{ errors.address[0] }}</p>
+                        <textarea v-model="form.description" placeholder="Enter Address" class="mt-1 p-2 border rounded-md w-full"></textarea>
+                        <p v-if="errors.address" class="text-red-500 text-xs mt-1">{{ errors.address[0] }}</p>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">ZIP Code</label>
                             <input type="number" max="9999" v-model="form.zip" placeholder="Enter ZIP code" class="mt-1 p-2 border rounded-md w-full" />
@@ -72,16 +72,16 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Contact Number</label>
                             <input type="text" v-model="form.contact_number" placeholder="Enter contact number" class="mt-1 p-2 border rounded-md w-full" />
-                            <p v-if="errors.email" class="text-red-500 text-xs mt-1">{{ errors.contact_number[0] }}</p>
+                            <p v-if="errors.contact_number" class="text-red-500 text-xs mt-1">{{ errors.contact_number[0] }}</p>
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Email</label>
-                            <input type="email" v-model="form.email" placeholder="Enter email" class="mt-1 p-2 border rounded-md w-full" />
+                            <input type="text" v-model="form.email" placeholder="Enter email" class="mt-1 p-2 border rounded-md w-full" />
                             <p v-if="errors.email" class="text-red-500 text-xs mt-1">{{ errors.email[0] }}</p>
                         </div>
                     </div>

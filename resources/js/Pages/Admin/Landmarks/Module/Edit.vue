@@ -19,12 +19,6 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700">Description</label>
-                        <textarea v-model="form.description" placeholder="Enter landmark description" class="mt-1 p-2 border rounded-md w-full"></textarea>
-                        <p v-if="errors.description" class="text-red-500 text-xs mt-1">{{ errors.description[0] }}</p>
-                    </div>
-
-                    <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Building Type</label>
                         <select v-model="form.building_type" class="mt-1 p-2 border rounded-md w-full">
                             <option value="">Select Type</option>
@@ -41,7 +35,7 @@
                         <p v-if="errors.building_type" class="text-red-500 text-xs mt-1">{{ errors.building_type[0] }}</p>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Latitude</label>
                             <input type="text" v-model="form.latitude" placeholder="Enter latitude" class="mt-1 p-2 border rounded-md w-full" />
@@ -53,6 +47,12 @@
                             <input type="text" v-model="form.longitude" placeholder="Enter longitude" class="mt-1 p-2 border rounded-md w-full" />
                             <p v-if="errors.longitude" class="text-red-500 text-xs mt-1">{{ errors.longitude[0] }}</p>
                         </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Description</label>
+                        <textarea v-model="form.description" placeholder="Enter landmark description" class="mt-1 p-2 border rounded-md w-full"></textarea>
+                        <p v-if="errors.description" class="text-red-500 text-xs mt-1">{{ errors.description[0] }}</p>
                     </div>
 
                     <div class="flex items-center mt-4">
