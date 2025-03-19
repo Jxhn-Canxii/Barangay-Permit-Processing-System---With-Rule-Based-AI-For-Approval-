@@ -101,7 +101,7 @@
                         <p v-if="errors.right_over_land" class="text-red-500 text-xs mt-1">{{ errors.right_over_land[0] }}</p>
                     </div>
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700">Lot Area</label>
+                        <label class="block text-sm font-medium text-gray-700">Lot Area (sqm)</label>
                         <input type="number" v-model="form.lot_area" placeholder="Enter lot area" class="mt-1 p-2 border rounded-md w-full" />
                         <p v-if="errors.lot_area" class="text-red-500 text-xs mt-1">{{ errors.lot_area[0] }}</p>
                     </div>

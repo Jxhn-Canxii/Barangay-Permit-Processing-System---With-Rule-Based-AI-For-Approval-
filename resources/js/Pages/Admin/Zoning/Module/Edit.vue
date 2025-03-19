@@ -104,7 +104,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700">Lot Area</label>
+                        <label class="block text-sm font-medium text-gray-700">Lot Area (sqm)</label>
                         <input type="number" v-model="form.lot_area" placeholder="Enter lot area" class="mt-1 p-2 border rounded-md w-full" />
                         <InputError :message="form.errors.lot_area" />
                     </div>
