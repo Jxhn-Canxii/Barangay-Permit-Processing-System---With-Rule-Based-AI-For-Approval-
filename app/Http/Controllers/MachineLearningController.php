@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Phpml\Classification\DecisionTree;
 use Phpml\Dataset\CsvDataset;
 
-class PermitPredictionService
+class MachineLearningController extends Controller
 {
     public function trainModel()
     {
@@ -21,9 +21,9 @@ class PermitPredictionService
         return response()->json(['message' => 'Model trained and saved']);
     }
 
-    public function predict($data)
+    public function predict(Request $request)
     {
-        // $data = $request->all();
+        $data = $request->all();
         $sample = array_values($data); //array format
 
         // Load the trained model (deserialize)
