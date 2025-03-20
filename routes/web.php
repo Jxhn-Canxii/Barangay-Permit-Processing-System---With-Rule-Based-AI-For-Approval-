@@ -30,8 +30,8 @@ Route::get('login', function () {
     ]);
 });
 
-Route::get('/register', function () { return Inertia::render('Auth/Register'); })->name('home');
-Route::get('/home', function () { return Inertia::render('Home/Index'); })->name('home');
+Route::get('/register', function () { return Inertia::render('Auth/Register'); })->name('register');
+Route::get('/', function () { return Inertia::render('Home/Index'); })->name('home');
 Route::get('/complaint', function () { return Inertia::render('Complaint/Index'); })->name('complaint');
 Route::get('/mapping', function () { return Inertia::render('Mapping/Index'); })->name('mapping');
 
