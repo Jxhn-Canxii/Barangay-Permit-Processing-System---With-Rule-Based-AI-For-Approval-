@@ -14,6 +14,7 @@
 
         <!-- Favicon (Browser logo) -->
         <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+        
         @routes
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
