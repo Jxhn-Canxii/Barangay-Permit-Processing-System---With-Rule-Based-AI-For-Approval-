@@ -49,9 +49,9 @@
                         <p v-if="errors.role" class="text-red-500 text-xs mt-1">{{ errors.role[0] }}</p>
                     </div>
 
-                    <div class="flex items-center">
+                    <div class="flex items-center justify-end">
                         <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">
-                            Submit
+                             <i class="fa fa-save"></i> Add
                         </button>
                     </div>
                 </form>

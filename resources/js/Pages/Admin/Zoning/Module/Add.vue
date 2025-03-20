@@ -6,10 +6,10 @@
             :disabled="isAddModalOpen"
             class="px-2 py-2 bg-blue-500 font-bold mb-4 text-nowrap text-md float-end text-white rounded shadow"
         >
-            <i class="fa fa-plus"></i> Add Zoning Permit
+            <i class="fa fa-file-contract"></i> Create Zoning Permit
         </button>
 
-        <Modal :show="isAddModalOpen" :maxWidth="'fullscreen'" title="Add Zoning Permit" @close="isAddModalOpen = false,errors = false">
+        <Modal :show="isAddModalOpen" :maxWidth="'fullscreen'" title="Create Zoning Permit Application" @close="isAddModalOpen = false,errors = false">
             <div class="grid grid-cols-1 gap-6 p-6">
                 <form class="mt-4" @submit.prevent="addPermit">
                     <!-- Date and Receipt Information Section -->
@@ -180,9 +180,9 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <div class="flex items-center border-t-2 pt-2 justify-end">
+                    <div class="flex items-center justify-end">
                         <button type="submit" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded">
-                            Submit Zonal Permit
+                            <i class="fa fa-save"></i> Submit Application
                         </button>
                     </div>
                 </form>
