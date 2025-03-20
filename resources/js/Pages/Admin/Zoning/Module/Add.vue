@@ -90,7 +90,7 @@
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Email</label>
-                                <input type="text" v-model="form.email" placeholder="Enter email" class="mt-1 p-2 border rounded-md w-full" />
+                                <input type="email" v-model="form.email" placeholder="Enter email" class="mt-1 p-2 border rounded-md w-full" />
                                 <p v-if="errors.email" class="text-red-500 text-xs mt-1">{{ errors.email[0] }}</p>
                             </div>
                         </div>

@@ -184,7 +184,7 @@ class ZoningController extends Controller
             'zoning_district' => 'required|integer|min:0',
             'proposed_use' => 'required|string|max:255',
             'existing_structures' => 'required|integer|min:0',
-            'setback_compliance' => 'required|string',
+            'setback_compliance' => 'nullable|boolean',
             'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png',
 
         ]);
