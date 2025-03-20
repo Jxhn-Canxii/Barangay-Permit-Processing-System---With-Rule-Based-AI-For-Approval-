@@ -55,7 +55,7 @@ class PermitPredictionService
                 throw new Exception("Failed to read model file at: {$this->modelFile}");
             }
     
-            $this->classifier = $serializer->deserialize($modelData);
+            $this->classifier = unserialize($modelData);
     
             // Check if scaler file exists
             if (!file_exists($this->scalerFile)) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2025 at 01:36 AM
+-- Generation Time: Mar 20, 2025 at 01:26 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -187,7 +187,11 @@ CREATE TABLE `zoning_permits` (
   `location_of_lot` varchar(255) NOT NULL,
   `right_over_land` varchar(100) DEFAULT NULL,
   `lot_area` varchar(50) DEFAULT NULL,
+  `zoning_district` enum('residential','commercial','industrial') NOT NULL,
+  `proposed_use` varchar(255) NOT NULL,
+  `existing_structures` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `uploaded_file` varchar(255) DEFAULT NULL,
+  `setback_compliance` tinyint(1) NOT NULL,
   `status_id` int(11) NOT NULL,
   `inputted_by` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -198,10 +202,10 @@ CREATE TABLE `zoning_permits` (
 -- Dumping data for table `zoning_permits`
 --
 
-INSERT INTO `zoning_permits` (`id`, `date_of_application`, `or_date`, `official_receipt_no`, `first_name`, `middle_name`, `last_name`, `address`, `zip`, `owner_name`, `contact_number`, `email`, `location_of_lot`, `right_over_land`, `lot_area`, `uploaded_file`, `status_id`, `inputted_by`, `created_at`, `updated_at`) VALUES
-(1, '1985-08-25', '2008-09-26', 'Aliquid aliqua Eum', 'Hernan', 'John', 'Canciller', 'Bulkan Mayon,Alpha Chupapi Munyanyo,Block 69 Kilid sa Kamunggayan.', '6014', 'Iusto qui aliquam co', '09561741499', 'greygreygrey35@gmail.com', 'Sit est minima adi', 'Philippines', '88', 'zoning_permits/ZnQOm6i1K57er3QFgRKMFUMSxIz1hA44uFB2fnsO.pdf', 2, 1, '2025-03-18 08:27:32', '2025-03-18 08:28:24'),
-(2, '2009-02-10', '2000-05-28', 'Commodi ex sit ipsu', 'Nisi corrupti sed q', 'Consequatur et dolo', 'Fugiat nostrum elit', 'Ut amet eos quia e', '9259', 'Consequat Possimus', 'Et exercitationem et', 'zykiwynot@mailinator.com', 'Mollitia architecto', 'Fugiat voluptate ali', '31', 'zoning_permits/VvYqexAXxOJMlXcZjuZZmBMrKScPSbGZQBYavs8o.jpg', 2, 1, '2025-03-18 08:32:54', '2025-03-18 08:33:15'),
-(3, '2019-05-14', '1982-03-04', 'Aute ut veritatis fu', 'Ab cum perspiciatis', 'Fuga Commodo sit ma', 'Dicta pariatur Aliq', 'Minim voluptas sed a', '2876', 'Neque odio itaque al', 'Deserunt in maxime e', 'ximokajaw@mailinator.com', 'Iusto et deleniti si', 'Quia fugiat officii', '96', 'zoning_permits/TviDchYVI2xdbyvdAsFV00Gf53RVzR2fSU3ZNS3s.jpg', 2, 1, '2025-03-18 08:34:05', '2025-03-18 08:34:10');
+INSERT INTO `zoning_permits` (`id`, `date_of_application`, `or_date`, `official_receipt_no`, `first_name`, `middle_name`, `last_name`, `address`, `zip`, `owner_name`, `contact_number`, `email`, `location_of_lot`, `right_over_land`, `lot_area`, `zoning_district`, `proposed_use`, `existing_structures`, `uploaded_file`, `setback_compliance`, `status_id`, `inputted_by`, `created_at`, `updated_at`) VALUES
+(1, '1985-08-25', '2008-09-26', 'Aliquid aliqua Eum', 'Hernan', 'John', 'Canciller', 'Bulkan Mayon,Alpha Chupapi Munyanyo,Block 69 Kilid sa Kamunggayan.', '6014', 'Iusto qui aliquam co', '09561741499', 'greygreygrey35@gmail.com', 'Sit est minima adi', 'Philippines', '88', 'residential', '', 0, 'zoning_permits/ZnQOm6i1K57er3QFgRKMFUMSxIz1hA44uFB2fnsO.pdf', 0, 2, 1, '2025-03-18 08:27:32', '2025-03-18 08:28:24'),
+(2, '2009-02-10', '2000-05-28', 'Commodi ex sit ipsu', 'Nisi corrupti sed q', 'Consequatur et dolo', 'Fugiat nostrum elit', 'Ut amet eos quia e', '9259', 'Consequat Possimus', 'Et exercitationem et', 'zykiwynot@mailinator.com', 'Mollitia architecto', 'Fugiat voluptate ali', '31', 'residential', '', 0, 'zoning_permits/VvYqexAXxOJMlXcZjuZZmBMrKScPSbGZQBYavs8o.jpg', 0, 2, 1, '2025-03-18 08:32:54', '2025-03-18 08:33:15'),
+(3, '2019-05-14', '1982-03-04', 'Aute ut veritatis fu', 'Ab cum perspiciatis', 'Fuga Commodo sit ma', 'Dicta pariatur Aliq', 'Minim voluptas sed a', '2876', 'Neque odio itaque al', 'Deserunt in maxime e', 'ximokajaw@mailinator.com', 'Iusto et deleniti si', 'Quia fugiat officii', '96', 'residential', '', 0, 'zoning_permits/TviDchYVI2xdbyvdAsFV00Gf53RVzR2fSU3ZNS3s.jpg', 0, 2, 1, '2025-03-18 08:34:05', '2025-03-18 08:34:10');
 
 --
 -- Indexes for dumped tables
