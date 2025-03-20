@@ -31,7 +31,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="log in data.logs" v-if="data.total_pages" :key="log.id" class="text-gray-700">
+                            <tr v-for="log in data.logs" v-if="data.logs?.length > 0 && !loading" :key="log.id" class="text-gray-700">
                                 <td class="border-b border-gray-200 px-5 py-5 text-sm">
                                     {{ log.user_name }}
                                 </td>
@@ -51,10 +51,17 @@
                                     {{ formatDate(log.created_at) }}
                                 </td>
                             </tr>
-                            <tr v-else>
+                            <tr v-if="data.logs?.length == 0 && !loading">
                                 <td colspan="4" class="border-b text-center font-bold text-lg border-gray-200 bg-white px-5 py-5">
                                     <p class="text-red-500 whitespace-no-wrap">
                                         No Logs Found!
+                                    </p>
+                                </td>
+                            </tr>
+                             <tr v-if="loading">
+                                <td colspan="4" class="border-b text-center font-bold text-lg border-gray-200 bg-white px-5 py-5">
+                                    <p class="text-red-500 whitespace-no-wrap">
+                                       Loading...
                                     </p>
                                 </td>
                             </tr>
@@ -86,7 +93,7 @@ import axios from "axios";
 
 // Store logs data
 const data = ref([]);
-
+const loading = ref(false);
 // Store search and pagination state
 const search = ref({
     page_num: 1,
@@ -111,9 +118,13 @@ const searchInput = useDebounce(async () => {
 // Fetch logs from API
 const fetchData = async () => {
     try {
+        loading.value = true;
+        data.value = [];
         const response = await axios.post(route("logs.list"), search.value);
         data.value = response.data;
+        loading.value = false;
     } catch (error) {
+        loading.value = false;
         console.error("Error fetching logs:", error);
     }
 };

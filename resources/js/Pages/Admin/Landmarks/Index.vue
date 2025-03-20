@@ -32,7 +32,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="landmark in data.landmarks" v-if="data.total_pages" :key="landmark.id" class="text-gray-700">
+                            <tr v-for="landmark in data.landmarks" v-if="data.landmarks?.length > 0 && !loading" :key="landmark.id" class="text-gray-700">
                                 <td class="border-b border-gray-200 px-5 py-5 text-wrap text-sm">
                                     {{ landmark.name }}
                                 </td>
@@ -55,10 +55,17 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr v-else>
+                            <tr v-if="data.landmarks?.length == 0 && !loading">
                                 <td colspan="6" class="border-b text-center font-bold text-lg border-gray-200 bg-white px-5 py-5">
                                     <p class="text-red-500 whitespace-no-wrap">
                                         No Data Found!
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr v-if="loading">
+                                <td colspan="6" class="border-b text-center font-bold text-lg border-gray-200 bg-white px-5 py-5">
+                                    <p class="text-red-500 whitespace-no-wrap">
+                                       Loading...
                                     </p>
                                 </td>
                             </tr>
@@ -94,6 +101,7 @@ import Edit from "./Module/Edit.vue";
 import Delete from "./Module/Delete.vue";
 
 const data = ref([]);
+const loading = ref(false);
 const search = ref({
     page_num: 1,
     total_pages: 0,
@@ -115,9 +123,13 @@ const searchInput = useDebounce(async () => {
 // Fetch the landmarks data
 const fetchData = async () => {
     try {
+        loading.value = true;
+        data.value = [];
         const response = await axios.post(route("landmarks.list"), search.value);
         data.value = response.data;
+        loading.value = false;
     } catch (error) {
+        loading.value = false;
         console.error("Error fetching landmarks:", error);
     }
 };
