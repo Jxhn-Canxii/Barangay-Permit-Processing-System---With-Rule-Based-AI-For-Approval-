@@ -9,158 +9,180 @@
             <i class="fa fa-plus"></i> Add Zoning Permit
         </button>
 
-        <Modal :show="isAddModalOpen" :maxWidth="'2xl'" title="Add Zoning Permit" @close="isAddModalOpen = false,errors = false">
+        <Modal :show="isAddModalOpen" :maxWidth="'fullscreen'" title="Add Zoning Permit" @close="isAddModalOpen = false,errors = false">
             <div class="grid grid-cols-1 gap-6 p-6">
                 <form class="mt-4" @submit.prevent="addPermit">
-                    <div class="grid grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Date of Application</label>
-                            <input type="date" v-model="form.date_of_application" class="mt-1 p-2 border rounded-md w-full" />
-                            <p v-if="errors.or_date" class="text-red-500 text-xs mt-1">{{ errors.date_of_application[0] }}</p>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">OR Date</label>
-                            <input type="date" v-model="form.or_date" class="mt-1 p-2 border rounded-md w-full" />
-                            <p v-if="errors.or_date" class="text-red-500 text-xs mt-1">{{ errors.or_date[0] }}</p>
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700">Official Receipt No.</label>
-                        <input type="text" v-model="form.official_receipt_no" placeholder="Enter receipt number" class="mt-1 p-2 border rounded-md w-full" />
-                        <p v-if="errors.official_receipt_no" class="text-red-500 text-xs mt-1">{{ errors.official_receipt_no[0] }}</p>
-                    </div>
-
-                    <div class="grid grid-cols-3 gap-4 mb-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">First Name</label>
-                            <input type="text" v-model="form.first_name" placeholder="Enter first name" class="mt-1 p-2 border rounded-md w-full" />
-                            <p v-if="errors.first_name" class="text-red-500 text-xs mt-1">{{ errors.first_name[0] }}</p>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Middle Name</label>
-                            <input type="text" v-model="form.middle_name" placeholder="Enter middle name" class="mt-1 p-2 border rounded-md w-full" />
-                            <p v-if="errors.middle_name" class="text-red-500 text-xs mt-1">{{ errors.middle_name[0] }}</p>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Last Name</label>
-                            <input type="text" v-model="form.last_name" placeholder="Enter last name" class="mt-1 p-2 border rounded-md w-full" />
-                            <p v-if="errors.last_name" class="text-red-500 text-xs mt-1">{{ errors.last_name[0] }}</p>
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700">Address</label>
-                        <textarea v-model="form.address" placeholder="Enter Address" class="mt-1 p-2 border rounded-md w-full"></textarea>
-                        <p v-if="errors.address" class="text-red-500 text-xs mt-1">{{ errors.address[0] }}</p>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">ZIP Code</label>
-                            <input type="number" max="9999" v-model="form.zip" placeholder="Enter ZIP code" class="mt-1 p-2 border rounded-md w-full" />
-                             <p v-if="errors.zip" class="text-red-500 text-xs mt-1">{{ errors.zip[0] }}</p>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Owner Name</label>
-                            <input type="text" v-model="form.owner_name" placeholder="Enter owner name" class="mt-1 p-2 border rounded-md w-full" />
-                            <p v-if="errors.owner_name" class="text-red-500 text-xs mt-1">{{ errors.owner_name[0] }}</p>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Contact Number</label>
-                            <input type="text" v-model="form.contact_number" placeholder="Enter contact number" class="mt-1 p-2 border rounded-md w-full" />
-                            <p v-if="errors.contact_number" class="text-red-500 text-xs mt-1">{{ errors.contact_number[0] }}</p>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Email</label>
-                            <input type="text" v-model="form.email" placeholder="Enter email" class="mt-1 p-2 border rounded-md w-full" />
-                            <p v-if="errors.email" class="text-red-500 text-xs mt-1">{{ errors.email[0] }}</p>
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700">Location of Lot</label>
-                        <input type="text" v-model="form.location_of_lot" placeholder="Enter location" class="mt-1 p-2 border rounded-md w-full" />
-                        <p v-if="errors.location_of_lot" class="text-red-500 text-xs mt-1">{{ errors.location_of_lot[0] }}</p>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700">Right Over Land</label>
-                        <select v-model="form.right_over_land" class="mt-1 p-2 border rounded-md w-full">
-                            <option value="">Select Type</option>
-                            <option value="Own">Own</option>
-                            <option value="Rent">Rent</option>
-                            <option value="Leased">Leased</option>
-                        </select>
-                        <p v-if="errors.right_over_land" class="text-red-500 text-xs mt-1">{{ errors.right_over_land[0] }}</p>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700">Zoning District</label>
-                        <select v-model="form.zoning_district" class="mt-1 p-2 border rounded-md w-full">
-                            <option value="">Select District</option>
-                            <option value="residential">Residential</option>
-                            <option value="commercial">Commercial</option>
-                            <option value="industrial">Industrial</option>
-                        </select>
-                        <p v-if="errors.zoning_district" class="text-red-500 text-xs mt-1">{{ errors.zoning_district[0] }}</p>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700">Proposed Use</label>
-                        <select v-model="form.proposed_use" class="mt-1 p-2 border rounded-md w-full">
-                            <option value="">Select Proposed Use</option>
-                            <option value="single-family">Single Family Home</option>
-                            <option value="multi-family">Multi-Family Housing</option>
-                            <option value="retail">Retail Business</option>
-                            <option value="office">Office Space</option>
-                            <option value="mixed-use">Mixed Use</option>
-                        </select>
-                        <p v-if="errors.proposed_use" class="text-red-500 text-xs mt-1">{{ errors.proposed_use[0] }}</p>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Existing Structures</label>
-                            <input type="number" v-model="form.existing_structures" min="0" 
-                                placeholder="Number of existing structures" 
-                                class="mt-1 p-2 border rounded-md w-full" />
-                            <p v-if="errors.existing_structures" class="text-red-500 text-xs mt-1">{{ errors.existing_structures[0] }}</p>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Setback Compliance</label>
-                            <div class="mt-2">
-                                <label class="inline-flex items-center">
-                                    <input type="checkbox" v-model="form.setback_compliance" 
-                                        class="form-checkbox h-5 w-5 text-blue-600" />
-                                    <span class="ml-2 text-gray-700">Compliant with setback regulations</span>
-                                </label>
+                    <!-- Date and Receipt Information Section -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Date and Receipt Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Date of Application</label>
+                                <input type="date" v-model="form.date_of_application" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.date_of_application" class="text-red-500 text-xs mt-1">{{ errors.date_of_application[0] }}</p>
                             </div>
-                            <p v-if="errors.setback_compliance" class="text-red-500 text-xs mt-1">{{ errors.setback_compliance[0] }}</p>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">OR Date</label>
+                                <input type="date" v-model="form.or_date" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.or_date" class="text-red-500 text-xs mt-1">{{ errors.or_date[0] }}</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Official Receipt No.</label>
+                                <input type="text" v-model="form.official_receipt_no" placeholder="Enter receipt number" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.official_receipt_no" class="text-red-500 text-xs mt-1">{{ errors.official_receipt_no[0] }}</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700">Lot Area (sqm)</label>
-                        <input type="number" v-model="form.lot_area" placeholder="Enter lot area" class="mt-1 p-2 border rounded-md w-full" />
-                        <p v-if="errors.lot_area" class="text-red-500 text-xs mt-1">{{ errors.lot_area[0] }}</p>
+
+                    <!-- Personal Information Section -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Personal Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">First Name</label>
+                                <input type="text" v-model="form.first_name" placeholder="Enter first name" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.first_name" class="text-red-500 text-xs mt-1">{{ errors.first_name[0] }}</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Middle Name</label>
+                                <input type="text" v-model="form.middle_name" placeholder="Enter middle name" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.middle_name" class="text-red-500 text-xs mt-1">{{ errors.middle_name[0] }}</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Last Name</label>
+                                <input type="text" v-model="form.last_name" placeholder="Enter last name" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.last_name" class="text-red-500 text-xs mt-1">{{ errors.last_name[0] }}</p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700">Upload File</label>
-                        <input type="file" @change="handleFileUpload" class="mt-1 p-2 border rounded-md w-full" />
-                        <p v-if="errors.file" class="text-red-500 text-xs mt-1">{{ errors.file[0] }}</p>
+                    <!-- Address Section -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Address Details</h3>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Address</label>
+                            <textarea v-model="form.address" placeholder="Enter Address" class="mt-1 p-2 border rounded-md w-full"></textarea>
+                            <p v-if="errors.address" class="text-red-500 text-xs mt-1">{{ errors.address[0] }}</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">ZIP Code</label>
+                                <input type="number" max="9999" v-model="form.zip" placeholder="Enter ZIP code" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.zip" class="text-red-500 text-xs mt-1">{{ errors.zip[0] }}</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Owner Name</label>
+                                <input type="text" v-model="form.owner_name" placeholder="Enter owner name" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.owner_name" class="text-red-500 text-xs mt-1">{{ errors.owner_name[0] }}</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Contact Number</label>
+                                <input type="text" v-model="form.contact_number" placeholder="Enter contact number" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.contact_number" class="text-red-500 text-xs mt-1">{{ errors.contact_number[0] }}</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="text" v-model="form.email" placeholder="Enter email" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.email" class="text-red-500 text-xs mt-1">{{ errors.email[0] }}</p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="flex items-center">
-                        <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">
-                            Submit
+                    <!-- Property Information Section -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Property Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Location of Lot</label>
+                                <input type="text" v-model="form.location_of_lot" placeholder="Enter location" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.location_of_lot" class="text-red-500 text-xs mt-1">{{ errors.location_of_lot[0] }}</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Right Over Land</label>
+                                <select v-model="form.right_over_land" class="mt-1 p-2 border rounded-md w-full">
+                                    <option value="">Select Type</option>
+                                    <option value="Own">Own</option>
+                                    <option value="Rent">Rent</option>
+                                    <option value="Leased">Leased</option>
+                                </select>
+                                <p v-if="errors.right_over_land" class="text-red-500 text-xs mt-1">{{ errors.right_over_land[0] }}</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Zoning District</label>
+                                <select v-model="form.zoning_district" class="mt-1 p-2 border rounded-md w-full">
+                                    <option value="">Select District</option>
+                                    <option value="residential">Residential</option>
+                                    <option value="commercial">Commercial</option>
+                                    <option value="industrial">Industrial</option>
+                                </select>
+                                <p v-if="errors.zoning_district" class="text-red-500 text-xs mt-1">{{ errors.zoning_district[0] }}</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Proposed Use</label>
+                                <select v-model="form.proposed_use" class="mt-1 p-2 border rounded-md w-full">
+                                    <option value="">Select Proposed Use</option>
+                                    <option value="single-family">Single Family Home</option>
+                                    <option value="multi-family">Multi-Family Housing</option>
+                                    <option value="retail">Retail Business</option>
+                                    <option value="office">Office Space</option>
+                                    <option value="mixed-use">Mixed Use</option>
+                                </select>
+                                <p v-if="errors.proposed_use" class="text-red-500 text-xs mt-1">{{ errors.proposed_use[0] }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Setback Compliance Section -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Setback Compliance</h3>
+                        <div class="mt-2">
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" v-model="form.setback_compliance" class="form-checkbox h-5 w-5 text-blue-600" />
+                                <span class="ml-2 text-gray-700">Compliant with setback regulations</span>
+                            </label>
+                        </div>
+                        <p v-if="errors.setback_compliance" class="text-red-500 text-xs mt-1">{{ errors.setback_compliance[0] }}</p>
+                    </div>
+
+                    <!-- Additional Information Section -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Additional Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Existing Structures</label>
+                                <input type="number" v-model="form.existing_structures" min="0" placeholder="Number of existing structures" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.existing_structures" class="text-red-500 text-xs mt-1">{{ errors.existing_structures[0] }}</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Lot Area (sqm)</label>
+                                <input type="number" v-model="form.lot_area" placeholder="Enter lot area" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.lot_area" class="text-red-500 text-xs mt-1">{{ errors.lot_area[0] }}</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Upload File</label>
+                                <input type="file" @change="handleFileUpload" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.file" class="text-red-500 text-xs mt-1">{{ errors.file[0] }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex items-center border-t-2 pt-2 justify-end">
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded">
+                            Submit Zonal Permit
                         </button>
                     </div>
                 </form>
