@@ -10,13 +10,13 @@ class PermitPredictionService
 {
     public function trainModel()
     {
-        $dataset = new CsvDataset(storage_path('app/data.csv'), 1, true);
+        $dataset = new CsvDataset(storage_path('app/prediction/data.csv'), 1, true);
 
         $classifier = new DecisionTree();
         $classifier->train($dataset->getSamples(), $dataset->getTargets());
 
         // JSON
-        file_put_contents(storage_path('app/model.json'), json_encode($classifier));
+        file_put_contents(storage_path('app/prediction/model.json'), json_encode($classifier));
         
         return response()->json(['message' => 'Model trained and saved']);
     }
@@ -27,7 +27,7 @@ class PermitPredictionService
         $sample = array_values($data); //array format
 
         // Load the trained model (deserialize)
-        $classifier = json_decode(file_get_contents(storage_path('app/model.json')), true);
+        $classifier = json_decode(file_get_contents(storage_path('app/prediction/model.json')), true);
         
         $prediction = $classifier->predict($sample);
 
