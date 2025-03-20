@@ -22,11 +22,11 @@ return new class extends Migration {
             $table->string('email')->nullable();
             
             // Enhanced zoning-specific fields
-            $table->string('location_of_lot');
-            $table->string('zoning_district')->default('residential'); // Added
-            $table->string('right_over_land')->nullable();
+            $table->integer('location_of_lot');
+            $table->integer('zoning_district');
+            $table->integer('right_over_land');
             $table->decimal('lot_area', 10, 2)->nullable(); // Changed to decimal
-            $table->string('proposed_use')->nullable(); // Added
+            $table->integer('proposed_use'); // Added
             $table->integer('existing_structures')->default(0); // Added
             $table->boolean('setback_compliance')->default(false); // Added
             

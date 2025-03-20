@@ -159,8 +159,13 @@ const approvePermit = async (id) => {
         });
 
         if (result.isConfirmed) {
-            await axios.put(route("zoning.approve", id));
-            Swal.fire("Approved!", "The zoning permit has been approved.", "success");
+            const response = await axios.put(route("zoning.approve", id));
+            if(response.data.status == 2){
+                Swal.fire("Approved!", response.data.message, "success");
+            }else{
+                Swal.fire("Rejected!", response.data.message, "warning");
+            }
+            
             fetchData();
         }
     } catch (error) {

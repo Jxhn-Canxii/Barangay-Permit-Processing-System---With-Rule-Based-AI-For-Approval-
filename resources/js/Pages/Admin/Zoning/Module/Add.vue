@@ -111,8 +111,8 @@
                                 <select v-model="form.right_over_land" class="mt-1 p-2 border rounded-md w-full">
                                     <option value="">Select Type</option>
                                     <option value="Own">Own</option>
-                                    <option value="Rent">Rent</option>
-                                    <option value="Leased">Leased</option>
+                                    <option value="Rent">Rent/Leased</option>
+                                    <option value="Inherited">Inherited</option>
                                 </select>
                                 <p v-if="errors.right_over_land" class="text-red-500 text-xs mt-1">{{ errors.right_over_land[0] }}</p>
                             </div>
@@ -155,29 +155,53 @@
                         <p v-if="errors.setback_compliance" class="text-red-500 text-xs mt-1">{{ errors.setback_compliance[0] }}</p>
                     </div>
 
-                    <!-- Additional Information Section -->
+                    <!-- Property Information Section -->
                     <div class="mb-6">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Additional Information</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Property Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700">Existing Structures</label>
-                                <input type="number" v-model="form.existing_structures" min="0" placeholder="Number of existing structures" class="mt-1 p-2 border rounded-md w-full" />
-                                <p v-if="errors.existing_structures" class="text-red-500 text-xs mt-1">{{ errors.existing_structures[0] }}</p>
+                                <label class="block text-sm font-medium text-gray-700">Location of Lot</label>
+                                <input type="text" v-model="form.location_of_lot" placeholder="Enter location" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.location_of_lot" class="text-red-500 text-xs mt-1">{{ errors.location_of_lot[0] }}</p>
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700">Lot Area (sqm)</label>
-                                <input type="number" v-model="form.lot_area" placeholder="Enter lot area" class="mt-1 p-2 border rounded-md w-full" />
-                                <p v-if="errors.lot_area" class="text-red-500 text-xs mt-1">{{ errors.lot_area[0] }}</p>
+                                <label class="block text-sm font-medium text-gray-700">Right Over Land</label>
+                                <select v-model="form.right_over_land" class="mt-1 p-2 border rounded-md w-full">
+                                    <option value="">Select Type</option>
+                                    <option value="1">Own</option>
+                                    <option value="2">Rent</option>
+                                    <option value="3">Inherited</option>
+                                </select>
+                                <p v-if="errors.right_over_land" class="text-red-500 text-xs mt-1">{{ errors.right_over_land[0] }}</p>
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700">Upload File</label>
-                                <input type="file" @change="handleFileUpload" class="mt-1 p-2 border rounded-md w-full" />
-                                <p v-if="errors.file" class="text-red-500 text-xs mt-1">{{ errors.file[0] }}</p>
+                                <label class="block text-sm font-medium text-gray-700">Zoning District</label>
+                                <select v-model="form.zoning_district" class="mt-1 p-2 border rounded-md w-full">
+                                    <option value="">Select District</option>
+                                    <option value="1">Residential</option>
+                                    <option value="2">Commercial</option>
+                                    <option value="3">Industrial</option>
+                                </select>
+                                <p v-if="errors.zoning_district" class="text-red-500 text-xs mt-1">{{ errors.zoning_district[0] }}</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Proposed Use</label>
+                                <select v-model="form.proposed_use" class="mt-1 p-2 border rounded-md w-full">
+                                    <option value="">Select Proposed Use</option>
+                                    <option value="1">Single Family Home</option>
+                                    <option value="2">Multi-Family Housing</option>
+                                    <option value="3">Retail Business</option>
+                                    <option value="4">Office Space</option>
+                                    <option value="5">Mixed Use</option>
+                                </select>
+                                <p v-if="errors.proposed_use" class="text-red-500 text-xs mt-1">{{ errors.proposed_use[0] }}</p>
                             </div>
                         </div>
                     </div>
+
 
                     <!-- Submit Button -->
                     <div class="flex items-center justify-end">

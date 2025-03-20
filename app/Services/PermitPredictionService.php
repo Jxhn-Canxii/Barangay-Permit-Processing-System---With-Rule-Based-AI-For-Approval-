@@ -8,29 +8,82 @@ use Phpml\Dataset\CsvDataset;
 
 class PermitPredictionService
 {
-    public function trainModel()
+    private $modelPath;
+    private $logPath;
+
+    public function __construct()
     {
-        $dataset = new CsvDataset(storage_path('app/prediction/data.csv'), 1, true);
-
-        $classifier = new DecisionTree();
-        $classifier->train($dataset->getSamples(), $dataset->getTargets());
-
-        // JSON
-        file_put_contents(storage_path('app/prediction/model.json'), json_encode($classifier));
-        
-        return response()->json(['message' => 'Model trained and saved']);
+        $this->modelPath = storage_path('app/prediction/model.serialize');
+        $this->logPath = storage_path('app/prediction/logs.json');
     }
 
+    private function logData(array $data)
+    {
+        $logEntries = file_exists($this->logPath) ? json_decode(file_get_contents($this->logPath), true) : [];
+        $logEntries[] = $data;
+        file_put_contents($this->logPath, json_encode($logEntries, JSON_PRETTY_PRINT));
+    }
+
+    public function trainModel()
+    {
+        $datasetPath = storage_path('app/prediction/zoning_permit_training_data.csv');
+        
+        $logData = [
+            'timestamp' => now()->toDateTimeString(),
+            'status' => 'Training started'
+        ];
+    
+        if (!file_exists($datasetPath)) {
+            $logData['error'] = 'Training dataset not found';
+            $this->logData($logData);
+            return response()->json(['message' => 'Training dataset not found. Check logs for details'], 500);
+        }
+    
+        try {
+            $dataset = new CsvDataset($datasetPath, 16, true);
+            $classifier = new DecisionTree();
+            $classifier->train($dataset->getSamples(), $dataset->getTargets());
+            file_put_contents($this->modelPath, serialize($classifier));
+    
+            $logData['status'] = 'Training successful';
+        } catch (\Exception $e) {
+            $logData['error'] = 'Training failed: ' . $e->getMessage();
+        }
+    
+        $this->logData($logData);
+        return response()->json(['message' => 'Model trained. Check logs for details.']);
+    }
+    
     public function predict($data)
     {
-        // $data = $request->all();
-        $sample = array_values($data); //array format
-
-        // Load the trained model (deserialize)
-        $classifier = json_decode(file_get_contents(storage_path('app/prediction/model.json')), true);
-        
-        $prediction = $classifier->predict($sample);
-
-        return response()->json(['prediction' => $prediction]);
+        if (!file_exists($this->modelPath)) {
+            return response()->json(['message' => 'Model not trained yet'], 500);
+        }
+    
+        $classifier = unserialize(file_get_contents($this->modelPath));
+    
+        if (!$classifier instanceof DecisionTree) {
+            return response()->json(['message' => 'Invalid model data'], 500);
+        }
+    
+        $sample = array_values($data);
+    
+        try {
+            $prediction = $classifier->predict([$sample])[0];
+    
+            $this->logData([
+                'timestamp' => now()->toDateTimeString(),
+                'input' => $sample,
+                'prediction' => $prediction
+            ]);
+    
+            return $prediction;
+        } catch (\Exception $e) {
+            $this->logData([
+                'timestamp' => now()->toDateTimeString(),
+                'error' => 'Prediction failed: ' . $e->getMessage()
+            ]);
+            return response()->json(['message' => 'Prediction failed', 'error' => $e->getMessage()], 500);
+        }
     }
 }

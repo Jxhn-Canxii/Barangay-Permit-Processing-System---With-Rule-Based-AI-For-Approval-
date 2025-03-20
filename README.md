@@ -174,9 +174,10 @@ This will reset and re-run the migrations.
 This project is open-source and available under the MIT License. For more details, check the LICENSE file.
 
 
-7. Installation of Phyton Tensor Flow Ai
+7. Installation of Php Machine Learningcomposer require php-ai/php-ml
 
-composer require rubix/ml
+composer require php-ai/php-ml
+
 
 8. run training data command for zoning approval decision maker - AI
 
