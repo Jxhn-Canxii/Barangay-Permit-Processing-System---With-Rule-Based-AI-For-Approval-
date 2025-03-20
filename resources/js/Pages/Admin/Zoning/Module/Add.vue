@@ -89,9 +89,9 @@
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700">Existing Structures</label>
-                                <input type="number" v-model="form.existing_structures" placeholder="Number of existing structures" class="mt-1 p-2 border rounded-md w-full" />
-                                <p v-if="errors.existing_structures" class="text-red-500 text-xs mt-1">{{ errors.existing_structures[0] }}</p>
+                                <label class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="text" v-model="form.email" placeholder="Enter email" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.email" class="text-red-500 text-xs mt-1">{{ errors.email[0] }}</p>
                             </div>
                         </div>
                     </div>
@@ -119,9 +119,9 @@
                             </div>
                             
                             <div>
-                                <label class="block text-sm font-medium text-gray-700">Email</label>
-                                <input type="text" v-model="form.email" placeholder="Enter email" class="mt-1 p-2 border rounded-md w-full" />
-                                <p v-if="errors.email" class="text-red-500 text-xs mt-1">{{ errors.email[0] }}</p>
+                                <label class="block text-sm font-medium text-gray-700">Existing Structures</label>
+                                <input type="number" v-model="form.existing_structures" placeholder="Number of existing structures" class="mt-1 p-2 border rounded-md w-full" />
+                                <p v-if="errors.existing_structures" class="text-red-500 text-xs mt-1">{{ errors.existing_structures[0] }}</p>
                             </div>
                             
                             <div>
