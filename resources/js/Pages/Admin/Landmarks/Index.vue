@@ -12,7 +12,7 @@
                     <input
                         type="text"
                         v-model="search.search"
-                        @input.prevent="fetchData()"
+                        @input.prevent="searchInput()"
                         placeholder="Search Landmarks"
                         class="px-2 py-2 font-bold mb-4 w-full text-md float-end text-black rounded shadow"
                     />
@@ -84,6 +84,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import Paginator from "@/Components/Paginator.vue";
+import { useDebounce } from "@/Utility/Helper.js";
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -104,6 +105,12 @@ const search = ref({
 onMounted(() => {
     fetchData();
 });
+
+const searchInput = useDebounce(async () => {
+  search.value.page_num = 1;
+  data.value.items = []; // Clear current items
+  await fetchData();
+}, 500);
 
 // Fetch the landmarks data
 const fetchData = async () => {

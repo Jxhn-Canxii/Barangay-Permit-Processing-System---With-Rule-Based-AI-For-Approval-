@@ -188,9 +188,10 @@ class ZoningController extends Controller
             'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png',
 
         ]);
-       
-        // Store the uploaded file
-        $filePath = $request->file('file')->store('zoning_permits', 'public');
+        $filePath = null;
+        if ($request->hasFile('file')) {
+            $filePath = $request->file('file')->store('zoning_permits', 'public');
+        }        
 
         // Insert into database
         DB::table('zoning_permits')->insert([

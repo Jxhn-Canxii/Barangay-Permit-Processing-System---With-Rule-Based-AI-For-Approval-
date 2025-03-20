@@ -6,7 +6,7 @@
             <input
                 type="text"
                 v-model="search.search"
-                @input.prevent="fetchData()"
+                @input.prevent="searchInput"
                 placeholder="Search Zoning Permits"
                 class="mt-1 mb-4 p-2 border rounded w-full text-black"
             />
@@ -88,6 +88,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import Paginator from "@/Components/Paginator.vue";
+import { useDebounce } from "@/Utility/Helper.js";
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -106,6 +107,12 @@ const search = ref({
 onMounted(() => {
     fetchData();
 });
+
+const searchInput = useDebounce(async () => {
+  search.value.page_num = 1;
+  data.value.items = []; // Clear current items
+  await fetchData();
+}, 500);
 
 // Fetch the zoning permits data
 const fetchData = async () => {
