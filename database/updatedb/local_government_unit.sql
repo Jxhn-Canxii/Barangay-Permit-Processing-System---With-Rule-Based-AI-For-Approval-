@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2025 at 01:26 AM
+-- Generation Time: Mar 20, 2025 at 02:22 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -75,7 +75,7 @@ INSERT INTO `landmarks` (`id`, `name`, `building_type`, `description`, `latitude
 (3, 'San Agustin Covered Court', 'Sports Facility', 'Covered basketball court', '14.6461', '121.0435', '2025-03-18 23:33:17', '2025-03-18 23:33:17'),
 (4, 'Barangay Health Center (San Agustin)', 'Health Center', 'Local health center', '14.6462', '121.0433', '2025-03-18 23:33:17', '2025-03-18 23:33:17'),
 (5, 'Public Market (Near San Agustin)', 'Market', 'Public market near barangay', '14.6459', '121.0438', '2025-03-18 23:33:17', '2025-03-18 23:33:17'),
-(6, 'Best Link College - Philippines', 'Residential', 'No description available', '13473731.48', '1657718.51', '2025-03-18 23:33:17', '2025-03-19 00:34:59'),
+(6, 'BCP', 'Market', 'No description available', '13473731.48', '1657718.51', '2025-03-18 23:33:17', '2025-03-19 09:34:20'),
 (7, 'Amaia Series Village', 'Residential', 'Housing subdivision', '13473893.34', '1659107.29', '2025-03-18 23:33:17', '2025-03-18 23:33:17'),
 (8, 'Novaliches Highschool', 'School', 'High school in the area', '13473292.65', '1657743.05', '2025-03-18 23:33:17', '2025-03-18 23:33:17');
 
@@ -109,7 +109,11 @@ INSERT INTO `logs` (`id`, `user_id`, `action`, `module`, `ip_address`, `details`
 (6, 1, 'Approved zoning permit for Nisi corrupti sed q Fugiat nostrum elit', 'Zoning Application', NULL, NULL, '2025-03-18 08:32:58', '2025-03-18 16:32:58'),
 (7, 1, 'Approved zoning permit for Nisi corrupti sed q Fugiat nostrum elit', 'Zoning Application', NULL, NULL, '2025-03-18 08:33:15', '2025-03-18 16:33:15'),
 (8, 1, 'Added zoning permit for Ab cum perspiciatis Dicta pariatur Aliq', 'Zoning Application', NULL, NULL, '2025-03-18 08:34:06', '2025-03-18 16:34:06'),
-(9, 1, 'Approved zoning permit for Ab cum perspiciatis Dicta pariatur Aliq', 'Zoning Application', NULL, NULL, '2025-03-18 08:34:10', '2025-03-18 16:34:10');
+(9, 1, 'Approved zoning permit for Ab cum perspiciatis Dicta pariatur Aliq', 'Zoning Application', NULL, NULL, '2025-03-18 08:34:10', '2025-03-18 16:34:10'),
+(10, 1, 'Added zoning permit for Reprehenderit non e Sit recusandae Eos', 'Zoning Application', NULL, NULL, '2025-03-19 01:39:07', '2025-03-19 09:39:07'),
+(11, 1, 'Rejected zoning permit for Reprehenderit non e Sit recusandae Eos', 'Zoning Application', NULL, NULL, '2025-03-19 01:41:06', '2025-03-19 09:41:06'),
+(12, 1, 'Added zoning permit for Expedita beatae quis Omnis aliquid quo co', 'Zoning Application', NULL, NULL, '2025-03-19 01:42:49', '2025-03-19 09:42:49'),
+(13, 1, 'Added zoning permit for Distinctio Id magna Harum magna dolorum', 'Zoning Application', NULL, NULL, '2025-03-19 02:25:22', '2025-03-19 10:25:22');
 
 -- --------------------------------------------------------
 
@@ -185,13 +189,13 @@ CREATE TABLE `zoning_permits` (
   `contact_number` varchar(50) NOT NULL,
   `email` varchar(100) DEFAULT NULL,
   `location_of_lot` varchar(255) NOT NULL,
-  `right_over_land` varchar(100) DEFAULT NULL,
+  `right_over_land` tinyint(4) DEFAULT NULL,
   `lot_area` varchar(50) DEFAULT NULL,
-  `zoning_district` enum('residential','commercial','industrial') NOT NULL,
-  `proposed_use` varchar(255) NOT NULL,
-  `existing_structures` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `proposed_use` tinyint(4) DEFAULT NULL,
+  `zoning_district` tinyint(4) DEFAULT NULL,
+  `existing_structures` int(11) DEFAULT NULL,
+  `setback_compliance` tinyint(1) DEFAULT NULL,
   `uploaded_file` varchar(255) DEFAULT NULL,
-  `setback_compliance` tinyint(1) NOT NULL,
   `status_id` int(11) NOT NULL,
   `inputted_by` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -202,10 +206,9 @@ CREATE TABLE `zoning_permits` (
 -- Dumping data for table `zoning_permits`
 --
 
-INSERT INTO `zoning_permits` (`id`, `date_of_application`, `or_date`, `official_receipt_no`, `first_name`, `middle_name`, `last_name`, `address`, `zip`, `owner_name`, `contact_number`, `email`, `location_of_lot`, `right_over_land`, `lot_area`, `zoning_district`, `proposed_use`, `existing_structures`, `uploaded_file`, `setback_compliance`, `status_id`, `inputted_by`, `created_at`, `updated_at`) VALUES
-(1, '1985-08-25', '2008-09-26', 'Aliquid aliqua Eum', 'Hernan', 'John', 'Canciller', 'Bulkan Mayon,Alpha Chupapi Munyanyo,Block 69 Kilid sa Kamunggayan.', '6014', 'Iusto qui aliquam co', '09561741499', 'greygreygrey35@gmail.com', 'Sit est minima adi', 'Philippines', '88', 'residential', '', 0, 'zoning_permits/ZnQOm6i1K57er3QFgRKMFUMSxIz1hA44uFB2fnsO.pdf', 0, 2, 1, '2025-03-18 08:27:32', '2025-03-18 08:28:24'),
-(2, '2009-02-10', '2000-05-28', 'Commodi ex sit ipsu', 'Nisi corrupti sed q', 'Consequatur et dolo', 'Fugiat nostrum elit', 'Ut amet eos quia e', '9259', 'Consequat Possimus', 'Et exercitationem et', 'zykiwynot@mailinator.com', 'Mollitia architecto', 'Fugiat voluptate ali', '31', 'residential', '', 0, 'zoning_permits/VvYqexAXxOJMlXcZjuZZmBMrKScPSbGZQBYavs8o.jpg', 0, 2, 1, '2025-03-18 08:32:54', '2025-03-18 08:33:15'),
-(3, '2019-05-14', '1982-03-04', 'Aute ut veritatis fu', 'Ab cum perspiciatis', 'Fuga Commodo sit ma', 'Dicta pariatur Aliq', 'Minim voluptas sed a', '2876', 'Neque odio itaque al', 'Deserunt in maxime e', 'ximokajaw@mailinator.com', 'Iusto et deleniti si', 'Quia fugiat officii', '96', 'residential', '', 0, 'zoning_permits/TviDchYVI2xdbyvdAsFV00Gf53RVzR2fSU3ZNS3s.jpg', 0, 2, 1, '2025-03-18 08:34:05', '2025-03-18 08:34:10');
+INSERT INTO `zoning_permits` (`id`, `date_of_application`, `or_date`, `official_receipt_no`, `first_name`, `middle_name`, `last_name`, `address`, `zip`, `owner_name`, `contact_number`, `email`, `location_of_lot`, `right_over_land`, `lot_area`, `proposed_use`, `zoning_district`, `existing_structures`, `setback_compliance`, `uploaded_file`, `status_id`, `inputted_by`, `created_at`, `updated_at`) VALUES
+(1, '2025-01-15', '2025-01-20', '992345', 'Alex', 'C.', 'Johnson', '456 Neutral Ave', '2002', 'Alex Johnson', '09234567890', 'alex.johnson@example.com', 'Lot X', 1, '2500.00', 5, 2, 2, 1, 'file_pending.pdf', 3, 0, '2025-03-20 13:14:29', '2025-03-20 05:15:45'),
+(2, '2025-03-15', '2025-03-16', '100123', 'John', 'Michael', 'Doe', '123 Main St', '1000', 'John Doe', '09171234567', 'johndoe@example.com', 'Lot 15, Block 8, City Subdivision', 0, '5000', 0, 0, 0, 1, 'zoning_application.pdf', 3, 0, '2025-03-20 13:16:46', '2025-03-20 05:16:54');
 
 --
 -- Indexes for dumped tables
@@ -268,7 +271,7 @@ ALTER TABLE `landmarks`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -286,7 +289,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `zoning_permits`
 --
 ALTER TABLE `zoning_permits`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
