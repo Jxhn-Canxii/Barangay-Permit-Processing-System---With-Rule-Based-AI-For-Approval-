@@ -181,7 +181,7 @@ class ZoningController extends Controller
             'location_of_lot' => 'required|string|max:255',
             'right_over_land' => 'required|string|max:50',
             'lot_area' => 'required|string|max:50',
-            'zoning_district' => 'required|string|in:residential,commercial,industrial',
+            'zoning_district' => 'required|integer|min:0',
             'proposed_use' => 'required|string|max:255',
             'existing_structures' => 'required|integer|min:0',
             'setback_compliance' => 'required|string',
