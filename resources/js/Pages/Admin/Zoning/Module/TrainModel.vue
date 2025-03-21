@@ -14,35 +14,38 @@ import { useForm } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-
-
 const trainModel = async () => {
     // Show a confirmation dialog
     Swal.fire({
         title: "Are you sure?",
-        text: "You are about to trainModel this team.",
+        text: "You are about to train the machine learning model. This may take some time.",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "Yes, trainModel it!",
+        confirmButtonText: "Yes, train the model!",
         cancelButtonText: "No, cancel!",
         reverseButtons: true,
     }).then(async (result) => {
         if (result.isConfirmed) {
             try {
                 const response = await axios.get(route("zoning.train"));
-                if (response) {
+                if (response.data.success) {
                     Swal.fire({
                         title: "Success!",
-                        text: "Team removed successfully.",
+                        text: "The model has been trained successfully.",
                         icon: "success",
                     });
-                    // Refresh leagues
-                    emits('transaction_id',Math.random());
+                    // Optionally refresh data or trigger another action here
+                    emits('transaction_id', Math.random());
                 } else {
-                    throw new Error("Failed to trainModel team");
+                    throw new Error("Failed to train the model");
                 }
             } catch (error) {
-                console.error("Error deleting team:", error);
+                console.error("Error training model:", error);
+                Swal.fire({
+                    title: "Error",
+                    text: error.response.data.message,
+                    icon: "error",
+                });
             }
         }
     });
