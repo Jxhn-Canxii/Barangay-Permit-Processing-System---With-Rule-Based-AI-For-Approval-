@@ -28,12 +28,22 @@ const trainModel = async () => {
         if (result.isConfirmed) {
             try {
                 const response = await axios.get(route("zoning.train"));
-                if (response.data.success) {
-                    Swal.fire({
+                console.log(response);
+                if (response.data) {
+                   const data = response.data.original;
+
+                   Swal.fire({
                         title: "Success!",
-                        text: "The model has been trained successfully.",
+                        html: `
+                            <p>${data.message}</p>
+                            <ul>
+                                <li><strong>Samples Count:</strong> ${data.training_details.samples_count}</li>
+                                <li><strong>Features Count:</strong> ${data.training_details.features_count}</li>
+                            </ul>
+                        `,
                         icon: "success",
                     });
+
                     // Optionally refresh data or trigger another action here
                     emits('transaction_id', Math.random());
                 } else {

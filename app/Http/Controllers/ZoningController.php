@@ -244,7 +244,9 @@ class ZoningController extends Controller
     }
     public function trainModel() {
 
-       return $this->predictionService->trainModel();
+       $trainModel = $this->predictionService->trainModel();
+
+       return response()->json($trainModel);
     }
     //approve zoning with ai decision making using PHP AI
     public function decideByAI(Request $request, $id)
