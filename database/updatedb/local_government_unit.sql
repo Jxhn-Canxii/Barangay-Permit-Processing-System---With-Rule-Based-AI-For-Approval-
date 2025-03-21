@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2025 at 02:22 PM
+-- Generation Time: Mar 21, 2025 at 03:27 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -113,7 +113,8 @@ INSERT INTO `logs` (`id`, `user_id`, `action`, `module`, `ip_address`, `details`
 (10, 1, 'Added zoning permit for Reprehenderit non e Sit recusandae Eos', 'Zoning Application', NULL, NULL, '2025-03-19 01:39:07', '2025-03-19 09:39:07'),
 (11, 1, 'Rejected zoning permit for Reprehenderit non e Sit recusandae Eos', 'Zoning Application', NULL, NULL, '2025-03-19 01:41:06', '2025-03-19 09:41:06'),
 (12, 1, 'Added zoning permit for Expedita beatae quis Omnis aliquid quo co', 'Zoning Application', NULL, NULL, '2025-03-19 01:42:49', '2025-03-19 09:42:49'),
-(13, 1, 'Added zoning permit for Distinctio Id magna Harum magna dolorum', 'Zoning Application', NULL, NULL, '2025-03-19 02:25:22', '2025-03-19 10:25:22');
+(13, 1, 'Added zoning permit for Distinctio Id magna Harum magna dolorum', 'Zoning Application', NULL, NULL, '2025-03-19 02:25:22', '2025-03-19 10:25:22'),
+(14, 1, 'Added zoning permit for In neque non eaque e Rerum corporis quia', 'Zoning Application', NULL, NULL, '2025-03-20 16:58:16', '2025-03-21 00:58:16');
 
 -- --------------------------------------------------------
 
@@ -193,7 +194,7 @@ CREATE TABLE `zoning_permits` (
   `lot_area` varchar(50) DEFAULT NULL,
   `proposed_use` tinyint(4) DEFAULT NULL,
   `zoning_district` tinyint(4) DEFAULT NULL,
-  `existing_structures` int(11) DEFAULT NULL,
+  `existing_structures` tinyint(1) DEFAULT NULL,
   `setback_compliance` tinyint(1) DEFAULT NULL,
   `uploaded_file` varchar(255) DEFAULT NULL,
   `status_id` int(11) NOT NULL,
@@ -201,14 +202,6 @@ CREATE TABLE `zoning_permits` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `zoning_permits`
---
-
-INSERT INTO `zoning_permits` (`id`, `date_of_application`, `or_date`, `official_receipt_no`, `first_name`, `middle_name`, `last_name`, `address`, `zip`, `owner_name`, `contact_number`, `email`, `location_of_lot`, `right_over_land`, `lot_area`, `proposed_use`, `zoning_district`, `existing_structures`, `setback_compliance`, `uploaded_file`, `status_id`, `inputted_by`, `created_at`, `updated_at`) VALUES
-(1, '2025-01-15', '2025-01-20', '992345', 'Alex', 'C.', 'Johnson', '456 Neutral Ave', '2002', 'Alex Johnson', '09234567890', 'alex.johnson@example.com', 'Lot X', 1, '2500.00', 5, 2, 2, 1, 'file_pending.pdf', 3, 0, '2025-03-20 13:14:29', '2025-03-20 05:15:45'),
-(2, '2025-03-15', '2025-03-16', '100123', 'John', 'Michael', 'Doe', '123 Main St', '1000', 'John Doe', '09171234567', 'johndoe@example.com', 'Lot 15, Block 8, City Subdivision', 0, '5000', 0, 0, 0, 1, 'zoning_application.pdf', 3, 0, '2025-03-20 13:16:46', '2025-03-20 05:16:54');
 
 --
 -- Indexes for dumped tables
@@ -271,7 +264,7 @@ ALTER TABLE `landmarks`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -289,7 +282,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `zoning_permits`
 --
 ALTER TABLE `zoning_permits`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

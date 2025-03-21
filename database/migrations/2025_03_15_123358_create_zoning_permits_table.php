@@ -27,7 +27,7 @@ return new class extends Migration {
             $table->integer('right_over_land');
             $table->decimal('lot_area', 10, 2)->nullable(); // Changed to decimal
             $table->integer('proposed_use'); // Added
-            $table->integer('existing_structures')->default(0); // Added
+            $table->boolean('existing_structures')->default(false); // Added
             $table->boolean('setback_compliance')->default(false); // Added
             
             // Status and tracking
