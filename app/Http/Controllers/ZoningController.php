@@ -228,7 +228,7 @@ class ZoningController extends Controller
     }
     
     //approve zoning with ai decision making
-    public function approve(Request $request, $id)
+    public function decideByAI(Request $request, $id)
     {
         // Get zoning permit details
         $permit = DB::table('zoning_permits')
@@ -331,7 +331,7 @@ class ZoningController extends Controller
     }
 
     //approve zoning without ai intervention
-    public function approvev1(Request $request, $id)
+    public function approve(Request $request, $id)
     {
         $userId = $request->user()->id;
     
