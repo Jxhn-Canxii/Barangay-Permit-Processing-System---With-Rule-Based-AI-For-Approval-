@@ -66,16 +66,16 @@
           </template>
           Zonal Map
         </nav-link>
-        <nav-link :href="route('users.index')" :active="route().current('users.index')">
-          <template #icon>
-            <i class="fa fa-users"></i>
-          </template>
-          Users
-        </nav-link>
       </template>
 
       <!-- System Logs Section -->
-      <p class="px-4 text-xs text-gray-400 uppercase mt-4">System Logs</p>
+      <p class="px-4 text-xs text-gray-400 uppercase mt-4">System</p>
+      <nav-link :href="route('users.index')" :active="route().current('users.index')">
+        <template #icon>
+          <i class="fa fa-users"></i>
+        </template>
+        Users
+      </nav-link>
       <nav-link :href="route('logs.index')" :active="route().current('logs.index')">
         <template #icon>
           <i class="fa fa-history"></i>
