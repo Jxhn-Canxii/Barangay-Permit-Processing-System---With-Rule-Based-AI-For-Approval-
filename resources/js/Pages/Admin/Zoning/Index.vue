@@ -3,13 +3,15 @@
         <Head title="Zoning Permits" />
         <p hidden>{{ sessionRole = $page.props.auth.user.role }} Plus 1 Happy Kaarawan</p>
         <AuthenticatedLayout>
-            <template #header> Zoning Permits </template>
+            <template #header> Zoning Permits {{ sessionRole.value }}</template>
 
             <div class="bg-white rounded shadow p-4">
-
+                
                 <!-- Add Permit Button -->
-                <Add v-if="sessionRole.value != 3" @transaction_id="handleTransaction()" />
-
+                <div class="flex justify-between gap-4">
+                    <TrainModel v-if="sessionRole == 1" @transaction_id="handleTransaction()" />
+                    <Add v-if="sessionRole != 3" @transaction_id="handleTransaction()" />
+                </div>
                 <!-- Tabs Navigation -->
                 <div class="flex flex-wrap px-3">
                     <!-- Tab Buttons (Responsive) -->
@@ -44,6 +46,7 @@ import { Head } from "@inertiajs/vue3";
 import { ref, computed } from "vue";
 
 import Add from "./Module/Add.vue";
+import TrainModel from "./Module/TrainModel.vue";
 import ApprovedList from "./Module/ApprovedList.vue";
 import PendingList from "./Module/PendingList.vue";
 import RejectedList from "./Module/RejectedList.vue";

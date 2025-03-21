@@ -78,6 +78,9 @@ Route::middleware('auth')->group(function () {
         Route::put('decide/{id}', [ZoningController::class, 'decideByAI'])->name('zoning.decide'); // Approve permit
         Route::put('approve/{id}', [ZoningController::class, 'approve'])->name('zoning.approve'); // Approve permit
         Route::put('reject/{id}', [ZoningController::class, 'reject'])->name('zoning.reject'); // Reject permit
+
+        Route::get('train', [ZoningController::class, 'trainModel'])->name('zoning.train'); // Add new zoning permit with file upload
+        
     });
     Route::prefix('landmark/')->group(function(){
         Route::get('', [LandMarkController::class, 'index'])->name('landmark.index');

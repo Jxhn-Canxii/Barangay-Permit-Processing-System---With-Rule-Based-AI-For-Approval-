@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
+
+//ai
+
+//mailer
 use App\Mail\ZoningPermitApproved;
 use App\Mail\ZoningPermitRejected;
 use Illuminate\Support\Facades\Mail;
@@ -233,7 +237,10 @@ class ZoningController extends Controller
 
         return response()->json(['message' => 'Zoning permit submitted successfully'], 201);
     }
-    
+    public function trainModel() {
+        
+       return $this->predictionService->trainModel();
+    }
     //approve zoning with ai decision making using PHP AI
     public function decideByAI(Request $request, $id)
     {
