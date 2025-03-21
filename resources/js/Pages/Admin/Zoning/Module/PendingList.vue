@@ -213,7 +213,7 @@ const decideByAi = async (id) => {
         }
     } catch (error) {
         console.error("Error processing zoning permit:", error);
-        Swal.fire("Error!", error.response?.data?.error || "Something went wrong.", "error");
+        Swal.fire("Error!", error.response?.data?.message || "Something went wrong.", "error");
     }
 };
 
@@ -241,7 +241,7 @@ const approvePermit = async (id) => {
         }
     } catch (error) {
         console.error("Error approving zoning permit:", error);
-        Swal.fire("Error!", error.response?.data?.error || "Something went wrong.", "error");
+        Swal.fire("Error!", error.response?.data?.message || "Something went wrong.", "error");
     }
 };
 
@@ -265,7 +265,7 @@ const rejectPermit = async (id) => {
         }
     } catch (error) {
         console.error("Error rejecting zoning permit:", error);
-        Swal.fire("Error!", error.response?.data?.error || "Something went wrong.", "error");
+        Swal.fire("Error!", error.response?.data?.message || "Something went wrong.", "error");
     }
 };
 
