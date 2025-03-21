@@ -1,0 +1,26 @@
+{
+    "timestamp": "2025-03-20 13:41:21",
+    "feature_count": 18,
+    "expected_features": 24,
+    "input": {
+        "date_of_application": "2023-11-09",
+        "or_date": "1985-09-10",
+        "official_receipt_no": "Consequat Vel nisi",
+        "first_name": "Cupidatat illum id",
+        "middle_name": "Id quaerat dolor exe",
+        "last_name": "Perferendis aut rati",
+        "address": "Nulla ut obcaecati c",
+        "zip": "8749",
+        "owner_name": "Nesciunt qui sunt a",
+        "contact_number": "Minima rerum debitis",
+        "email": "asd@gmail.com",
+        "location_of_lot": "Delectus voluptatum",
+        "right_over_land": 2,
+        "lot_area": "2000",
+        "zoning_district": 2,
+        "proposed_use": 4,
+        "existing_structures": 2,
+        "setback_compliance": 1
+    },
+    "prediction": 2
+}
