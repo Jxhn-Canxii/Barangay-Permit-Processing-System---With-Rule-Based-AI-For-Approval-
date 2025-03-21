@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Response;
 
 //ai
 
@@ -201,8 +203,11 @@ class ZoningController extends Controller
         
         $filePath = null;
         if ($request->hasFile('file')) {
-            $filePath = $request->file('file')->store('zoning_permits', 'public');
-        }        
+            // Store the file in storage/app/zoning_permits
+            $filePath = $request->file('file')->store('zoning_permits');  // No 'public' disk here, just 'zoning_permits'
+        }
+
+      
 
         // Insert into database
         DB::table('zoning_permits')->insert([
@@ -238,7 +243,7 @@ class ZoningController extends Controller
         return response()->json(['message' => 'Zoning permit submitted successfully'], 201);
     }
     public function trainModel() {
-        
+
        return $this->predictionService->trainModel();
     }
     //approve zoning with ai decision making using PHP AI
@@ -550,6 +555,29 @@ class ZoningController extends Controller
 
         // Default: Reject if no AI model is available
         return 3;
+    }
+
+
+    public function viewImage($filename)
+    {
+        // Define the path to the file within the 'zoning_permits' directory
+        $path = 'zoning_permits/' . $filename;
+    
+        // Ensure the file exists in storage
+        if (Storage::disk('local')->exists($path)) {
+            // Get the file content
+            $file = Storage::disk('local')->get($path);
+    
+            // Get the file's MIME type
+            $mimeType = Storage::disk('local')->mimeType($path);
+    
+            // Return the file with the appropriate content type
+            return response($file, 200)
+                ->header('Content-Type', $mimeType);
+        } else {
+            // If the file doesn't exist, return a 404 response
+            abort(404);
+        }
     }
 
 }

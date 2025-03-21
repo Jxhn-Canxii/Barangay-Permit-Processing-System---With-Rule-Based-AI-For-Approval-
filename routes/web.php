@@ -68,6 +68,8 @@ Route::middleware('auth')->group(function () {
         Route::post('list', [LogsController::class, 'listLogs'])->name('logs.list');
     });
     
+    Route::get('view-image/{filename}', [ZoningController::class, 'viewImage']);
+
     Route::prefix('zoning/')->group(function(){
         Route::get('', [ZoningController::class, 'index'])->name('zoning.index');
         Route::post('list-rejected', [ZoningController::class, 'listRejected'])->name('zoning.rejected.list'); // List with pagination

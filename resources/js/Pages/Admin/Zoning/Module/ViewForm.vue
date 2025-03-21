@@ -133,7 +133,9 @@ const proposedUseText = computed(() => {
 });
 
 const fileUrl = computed(() => {
-    return `/storage/${props.data.uploaded_file}`;
+    const formattedFile = (props.data.uploaded_file).replace('zoning_permits/','');
+
+    return `view-image/${formattedFile}`;
 });
 </script>
 
