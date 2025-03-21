@@ -166,6 +166,11 @@ class ZoningController extends Controller
     {
         $userId = $request->user()->id;
 
+        $request->merge([
+            'existing_structures' => $request->has('existing_structures') ? filter_var($request->existing_structures, FILTER_VALIDATE_BOOLEAN) : false,
+            'setback_compliance' => $request->has('setback_compliance') ? filter_var($request->setback_compliance, FILTER_VALIDATE_BOOLEAN) : false,
+        ]);
+        
         $request->validate([
             'date_of_application' => 'required|date',
             'or_date' => 'required|date',
@@ -183,11 +188,13 @@ class ZoningController extends Controller
             'lot_area' => 'required|string|max:50',
             'zoning_district' => 'required|integer|min:0',
             'proposed_use' => 'required|string|max:255',
-            'existing_structures' => 'required|in:1,0,true,false',
-            'setback_compliance' => 'required|in:1,0,true,false',
+            'existing_structures' => 'boolean', // No need for required since we default it
+            'setback_compliance' => 'boolean', // No need for required since we default it
             'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png',
-
         ]);
+        
+
+        
         $filePath = null;
         if ($request->hasFile('file')) {
             $filePath = $request->file('file')->store('zoning_permits', 'public');
