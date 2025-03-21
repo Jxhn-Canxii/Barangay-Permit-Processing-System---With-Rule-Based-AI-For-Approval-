@@ -50,13 +50,13 @@
                             </td>
                             <td class="border-b border-gray-200 px-5 py-5 text-sm">
                                 <div class="flex justify-center space-x-2">
-                                    <button v-if="permit.status_id === 1 && sessionRole == 1" @click="decideByAi(permit.id)" class="px-3 py-1 bg-purple-500 text-white rounded">
+                                    <button v-if="permit.status_id === 1 && sessionRole == 1" @click="decideByAi(permit.id)" class="px-3 py-2 bg-purple-500 text-white rounded">
                                         <i class="fa fa-robot"></i> Let AI Decide
                                     </button>
-                                    <button v-if="permit.status_id === 1 && sessionRole == 1" @click="approvePermit(permit.id)" class="px-3 py-1 bg-green-500 text-white rounded">
+                                    <button v-if="permit.status_id === 1 && sessionRole == 1" @click="approvePermit(permit.id)" class="px-3 py-2 bg-green-500 text-white rounded">
                                         <i class="fa fa-thumbs-up"></i> Approve
                                     </button>
-                                    <button v-if="permit.status_id === 1 && sessionRole == 1" @click="rejectPermit(permit.id)" class="px-3 py-1 bg-red-500 text-white rounded">
+                                    <button v-if="permit.status_id === 1 && sessionRole == 1" @click="rejectPermit(permit.id)" class="px-3 py-2 bg-red-500 text-white rounded">
                                         <i class="fa fa-thumbs-down"></i> Reject
                                     </button>
                                     <ViewForm :key="permit.id" :data="permit" />
@@ -196,10 +196,13 @@ const decideByAi = async (id) => {
                 text: "Would you like to approve or reject the permit?",
                 icon: "warning",
                 showDenyButton: true,
+                showCancelButton: true,
                 confirmButtonText: "Approve",
                 denyButtonText: "Reject",
+                cancelButtonText: "Cancel",
                 confirmButtonColor: "#3085d6",
                 denyButtonColor: "#d33",
+                cancelButtonColor: "#a9a9a9",
             });
 
             if (manualDecision.isConfirmed) {

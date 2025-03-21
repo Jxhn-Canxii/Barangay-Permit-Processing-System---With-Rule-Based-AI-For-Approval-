@@ -1,7 +1,7 @@
 <template>
     <button
         @click.prevent="isViewModalOpen = true"
-        class="px-3 py-1 bg-blue-500 text-white rounded"
+        class="px-3 py-2 bg-blue-500 text-white rounded"
     >
         <i class="fa fa-eye"></i> View
     </button>
