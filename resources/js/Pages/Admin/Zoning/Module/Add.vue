@@ -96,32 +96,40 @@
                         </div>
                     </div>
 
-                    <!-- Setback Compliance Section -->
                     <div class="mb-6">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Setback Compliance</h3>
-                        <div class="mt-2">
-                            <label class="inline-flex items-center">
-                                <input type="checkbox" v-model="form.setback_compliance" class="form-checkbox h-5 w-5 text-blue-600" />
-                                <span class="ml-2 text-gray-700">Compliant with setback regulations</span>
-                            </label>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Compliance</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <!-- Setback Compliance Section -->
+                            <div class="mb-6">
+                                <h3 class="text-md font-semibold text-gray-800 mb-2">Setback Compliance</h3>
+                                <div class="mt-2">
+                                    <label class="inline-flex items-center">
+                                        <input type="checkbox" v-model="form.setback_compliance" class="form-checkbox h-5 w-5 text-blue-600" />
+                                        <span class="ml-2 text-gray-700">Compliant with setback regulations</span>
+                                    </label>
+                                </div>
+                                <p v-if="errors.setback_compliance" class="text-red-500 text-xs mt-1">{{ errors.setback_compliance[0] }}</p>
+                            </div>
+                            <div class="mb-6">
+                                <h3 class="text-md font-semibold text-gray-800 mb-2">Existing Structures Compliance</h3>
+                                <div class="mt-2">
+                                    <label class="inline-flex items-center">
+                                        <input type="checkbox" v-model="form.existing_structures" class="form-checkbox h-5 w-5 text-blue-600" />
+                                        <span class="ml-2 text-gray-700"> Are there existing structures on this lot?</span>
+                                    </label>
+                                </div>
+                                <p v-if="errors.existing_structures" class="text-red-500 text-xs mt-1">{{ errors.setback_compliance[0] }}</p>
+                            </div>
                         </div>
-                        <p v-if="errors.setback_compliance" class="text-red-500 text-xs mt-1">{{ errors.setback_compliance[0] }}</p>
                     </div>
-
                     <!-- Property Information Section -->
                     <div class="mb-6">
                         <h3 class="text-lg font-semibold text-gray-800 mb-2">Property Information</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Location of Lot</label>
                                 <input type="text" v-model="form.location_of_lot" placeholder="Enter location" class="mt-1 p-2 border rounded-md w-full" />
                                 <p v-if="errors.location_of_lot" class="text-red-500 text-xs mt-1">{{ errors.location_of_lot[0] }}</p>
-                            </div>
-                            
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Existing Structures</label>
-                                <input type="number" v-model="form.existing_structures" placeholder="Number of existing structures" class="mt-1 p-2 border rounded-md w-full" />
-                                <p v-if="errors.existing_structures" class="text-red-500 text-xs mt-1">{{ errors.existing_structures[0] }}</p>
                             </div>
                             
                             <div>
@@ -219,7 +227,7 @@ const form = useForm({
     lot_area: "",
     zoning_district: '',
     proposed_use: '',
-    existing_structures: 0,
+    existing_structures: false,
     setback_compliance: false,
     file: null,
 });

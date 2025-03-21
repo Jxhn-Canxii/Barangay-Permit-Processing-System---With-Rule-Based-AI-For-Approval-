@@ -183,8 +183,8 @@ class ZoningController extends Controller
             'lot_area' => 'required|string|max:50',
             'zoning_district' => 'required|integer|min:0',
             'proposed_use' => 'required|string|max:255',
-            'existing_structures' => 'nullable|boolean',
-            'setback_compliance' => 'nullable|boolean',
+            'existing_structures' => 'required|in:1,0,true,false',
+            'setback_compliance' => 'required|in:1,0,true,false',
             'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png',
 
         ]);
@@ -211,7 +211,7 @@ class ZoningController extends Controller
             'lot_area' => $request->lot_area,
             'zoning_district' => $request->zoning_district,
             'proposed_use' => $request->proposed_use,
-            'existing_structures' => $request->existing_structures,
+            'existing_structures' => (Boolean) $request->existing_structures,
             'setback_compliance' => (Boolean) $request->setback_compliance,
             'uploaded_file' => $filePath,
             'status_id' => 1,
