@@ -19,7 +19,7 @@
                         @click="activeTab = tab"
                         class="px-4 py-2 hover:bg-gray-200 focus:outline-none text-center w-full sm:w-auto"
                         :class="{
-                            'border-b-2 border-blue-500 font-bold': activeTab === tab,
+                            'border-b-2 border-emerald-500 bg-yellow-50 text-emerald-500 font-bold': activeTab === tab,
                             'text-gray-600': activeTab !== tab
                         }"
                     >

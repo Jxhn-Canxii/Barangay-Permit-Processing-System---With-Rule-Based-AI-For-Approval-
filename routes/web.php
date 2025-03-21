@@ -75,6 +75,7 @@ Route::middleware('auth')->group(function () {
         Route::post('list-pending', [ZoningController::class, 'listPending'])->name('zoning.pending.list'); // List with pagination
         
         Route::post('add', [ZoningController::class, 'add'])->name('zoning.add'); // Add new zoning permit with file upload
+        Route::put('decide/{id}', [ZoningController::class, 'decideByAI'])->name('zoning.decide'); // Approve permit
         Route::put('approve/{id}', [ZoningController::class, 'approve'])->name('zoning.approve'); // Approve permit
         Route::put('reject/{id}', [ZoningController::class, 'reject'])->name('zoning.reject'); // Reject permit
     });

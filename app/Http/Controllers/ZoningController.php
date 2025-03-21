@@ -183,7 +183,7 @@ class ZoningController extends Controller
             'lot_area' => 'required|string|max:50',
             'zoning_district' => 'required|integer|min:0',
             'proposed_use' => 'required|string|max:255',
-            'existing_structures' => 'required|integer|min:0',
+            'existing_structures' => 'nullable|boolean',
             'setback_compliance' => 'nullable|boolean',
             'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png',
 
@@ -227,8 +227,8 @@ class ZoningController extends Controller
         return response()->json(['message' => 'Zoning permit submitted successfully'], 201);
     }
     
-    //approve zoning with ai decision making
-    public function approve(Request $request, $id)
+    //approve zoning with ai decision making using PHP AI
+    public function decideByAI(Request $request, $id)
     {
         // Get zoning permit details
         $permit = DB::table('zoning_permits')
@@ -329,9 +329,60 @@ class ZoningController extends Controller
     
         return response()->json(['status' => $status, 'message' => "Zoning permit {$message} and email sent"], 200);
     }
+    //approve zoning with ai decision making using Phyton PyPanda Machine Learning
+    public function decideByAIV2(Request $request, $id)
+    {
+        // Get zoning permit details
+        $permit = DB::table('zoning_permits')
+            ->where('id', $id)
+            ->first([
+                'right_over_land',
+                'zoning_district',
+                'proposed_use',
+                'existing_structures',
+                'setback_compliance',
+                'lot_area',
+            ]);
+
+        if (!$permit) {
+            return response()->json(['message' => 'Permit not found'], 404);
+        }
+
+        // Convert the permit object to an array
+        $permitArray = (array) $permit;
+
+        // Encode data as JSON
+        $inputJson = json_encode($permitArray);
+
+        // Define the path to your Python script
+        $pythonScriptPath = base_path('ml/predict_zoning.py');
+
+        // Execute the Python script
+        $command = "python3 " . escapeshellarg($pythonScriptPath) . " " . escapeshellarg($inputJson);
+        $output = shell_exec($command);
+
+        // Decode the output
+        $prediction = json_decode($output, true)['status_id'] ?? null;
+
+        if (!$prediction) {
+            return response()->json(['message' => 'AI prediction failed', 'error' => $output], 500);
+        }
+
+        // Determine approval status
+        $status = ($prediction === 2) ? 2 : 3;
+        $message = ($status === 2) ? "Approved" : "Rejected";
+
+        // Update the zoning permit status
+        DB::table('zoning_permits')->where('id', $id)->update([
+            'status_id' => $status,
+            'updated_at' => now(),
+        ]);
+
+        return response()->json(['status' => $status, 'message' => "Zoning permit {$message}"], 200);
+    }
 
     //approve zoning without ai intervention
-    public function approvev1(Request $request, $id)
+    public function approve(Request $request, $id)
     {
         $userId = $request->user()->id;
     
@@ -471,5 +522,20 @@ class ZoningController extends Controller
         };
     }
 
+    private function fallbackDecision($input)
+    {
+        // Example rules: If industrial zone and has a large lot, approve
+        if ($input['zoning_district'] === 3 && $input['lot_area'] === 3) {
+            return 2; // Approved
+        }
+
+        // If residential zone and setback is non-compliant, reject
+        if ($input['zoning_district'] === 1 && $input['setback_compliance'] === 0) {
+            return 3; // Rejected
+        }
+
+        // Default: Reject if no AI model is available
+        return 3;
+    }
 
 }

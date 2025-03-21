@@ -50,10 +50,13 @@
                             </td>
                             <td class="border-b border-gray-200 px-5 py-5 text-sm">
                                 <div class="flex justify-center space-x-2">
-                                    <button v-if="permit.status_id === 1 && sessionRole == 1" @click="approvePermit(permit.id)" class="px-3 py-1 bg-green-500 text-white rounded">
+                                    <button v-if="permit.status_id === 1 && sessionRole == 1" @click="decideByAi(permit.id)" class="px-3 py-2 bg-purple-500 text-white rounded">
+                                        <i class="fa fa-robot"></i> Let AI Decide
+                                    </button>
+                                    <button v-if="permit.status_id === 1 && sessionRole == 1" @click="approvePermit(permit.id)" class="px-3 py-2 bg-green-500 text-white rounded">
                                         <i class="fa fa-thumbs-up"></i> Approve
                                     </button>
-                                    <button v-if="permit.status_id === 1 && sessionRole == 1" @click="rejectPermit(permit.id)" class="px-3 py-1 bg-red-500 text-white rounded">
+                                    <button v-if="permit.status_id === 1 && sessionRole == 1" @click="rejectPermit(permit.id)" class="px-3 py-2 bg-red-500 text-white rounded">
                                         <i class="fa fa-thumbs-down"></i> Reject
                                     </button>
                                     <ViewForm :key="permit.id" :data="permit" />
@@ -164,6 +167,55 @@ const statusFormatter = (status_id) => {
     }
 }
 
+//let AI do the approval
+const decideByAi = async (id) => {
+    try {
+        const result = await Swal.fire({
+            title: "Let AI Decide?",
+            text: "Would you like the AI to determine whether this zoning permit should be approved?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, let AI decide!",
+            cancelButtonText: "I'll decide myself",
+        });
+
+        if (result.isConfirmed) {
+            const response = await axios.put(route("zoning.decide", id));
+            if (response.data.status == 2) {
+                Swal.fire("Approved!", response.data.message, "success");
+            } else {
+                Swal.fire("Rejected!", response.data.message, "warning");
+            }
+            fetchData();
+        } else {
+            // User chooses to decide manually
+            const manualDecision = await Swal.fire({
+                title: "Manual Decision",
+                text: "Would you like to approve or reject the permit?",
+                icon: "warning",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Approve",
+                denyButtonText: "Reject",
+                cancelButtonText: "Cancel",
+                confirmButtonColor: "#3085d6",
+                denyButtonColor: "#d33",
+                cancelButtonColor: "#a9a9a9",
+            });
+
+            if (manualDecision.isConfirmed) {
+                approvePermit(id);
+            } else if (manualDecision.isDenied) {
+                rejectPermit(id);
+            }
+        }
+    } catch (error) {
+        console.error("Error processing zoning permit:", error);
+        Swal.fire("Error!", error.response?.data?.message || "Something went wrong.", "error");
+    }
+};
 
 // Approve Zoning Permit
 const approvePermit = async (id) => {
@@ -180,17 +232,16 @@ const approvePermit = async (id) => {
 
         if (result.isConfirmed) {
             const response = await axios.put(route("zoning.approve", id));
-            if(response.data.status == 2){
+            if (response.data.status == 2) {
                 Swal.fire("Approved!", response.data.message, "success");
-            }else{
+            } else {
                 Swal.fire("Rejected!", response.data.message, "warning");
             }
-            
             fetchData();
         }
     } catch (error) {
         console.error("Error approving zoning permit:", error);
-        Swal.fire("Error!", error.response.data.error, "error");
+        Swal.fire("Error!", error.response?.data?.message || "Something went wrong.", "error");
     }
 };
 
@@ -214,8 +265,9 @@ const rejectPermit = async (id) => {
         }
     } catch (error) {
         console.error("Error rejecting zoning permit:", error);
-        Swal.fire("Error!", error.response.data.error, "error");
+        Swal.fire("Error!", error.response?.data?.message || "Something went wrong.", "error");
     }
 };
+
 
 </script>

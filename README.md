@@ -174,15 +174,19 @@ This will reset and re-run the migrations.
 This project is open-source and available under the MIT License. For more details, check the LICENSE file.
 
 
-7. Installation of Php Machine Learningcomposer require php-ai/php-ml
+7. Install PhP - Machine Learning -Zoning Approval AI
 
 composer require php-ai/php-ml
+
+
+<!-- python3 ml/predict_zoning.py '{"right_over_land": 1, "zoning_district": 2, "proposed_use": 3, "existing_structures": 1, "setback_compliance": 1, "lot_area": 2}' -->
 
 
 8. run training data command for zoning approval decision maker - AI
 
 php artisan model:train
 
+------------------------------------------
 Conclusion
 
 You should now have the AI-Driven Zoning Permit Processing system up and running on your local machine, both the Laravel back-end and the Vue.js front-end. If you encounter any issues, refer to the troubleshooting section or seek support from the community.
