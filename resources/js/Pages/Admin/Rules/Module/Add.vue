@@ -101,11 +101,9 @@ const landRights = ref([
 
 const handleSelectedItems = (selectedItems) => {
   form.acceptable_land_rights = selectedItems.map((item) => item.value);
-  console.log(form.acceptable_land_rights); // This will log the selected ids, e.g., [2, 4, 67]
 };
 const handleBuildingTypeChange = async (id) => {
     form.name = await buildingTypeFormatter(id);
-    console.log(form.name);
 }
 const addZoningRules = async () => {
     try {
