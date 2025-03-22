@@ -29,13 +29,6 @@
         autocomplete="off"
         class="mt-1 p-2 border rounded-md w-full"
       />
-      <!-- <button
-        type="button"
-        @click.prevent="viewItems()"
-        class="absolute top-2 right-2"
-      >
-        <i class="fa fa-xs font-extrabold text-black fa-chevron-down"></i>
-      </button> -->
     </div>
 
     <!-- Dropdown Menu -->
@@ -61,8 +54,6 @@
             ✓
           </span>
         </li>
-        <li v-if="loadingMore" class="text-center py-2">Loading more...</li>
-        <li v-if="!loadingMore && !hasMoreItems" class="text-center py-2 text-gray-500">No more items</li>
       </ul>
     </div>
   </div>
@@ -72,24 +63,39 @@
 import { ref, defineEmits, defineProps, onMounted } from "vue";
 
 const props = defineProps({
-  // Props definition with default values
-  data: Array, // An array of items that contain { value, label }
+  data: Array, // List of items [{ value, label }]
   placeholder: String, // Placeholder text for input field
+  defaultSelected: String, // Example: "[2,3]"
 });
 
 const emit = defineEmits(["items-selected"]);
 
 const searchQuery = ref("");
-const filteredItems = ref(props.data || []); // Use data passed in props
+const filteredItems = ref(props.data || []);
 const selectedItems = ref([]); // Store selected items
 const selectedIndex = ref(-1);
-const loadingMore = ref(false);
-const hasMoreItems = ref(true); // Track if more items can be loaded
 
-// When the component is mounted, initialize selected items
+// Function to safely parse defaultSelected string into an array
+const parseDefaultSelected = (str) => {
+  try {
+    return JSON.parse(str); // Convert string "[2,3]" to array [2,3]
+  } catch (error) {
+    console.error("Invalid defaultSelected format:", error);
+    return [];
+  }
+};
+
+// Initialize selected items when the component is mounted
 onMounted(() => {
-  filteredItems.value = props.data || []; // Pre-filtered data
-  console.log(props.data);
+  filteredItems.value = props.data || [];
+
+  // Parse defaultSelected and filter the data
+  const selectedValues = parseDefaultSelected(props.defaultSelected);
+  selectedItems.value = props.data.filter((item) =>
+    selectedValues.includes(item.value)
+  );
+
+  emit("items-selected", selectedItems.value);
 });
 
 // Handle input changes, filter the items based on search query
@@ -153,14 +159,5 @@ const filterItems = () => {
   filteredItems.value = props.data.filter((item) => {
     return item.label.toLowerCase().includes(query);
   });
-};
-
-// Handle the "viewItems" button, toggle dropdown visibility
-const viewItems = () => {
-  if (filteredItems.value.length > 0) {
-    filteredItems.value = [];
-  } else {
-    filterItems(); // Local filtering based on search query
-  }
 };
 </script>

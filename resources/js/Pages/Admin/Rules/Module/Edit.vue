@@ -1,63 +1,72 @@
 <template>
     <div>
         <button
-            @click.prevent="openModal()"
-            :class="{ 'opacity-25': isModalOpen }"
-            :disabled="isModalOpen"
+            @click.prevent="editBehavior()"
+            :class="{ 'opacity-25': isEditZoningRules }"
+            :disabled="isEditZoningRules"
             class="px-3 py-2 bg-yellow-500 text-nowrap font-bold mb-4 text-md float-end text-white rounded shadow"
         >
             <i class="fa fa-edit"></i> Edit
         </button>
 
-        <Modal :show="isModalOpen" :maxWidth="'2xl'" title="Edit Landmark" @close="isModalOpen = false; errors = {}">
+        <Modal :show="isEditZoningRules" :maxWidth="'2xl'" title="Edit Zoning Rules" @close="isEditZoningRules = false; errors = {}">
             <div class="grid grid-cols-1 gap-6 p-6">
-                <form class="mt-4" @submit.prevent="updateLandmark">
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700">Landmark Name</label>
-                        <input type="text" v-model="form.name" placeholder="Enter landmark name" class="mt-1 p-2 border rounded-md w-full" />
-                        <p v-if="errors.name" class="text-red-500 text-xs mt-1">{{ errors.name[0] }}</p>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700">Building Type</label>
-                        <select v-model="form.building_type" class="mt-1 p-2 border rounded-md w-full">
-                            <option value="">Select Type</option>
-                            <option value="Residential">Residential</option>
-                            <option value="Commercial">Commercial</option>
-                            <option value="Industrial">Industrial</option>
-                            <option value="Religious">Religious</option>
-                            <option value="School">School</option>
-                            <option value="Government">Government</option>
-                            <option value="Market">Market</option>
-                            <option value="Sports Facility">Sports Facility</option>
-                            <option value="Health Center">Health Center</option>
+                <form class="mt-4" @submit.prevent="editZoningRules">
+                    <div class="mb-4 p-1">
+                        <label class="block text-sm font-medium text-gray-700">Zoning District</label>
+                        <select disabled v-model="form.zoning_district" @change="handleBuildingTypeChange(form.zoning_district)" class="mt-1 p-2 border bg-gray-200 rounded-md w-full">
+                            <option value="0">Select District</option>
+                            <option value="1">Residential</option>
+                            <option value="2">Commercial</option>
+                            <option value="3">Industrial</option>
                         </select>
-                        <p v-if="errors.building_type" class="text-red-500 text-xs mt-1">{{ errors.building_type[0] }}</p>
+                        <p v-if="errors.zoning_district" class="text-red-500 text-xs mt-1">{{ errors.zoning_district[0] }}</p>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Latitude</label>
-                            <input type="text" v-model="form.latitude" placeholder="Enter latitude" class="mt-1 p-2 border rounded-md w-full" />
-                            <p v-if="errors.latitude" class="text-red-500 text-xs mt-1">{{ errors.latitude[0] }}</p>
+                    <div class="grid grid-cols-1 gap-6 p-1">
+                        <!-- Required Area -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Required Area (sq. meters)</label>
+                            <input type="number" v-model="form.required_area" class="mt-1 p-2 border rounded-md w-full" />
+                            <p v-if="errors.required_area" class="text-red-500 text-xs mt-1">{{ errors.required_area[0] }}</p>
                         </div>
 
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Longitude</label>
-                            <input type="text" v-model="form.longitude" placeholder="Enter longitude" class="mt-1 p-2 border rounded-md w-full" />
-                            <p v-if="errors.longitude" class="text-red-500 text-xs mt-1">{{ errors.longitude[0] }}</p>
+                        <!-- Minimum Lot Area -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Minimum Lot Area (sq. meters)</label>
+                            <input type="number" v-model="form.minimum_lot_area" class="mt-1 p-2 border rounded-md w-full" />
+                            <p v-if="errors.minimum_lot_area" class="text-red-500 text-xs mt-1">{{ errors.minimum_lot_area[0] }}</p>
+                        </div>
+
+                        <!-- Acceptable Land Rights -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Acceptable Land Rights</label>
+                            <MultiSelectDropdown
+                                :key="form.zoning_district"
+                                :data="landRights"
+                                :defaultSelected="form.acceptable_land_rights"
+                                placeholder="Search Land Rights"
+                                @items-selected="handleSelectedItems"
+                            />
+                            <p v-if="errors.acceptable_land_rights" class="text-red-500 text-xs mt-1">{{ errors.acceptable_land_rights[0] }}</p>
+                            <small class="text-gray-500">Comma-separated values</small>
+                        </div>
+
+                        <!-- Setback Compliance Required -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Setback Compliance Required</label>
+                            <select v-model="form.setback_compliance_required" class="mt-1 p-2 w-full border rounded-md">
+                                <option :value="true">Yes</option>
+                                <option :value="false">No</option>
+                            </select>
+                            <p v-if="errors.setback_compliance_required" class="text-red-500 text-xs mt-1">{{ errors.setback_compliance_required[0] }}</p>
                         </div>
                     </div>
 
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700">Description</label>
-                        <textarea v-model="form.description" placeholder="Enter landmark description" class="mt-1 p-2 border rounded-md w-full"></textarea>
-                        <p v-if="errors.description" class="text-red-500 text-xs mt-1">{{ errors.description[0] }}</p>
-                    </div>
-
-                    <div class="flex items-center justify-end">
+                    <!-- Submit Button -->
+                    <div class="flex items-center justify-end mt-4">
                         <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">
-                             <i class="fa fa-save"></i> Save
+                            <i class="fa fa-save"></i> Save
                         </button>
                     </div>
                 </form>
@@ -69,62 +78,83 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
 import Modal from "@/Components/Modal.vue";
+import MultiSelectDropdown from "@/Components/MultiSelectDropdown.vue";
 import Swal from "sweetalert2";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import axios from "axios";
 
-const props = defineProps({
-    data: Object, // Pass landmark data as prop
-});
 const emits = defineEmits(["transaction_id"]);
-const isModalOpen = ref(false);
-const errors = ref({}); // Store validation errors
+const props = defineProps({
+    data: Object,
+});
+const isEditZoningRules = ref(false);
+const errors = ref({}); // To store validation errors
 
 const form = useForm({
-    id: "",
-    name: "",
-    description: "",
-    building_type: "",
-    latitude: "",
-    longitude: "",
+    id: 0,
+    zoning_district: 0,
+    minimum_lot_area: 0,
+    required_area: 0,
+    acceptable_land_rights: '',
+    setback_compliance_required: true,
 });
 
-// Watch for changes in props and update form
-watch(
-    () => props.data,
-    (newData) => {
-        if (newData) {
-            form.id = newData.id;
-            form.name = newData.name;
-            form.description = newData.description;
-            form.building_type = newData.building_type;
-            form.latitude = newData.latitude;
-            form.longitude = newData.longitude;
-        }
-    },
-    { immediate: true }
-);
+const landRights = ref([
+  { value: 1, label: "Own" },
+  { value: 2, label: "Rent" },
+  { value: 3, label: "Inherited" },
+]);
 
-// Open modal
-const openModal = () => {
-    isModalOpen.value = true;
+const editBehavior = () => {
+    const data = props.data;
+
+
+    form.id = data.id;
+    form.zoning_district = data.zoning_district;
+    form.minimum_lot_area = data.minimum_lot_area;
+    form.required_area = data.required_area;
+    form.acceptable_land_rights = data.acceptable_land_rights;
+    form.setback_compliance_required = data.setback_compliance_required == 1 ? true : false;
+
+    isEditZoningRules.value = true;
+}
+
+const handleSelectedItems = (selectedItems) => {
+  form.acceptable_land_rights = selectedItems.map((item) => item.value);
 };
-
-// Update landmark record
-const updateLandmark = async () => {
+const handleBuildingTypeChange = async (id) => {
+    form.name = await buildingTypeFormatter(id);
+}
+const editZoningRules = async () => {
     try {
-        await axios.patch(route("landmarks.update", { id: form.id }), form);
-        Swal.fire("Success!", "Landmark updated successfully.", "success");
-        isModalOpen.value = false;
+          await axios.patch(route("rules.update", { id: form.id }), form);
+        Swal.fire("Success!", "Rules updated successfully.", "success");
+        form.reset();
+        isEditZoningRules.value = false;
         errors.value = {}; // Clear errors after successful submission
         emits("transaction_id", Math.random());
     } catch (error) {
-        console.log(error);
-       if (error.response && error.response.data.errors) {
+        if (error.response && error.response.data.errors) {
             errors.value = error.response.data.errors; // Store Laravel validation errors
         } else {
             Swal.fire("Error!", error.response?.data?.message || "Something went wrong.", "error");
         }
     }
 };
+const buildingTypeFormatter = (id) => {
+    switch (parseInt(id ?? 0)) {
+        case 1:
+            return 'Residential';
+            break;
+        case 2:
+            return 'Commercial';
+            break;
+        case 3:
+            return 'Industrial';
+            break;
+        default:
+            return 'None';
+            break;
+    }
+}
 </script>

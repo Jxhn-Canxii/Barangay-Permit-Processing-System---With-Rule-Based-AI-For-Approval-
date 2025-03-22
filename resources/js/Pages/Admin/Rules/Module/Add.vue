@@ -65,7 +65,7 @@
                     <!-- Submit Button -->
                     <div class="flex items-center justify-end mt-4">
                         <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">
-                            <i class="fa fa-save"></i> Save Zoning Rules
+                            <i class="fa fa-save"></i> Add
                         </button>
                     </div>
                 </form>

@@ -43,14 +43,14 @@
                                     {{ rule.minimum_lot_area ?? 'N/A' }}<sub>sqm</sub>
                                 </td>
                                 <td class="border-b border-gray-200 px-5 text-left text-wrap py-5 text-sm">
-                                    {{ rule.acceptable_land_rights }}
+                                    {{ rule.acceptable_land_rights_name }}
                                 </td>
                                 <td class="border-b border-gray-200 px-5 text-left py-5 text-sm">
                                     {{ rule.setback_compliance ?? 'Yes' }}
                                 </td>
                                 <td class="border-b border-gray-200 px-5 py-5 text-sm text-center">
                                     <div class="flex justify-center items-center">
-                                        <!-- <Edit :key="landmark.id" @transaction_id="handleTransaction()" :data="landmark" /> -->
+                                        <Edit :key="rule.id" @transaction_id="handleTransaction()" :data="rule" />
                                         <Delete :key="rule.id" @transaction_id="handleTransaction()" :id="rule.id" />
                                     </div>
                                 </td>

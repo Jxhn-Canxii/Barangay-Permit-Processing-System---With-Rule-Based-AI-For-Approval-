@@ -51,7 +51,7 @@ class RuleController extends Controller
 
             // If the decoded value is an array, map each number to its label
             if (is_array($landRightsArray)) {
-                $rule->acceptable_land_rights = implode(', ', array_map(function ($right) use ($landRightLabels) {
+                $rule->acceptable_land_rights_name = implode(', ', array_map(function ($right) use ($landRightLabels) {
                     return $landRightLabels[$right] ?? 'Unknown'; // Fallback to 'Unknown' if no label found
                 }, $landRightsArray));
             } else {
@@ -116,7 +116,6 @@ class RuleController extends Controller
 
         $validated = $request->validate([
             'required_area' => 'required|integer',
-            'allowed_zones' => 'required|array',
             'minimum_lot_area' => 'required|integer',
             'acceptable_land_rights' => 'required|array',
             'setback_compliance_required' => 'required|boolean',
@@ -125,7 +124,6 @@ class RuleController extends Controller
         // Update the rule data in 'rules' table using DB facade
         $updated = DB::table('rules')->where('id', $id)->update([
             'required_area' => $validated['required_area'],
-            'allowed_zones' => json_encode($validated['allowed_zones']),
             'minimum_lot_area' => $validated['minimum_lot_area'],
             'acceptable_land_rights' => json_encode($validated['acceptable_land_rights']),
             'setback_compliance_required' => $validated['setback_compliance_required'],
