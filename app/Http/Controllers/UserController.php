@@ -79,6 +79,7 @@ class UserController extends Controller
     // Update user using DB facade
     public function update(Request $request, $id)
     {
+        
         // Validate the incoming request
         $request->validate([
             'name' => 'required|string|max:255',
@@ -110,7 +111,7 @@ class UserController extends Controller
         // Update the user using DB facade
         DB::table('users')->where('id', $id)->update($data);
 
-        return redirect()->route('users.index')->with('status', 'User updated successfully.');
+        return response()->json(['message' => 'User updated successfully.']);
     }
 
     // Delete user using DB facade

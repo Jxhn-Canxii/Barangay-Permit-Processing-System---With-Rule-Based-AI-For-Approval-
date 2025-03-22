@@ -98,7 +98,7 @@ const editUser = async () => {
     try {
         
         await axios.patch(route("users.update",{ id: form.id }), form);
-        Swal.fire("Success!", "User added successfully.", "success");
+        Swal.fire("Success!", "User updated successfully.", "success");
         form.reset();
         isEditModalOpen.value = false;
         errors.value = {}; // Reset errors
