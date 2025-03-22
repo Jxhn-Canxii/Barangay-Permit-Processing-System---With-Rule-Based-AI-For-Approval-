@@ -40,8 +40,11 @@ class BarangayCensusController extends Controller
             ->limit($itemsPerPage)
             ->get();
 
-        // Get total count
-        $total = $query->count();
+        $allCensusList = DB::table('barangay_census');
+
+        $queryCount = $allCensusList->get();
+        
+        $total = $queryCount->count();
 
         return response()->json([
             'census' => $censusData,

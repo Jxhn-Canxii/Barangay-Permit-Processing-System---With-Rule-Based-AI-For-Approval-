@@ -40,7 +40,11 @@ class LandmarkController extends Controller
             ->get();
 
         // Get total count
-        $total = $query->count();
+        $allLandmarksList = DB::table('landmarks');
+
+        $queryCount = $allLandmarksList->get();
+        
+        $total = $queryCount->count();
 
         return response()->json([
             'landmarks' => $landmarksData,

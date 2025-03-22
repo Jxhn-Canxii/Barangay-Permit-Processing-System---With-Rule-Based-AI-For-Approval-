@@ -49,8 +49,15 @@ class LogsController extends Controller
             ->limit($itemsPerPage)
             ->get();
     
-        // Get total count
-        $total = $query->count();
+        $allUserLogs = DB::table('logs');
+        
+        if ($user->role == 3) {
+            $allUserLogs->where('logs.user_id', $user->id);
+        }
+
+        $queryCount = $allUserLogs->get();
+        
+        $total = $queryCount->count();
     
         return response()->json([
             'logs' => $logs,

@@ -74,7 +74,18 @@ class ZoningController extends Controller
             ->limit($itemsPerPage)
             ->get();
     
-        $total = $query->count();
+        //total count
+        $allPermitsList = DB::table('zoning_permits');
+
+        $allPermitsList->where('status_id', 2);
+        if ($userRole == 3) {
+            
+            $allPermitsList->where('inputted_by', $userId);
+        }
+        
+        $queryCount = $allPermitsList->get();
+        
+        $total = $queryCount->count();
     
         return response()->json([
             'data' => $permits,
@@ -115,7 +126,18 @@ class ZoningController extends Controller
             ->limit($itemsPerPage)
             ->get();
     
-        $total = $query->count();
+        //total count
+        $allPermitsList = DB::table('zoning_permits');
+
+        $allPermitsList->where('status_id', 1);
+        if ($userRole == 3) {
+            
+            $allPermitsList->where('inputted_by', $userId);
+        }
+        
+        $queryCount = $allPermitsList->get();
+        
+        $total = $queryCount->count();
     
         return response()->json([
             'data' => $permits,
@@ -156,7 +178,18 @@ class ZoningController extends Controller
             ->limit($itemsPerPage)
             ->get();
     
-        $total = $query->count();
+        //total count
+        $allPermitsList = DB::table('zoning_permits');
+
+        $allPermitsList->where('status_id', 3);
+        if ($userRole == 3) {
+            
+            $allPermitsList->where('inputted_by', $userId);
+        }
+        
+        $queryCount = $allPermitsList->get();
+        
+        $total = $queryCount->count();
     
         return response()->json([
             'data' => $permits,
