@@ -26,7 +26,7 @@
                                 <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Name</th>
                                 <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Required Lot Area</th>
                                 <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Minimum Lot Area</th>
-                                <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Acceptable Land</th>
+                                <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Acceptable Land Rights</th>
                                 <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Setback Compliant</th>
                                 <th class="border-b-2 border-gray-200 px-5 py-3 text-center">Action</th>
                             </tr>
