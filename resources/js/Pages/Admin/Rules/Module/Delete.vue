@@ -22,7 +22,7 @@ const emits = defineEmits(["transaction_id"]);
 const confirmDelete = async () => {
     Swal.fire({
         title: "Are you sure?",
-        text: "This will permanently delete the landmark!",
+        text: "This will permanently delete the rules!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -31,8 +31,8 @@ const confirmDelete = async () => {
     }).then(async (result) => {
         if (result.isConfirmed) {
             try {
-                await axios.delete(route("landmarks.delete", { id: props.id }));
-                Swal.fire("Deleted!", "Landmark has been deleted.", "success");
+                await axios.delete(route("rules.delete", { id: props.id }));
+                Swal.fire("Deleted!", "Rules has been deleted.", "success");
                 emits("transaction_id", Math.random()); // Refresh data
             } catch (error) {
                 Swal.fire("Error!", error.response?.data?.message || "Something went wrong.", "error");
