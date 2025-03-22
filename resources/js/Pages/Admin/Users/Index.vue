@@ -42,6 +42,7 @@
                                 </td>
                                 <td class="border-b border-gray-200 px-5 py-5 text-sm text-center">
                                     <div class="flex justify-center items-center">
+                                        <Edit :key="user.id" @transaction_id="handleTransaction()" :data="user" />
                                         <Delete :key="user.id" @transaction_id="handleTransaction()" :id="user.id" />
                                     </div>
                                 </td>
@@ -88,6 +89,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 import Add from "./Module/Add.vue";
+import Edit from "./Module/Edit.vue";
 import Delete from "./Module/Delete.vue";
 
 const data = ref([]);

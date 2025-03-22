@@ -27,7 +27,7 @@ class UserController extends Controller
         $page = (int) $request->input('page_num', 1);
         $offset = ($page - 1) * $itemsPerPage;
 
-        $query = User::query();
+        $query = DB::table('users');
 
         // Apply search filter if provided
         if ($search) {
@@ -39,7 +39,10 @@ class UserController extends Controller
         $total = $query->count();
 
         // Sort by latest ID first and apply manual pagination
-        $users = $query->orderBy('id', 'desc')->skip($offset)->take($itemsPerPage)->get();
+        $users = $query->orderBy('id', 'desc')
+                        ->skip($offset)
+                        ->take($itemsPerPage)
+                        ->get();
 
         return response()->json([
             'users' => $users,
@@ -49,7 +52,6 @@ class UserController extends Controller
             'itemsperpage' => $itemsPerPage,
         ]);
     }
-
 
     // Add a new user
     public function add(Request $request)
@@ -61,17 +63,60 @@ class UserController extends Controller
             'role' => 'required|integer|in:1,2,3', // Adjust roles as needed
         ]);
 
-        $user = User::create([
+        // Insert user using DB facade
+        DB::table('users')->insert([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         return redirect()->route('users.index')->with('status', 'User added successfully.');
     }
+
+    // Update user using DB facade
+    public function update(Request $request, $id)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email', // Ensure unique email but ignore current user
+            'password' => ['nullable', 'confirmed', Rules\Password::defaults()], // Password is optional on update
+            'role' => 'required|integer|in:1,2,3', // Adjust roles as needed
+        ]);
+
+        // Check if the user exists in the database using DB facade
+        $user = DB::table('users')->where('id', $id)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found.'], 404);
+        }
+
+        // Prepare updated data
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'updated_at' => now(),
+        ];
+
+        // Update password only if provided
+        if ($request->password) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        // Update the user using DB facade
+        DB::table('users')->where('id', $id)->update($data);
+
+        return redirect()->route('users.index')->with('status', 'User updated successfully.');
+    }
+
+    // Delete user using DB facade
     public function deleteUser($id)
     {
+        // Delete the user using DB facade
         $deleted = DB::table('users')->where('id', $id)->delete();
 
         if ($deleted) {

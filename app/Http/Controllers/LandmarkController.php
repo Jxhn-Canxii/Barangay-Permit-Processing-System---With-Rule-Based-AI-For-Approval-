@@ -110,8 +110,6 @@ class LandmarkController extends Controller
             'building_type' => 'nullable|string',
             'latitude' => 'required|string',
             'longitude' => 'required|string',
-
-
         ]);
         
 

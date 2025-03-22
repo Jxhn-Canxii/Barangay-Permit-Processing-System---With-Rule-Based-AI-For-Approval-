@@ -94,14 +94,11 @@ Route::middleware('auth')->group(function () {
         Route::delete('{id}', [RuleController::class, 'deleteRules'])->name('rules.delete');
     });
 
-    Route::prefix('landmark/')->group(function(){
-        Route::get('', [LandMarkController::class, 'index'])->name('landmark.index');
-    });
     Route::prefix('users/')->group(function(){
         Route::get('', [UserController::class, 'index'])->name('users.index');
         Route::post('users-list', [UserController::class, 'list'])->name('users.list');
         Route::post('users-add', [UserController::class, 'add'])->name('users.add');
-        
+        Route::patch('/{id}', [UserController::class, 'update'])->name('users.update');
         Route::delete('{id}', [UserController::class, 'deleteUser'])->name('users.delete');
     });
     Route::prefix('profile/')->group(function(){
