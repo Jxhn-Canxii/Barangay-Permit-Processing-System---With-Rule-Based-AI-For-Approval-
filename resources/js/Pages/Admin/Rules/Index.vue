@@ -32,30 +32,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="landmark in data.landmarks" v-if="data.landmarks?.length > 0 && !loading" :key="landmark.id" class="text-gray-700">
+                            <tr v-for="rule in data.rules" v-if="data.rules?.length > 0 && !loading" :key="rule.id" class="text-gray-700">
                                 <td class="border-b border-gray-200 px-5 py-5 text-wrap text-sm">
-                                    {{ landmark.name }}
+                                    {{ rule.name }}
                                 </td>
-                                <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                    {{ landmark.required_lot_area ?? 'N/A' }}
+                                <td class="border-b border-gray-200 px-5 text-right py-5 text-sm">
+                                    {{ rule.required_area ?? 'N/A' }} <sub>sqm</sub>
                                 </td>
-                                <td class="border-b border-gray-200 px-5 py-5 text-sm">
-                                    {{ landmark.minimum_lot_area ?? 'N/A' }}
+                                <td class="border-b border-gray-200 px-5 text-right py-5 text-sm">
+                                    {{ rule.minimum_lot_area ?? 'N/A' }}<sub>sqm</sub>
                                 </td>
-                                <td class="border-b border-gray-200 px-5 py-5 text-sm text-right">
-                                    {{ landmark.acceptable_land_rights }}
+                                <td class="border-b border-gray-200 px-5 text-left py-5 text-sm text-right">
+                                    {{ rule.acceptable_land_rights }}
                                 </td>
-                                <td class="border-b border-gray-200 px-5 py-5 text-sm text-right">
-                                    {{ landmark.setback_compliance ?? 'Yes' }}
+                                <td class="border-b border-gray-200 px-5 text-left py-5 text-sm text-right">
+                                    {{ rule.setback_compliance ?? 'Yes' }}
                                 </td>
                                 <td class="border-b border-gray-200 px-5 py-5 text-sm text-center">
                                     <div class="flex justify-center items-center">
                                         <!-- <Edit :key="landmark.id" @transaction_id="handleTransaction()" :data="landmark" /> -->
-                                        <Delete :key="landmark.id" @transaction_id="handleTransaction()" :id="landmark.id" />
+                                        <Delete :key="rule.id" @transaction_id="handleTransaction()" :id="rule.id" />
                                     </div>
                                 </td>
                             </tr>
-                            <tr v-if="data.landmarks?.length == 0 && !loading">
+                            <tr v-if="data.rules?.length == 0 && !loading">
                                 <td colspan="6" class="border-b text-center font-bold text-lg border-gray-200 bg-white px-5 py-5">
                                     <p class="text-red-500 whitespace-no-wrap">
                                         No Data Found!

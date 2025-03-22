@@ -35,7 +35,7 @@ class RuleController extends Controller
     
     
         // Fetch paginated results
-        $logs = $query->orderBy('id', 'desc')
+        $rules = $query->orderBy('id', 'desc')
             ->offset($offset)
             ->limit($itemsPerPage)
             ->get();
@@ -44,7 +44,7 @@ class RuleController extends Controller
         $total = $query->count();
     
         return response()->json([
-            'logs' => $logs,
+            'rules' => $rules,
             'total' => $total,
             'total_pages' => ceil($total / $itemsPerPage),
             'page_num' => $page,
