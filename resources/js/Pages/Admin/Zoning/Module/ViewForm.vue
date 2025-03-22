@@ -90,7 +90,7 @@
                     <label class="font-bold">Existing Structures:</label>
                     <p class="border px-2 py-1 rounded">{{ data.existing_structures ? 'Yes' : 'No' }}</p>
                 </div>
-                 <div>
+                <div>
                     <label class="font-bold">Compliant with setback regulations:</label>
                     <p class="border px-2 py-1 rounded">{{ data.setback_compliance ? 'Compliant' : 'Non-compliant' }}</p>
                 </div>
@@ -100,6 +100,10 @@
                         <a :href="fileUrl" target="_blank" class="text-blue-500 underline">View File</a>
                     </div>
                     <p v-else class="border px-2 py-1 rounded">No file uploaded</p>
+                </div>
+                <div v-if="data.status_id == 3">
+                    <label class="font-bold text-red-500">Reason of Rejection</label>
+                    <p class="border px-2 py-1 rounded">{{ data.rejection_reason?.length > 0 ? data.rejection_reason : 'None' }}</p>
                 </div>
             </div>
         </div>

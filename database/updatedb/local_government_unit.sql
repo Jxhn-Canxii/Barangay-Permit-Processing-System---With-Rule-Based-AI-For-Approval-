@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2025 at 03:27 AM
+-- Generation Time: Mar 22, 2025 at 02:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -114,7 +114,15 @@ INSERT INTO `logs` (`id`, `user_id`, `action`, `module`, `ip_address`, `details`
 (11, 1, 'Rejected zoning permit for Reprehenderit non e Sit recusandae Eos', 'Zoning Application', NULL, NULL, '2025-03-19 01:41:06', '2025-03-19 09:41:06'),
 (12, 1, 'Added zoning permit for Expedita beatae quis Omnis aliquid quo co', 'Zoning Application', NULL, NULL, '2025-03-19 01:42:49', '2025-03-19 09:42:49'),
 (13, 1, 'Added zoning permit for Distinctio Id magna Harum magna dolorum', 'Zoning Application', NULL, NULL, '2025-03-19 02:25:22', '2025-03-19 10:25:22'),
-(14, 1, 'Added zoning permit for In neque non eaque e Rerum corporis quia', 'Zoning Application', NULL, NULL, '2025-03-20 16:58:16', '2025-03-21 00:58:16');
+(14, 1, 'Added zoning permit for In neque non eaque e Rerum corporis quia', 'Zoning Application', NULL, NULL, '2025-03-20 16:58:16', '2025-03-21 00:58:16'),
+(15, 1, 'Added zoning permit for Fugiat non quasi co Neque odio commodi n', 'Zoning Application', NULL, NULL, '2025-03-20 22:42:27', '2025-03-21 06:42:27'),
+(16, 1, 'Added zoning permit for Voluptatem accusanti Tempore deserunt ni', 'Zoning Application', NULL, NULL, '2025-03-20 23:11:07', '2025-03-21 07:11:07'),
+(17, 1, 'Added zoning permit for Dolor omnis itaque n Unde sapiente ea omn', 'Zoning Application', NULL, NULL, '2025-03-20 23:26:21', '2025-03-21 07:26:21'),
+(18, 1, 'Added zoning permit for Consequuntur esse do Dolorum pariatur Qu', 'Zoning Application', NULL, NULL, '2025-03-20 23:29:11', '2025-03-21 07:29:11'),
+(19, 1, 'Added zoning permit for Voluptatibus ipsum i Exercitationem tempo', 'Zoning Application', NULL, NULL, '2025-03-20 23:33:26', '2025-03-21 07:33:26'),
+(20, 1, 'Added zoning permit for Consequuntur sed sed Nisi id ut do aut e', 'Zoning Application', NULL, NULL, '2025-03-20 23:51:35', '2025-03-21 07:51:35'),
+(21, 1, 'Added zoning permit for Id est sit occaecat Optio ipsam ut temp', 'Zoning Application', NULL, NULL, '2025-03-20 23:52:37', '2025-03-21 07:52:37'),
+(22, 1, 'Added zoning permit for Quam labore ad aperi Ratione reiciendis q', 'Zoning Application', NULL, NULL, '2025-03-21 00:36:56', '2025-03-21 08:36:56');
 
 -- --------------------------------------------------------
 
@@ -197,11 +205,26 @@ CREATE TABLE `zoning_permits` (
   `existing_structures` tinyint(1) DEFAULT NULL,
   `setback_compliance` tinyint(1) DEFAULT NULL,
   `uploaded_file` varchar(255) DEFAULT NULL,
+  `rejection_reason` longtext NOT NULL,
   `status_id` int(11) NOT NULL,
   `inputted_by` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zoning_permits`
+--
+
+INSERT INTO `zoning_permits` (`id`, `date_of_application`, `or_date`, `official_receipt_no`, `first_name`, `middle_name`, `last_name`, `address`, `zip`, `owner_name`, `contact_number`, `email`, `location_of_lot`, `right_over_land`, `lot_area`, `proposed_use`, `zoning_district`, `existing_structures`, `setback_compliance`, `uploaded_file`, `rejection_reason`, `status_id`, `inputted_by`, `created_at`, `updated_at`) VALUES
+(1, '1989-10-15', '1991-07-03', 'Quia vel omnis ea te', 'Fugiat non quasi co', 'Animi eos maxime co', 'Neque odio commodi n', 'Aut dolorem lorem co', '4422', 'Fugiat id ut sequi', 'Consectetur fugiat a', 'fyjytavo@mailinator.com', 'Quisquam anim id su', 1, '35', 5, 2, 0, 0, 'zoning_permits/XcaBezooZ3caXd7LEEZxyjeHwHV7R0qECDotQ2XF.png', '', 1, 1, '2025-03-20 22:42:27', '2025-03-20 22:42:27'),
+(2, '1990-11-02', '2025-08-07', 'Voluptatibus ut sunt', 'Voluptatem accusanti', 'Dolorem distinctio', 'Tempore deserunt ni', 'Ad tempore alias au', '2560', 'Nam omnis est ration', 'Aute quis esse eius', 'gyjyjinu@mailinator.com', 'Anim consectetur el', 2, '90', 4, 2, 1, 1, 'zoning_permits/8UJ23jGERAyK7eh9rMRtbKzLjLAXn9vpCbFtbaWw.png', 'Denied: Invalid land right, Lot area too small, Zoning district does not allow proposed use', 3, 1, '2025-03-20 23:11:07', '2025-03-21 17:02:43'),
+(3, '2009-06-27', '2016-07-28', 'Alias impedit ipsam', 'Dolor omnis itaque n', 'Nisi facere itaque r', 'Unde sapiente ea omn', 'Numquam velit aperia', '9819', 'Quia et animi exerc', 'Et mollitia qui at i', 'syxuhabu@mailinator.com', 'Qui ut nulla culpa q', 3, '57', 2, 1, 1, 1, 'zoning_permits/C1qOZeXk1GjYqTgYzJNIfMwd5p63NCLmMVReyfk0.png', 'Denied: Lot area too small, Zoning district does not allow proposed use', 3, 1, '2025-03-20 23:26:21', '2025-03-21 17:01:08'),
+(4, '2013-12-04', '1991-12-23', 'Incidunt et excepte', 'Consequuntur esse do', 'Explicabo Rerum qua', 'Dolorum pariatur Qu', 'Sint numquam ipsa c', '4138', 'Earum mollitia dolor', 'Quas rerum blanditii', 'roxogyho@mailinator.com', 'Eu nemo amet facili', 2, '23', 4, 1, 1, 1, 'zoning_permits/qGxWOUKFnUUuQzLCjCvUTcB0FqlGKos2siuyHule.png', '', 3, 1, '2025-03-20 23:29:11', '2025-03-21 00:16:22'),
+(5, '1974-03-17', '2010-07-28', 'Sed unde repudiandae', 'Voluptatibus ipsum i', 'Quaerat eos qui et o', 'Exercitationem tempo', 'Qui quia nisi culpa', '1036', 'Distinctio Labore o', 'Excepturi rerum corp', 'miwuq@mailinator.com', 'Esse porro pariatur', 1, '82', 3, 2, 0, 0, 'zoning_permits/jHI9s2dZZCWfetjnxjFufnbr11zvNjWgGyjuFCF9.png', '', 3, 1, '2025-03-20 23:33:26', '2025-03-21 00:16:31'),
+(6, '1990-01-11', '2024-02-10', 'Rerum et dolore qui', 'Consequuntur sed sed', 'Ipsam pariatur Dolo', 'Nisi id ut do aut e', 'Odio in debitis et c', '6063', 'Consequuntur deserun', 'Est non ut veniam', 'gahiz@mailinator.com', 'Aliquid in iste eius', 3, '94', 1, 3, 1, 0, 'zoning_permits/wndGzNUXo1Tg8qgG6rUhb4hRiDTdiXBzNSyxqYe5.png', '', 3, 1, '2025-03-20 23:51:35', '2025-03-21 00:16:14'),
+(7, '2022-10-13', '1993-11-27', 'In est quo consequat', 'Id est sit occaecat', 'Aliquam consectetur', 'Optio ipsam ut temp', 'Nihil vel natus enim', '9957', 'Vel quia nihil eu el', 'Totam voluptatem vol', 'nedu@mailinator.com', 'Quia et consequat S', 1, '40', 5, 3, 1, 1, 'zoning_permits/gY6QwIn1LdLm49LomLVEwDEiEmplhGBtL0L24uB6.png', '', 3, 1, '2025-03-20 23:52:37', '2025-03-21 00:12:56'),
+(8, '1988-02-26', '2025-08-21', 'Non voluptates incid', 'Quam labore ad aperi', 'Optio sunt cumque', 'Ratione reiciendis q', 'Eum corporis Nam sed', '6636', 'Voluptate in veniam', 'Sunt soluta quia am', 'jeneli@mailinator.com', 'Ex nostrud aspernatu', 3, '67', 2, 3, 1, 0, 'zoning_permits/8jIfghj2caXqDK48dHI1TMlEsqrff6FytagUqQzl.png', 'Denied: Lot area too small, Zoning district does not allow proposed use, Setback non-compliant', 3, 1, '2025-03-21 00:36:56', '2025-03-21 16:57:45');
 
 --
 -- Indexes for dumped tables
@@ -264,7 +287,7 @@ ALTER TABLE `landmarks`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -282,7 +305,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `zoning_permits`
 --
 ALTER TABLE `zoning_permits`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

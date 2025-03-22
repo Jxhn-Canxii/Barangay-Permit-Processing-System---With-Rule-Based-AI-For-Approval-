@@ -8,8 +8,8 @@
             <div class="bg-white rounded shadow p-4">
                 
                 <!-- Add Permit Button -->
-                <div class="flex justify-between gap-4">
-                    <TrainModel v-if="sessionRole == 1" @transaction_id="handleTransaction()" />
+                <div class="flex justify-end gap-4">
+                    <!-- <TrainModel v-if="sessionRole == 1" @transaction_id="handleTransaction()" /> -->
                     <Add v-if="sessionRole != 3" @transaction_id="handleTransaction()" />
                 </div>
                 <!-- Tabs Navigation -->

@@ -289,8 +289,10 @@ class ZoningController extends Controller
             $permitArray = (array) $permit;
     
             // Get prediction result
-            $prediction = (float) $this->predictionService->predict($permitArray);
-    
+            $prediction =  $this->predictionService->predict($permitArray);
+            $predictionStatus = $prediction['status'];
+            $predictionMessage = $prediction['message'];
+
             // Log input data for debugging
             $logData = [
                 'timestamp' => now()->toDateTimeString(),
@@ -310,21 +312,22 @@ class ZoningController extends Controller
         }
 
         // Ensure prediction result is valid
-        if (!in_array($prediction, [2, 3])) {
+        if (!in_array($predictionStatus, [2, 3])) {
             return response()->json([
                 'message' => 'Invalid prediction result',
-                'prediction' => $prediction
+                'prediction' => $predictionStatus
             ], 500);
         }
     
         // Approve or reject the permit
-        $status = ($prediction === 2) ? 2 : 3;
-        $approvalStatus = ($prediction != 2);
-        $message = ($prediction === 2) ? "Approved" : "Rejected";
-        $emailClass = ($prediction === 2) ? ZoningPermitApproved::class : ZoningPermitRejected::class;
+        $status = ($predictionStatus === 2) ? 2 : 3;
+        $approvalStatus = ($predictionStatus != 2);
+        $message = ($predictionStatus === 2) ? "Approved" : "Rejected, Reason: ".$predictionMessage;
+        $emailClass = ($predictionStatus === 2) ? ZoningPermitApproved::class : ZoningPermitRejected::class;
     
         DB::table('zoning_permits')->where('id', $id)->update([
             'status_id' => $status,
+            'rejection_reason' => $predictionMessage,
             'updated_at' => now(),
         ]);
     

@@ -3,22 +3,19 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
-use Phpml\Classification\DecisionTree;
-use Phpml\Dataset\CsvDataset;
 
+
+///rule based AI
 class PermitPredictionService
 {
-    private $modelPath;
     private $logPath;
 
     public function __construct()
     {
-        // Define model and log file paths inside storage
-        $this->modelPath = storage_path('app/prediction/model.serialize');
         $this->logPath = storage_path('app/prediction/logs.json');
     }
 
-    // Function to log training and prediction details to a JSON log file
+    // Function to log prediction details to a JSON log file
     private function logData(array $data)
     {
         $logEntries = file_exists($this->logPath) ? json_decode(file_get_contents($this->logPath), true) : [];
@@ -26,98 +23,71 @@ class PermitPredictionService
         file_put_contents($this->logPath, json_encode($logEntries, JSON_PRETTY_PRINT));
     }
 
-    // Function to train the model
-    public function trainModel()
+    // Function to define rules and predict zoning permit approval
+    public function predict(array $data)
     {
-        $datasetPath = storage_path('app/prediction/zoning_permit_training_data.csv');
-        $logData = [
-            'timestamp' => now()->toDateTimeString(),
-            'status' => 'Training started'
+        // Define the rules for zoning permit approval
+        $rules = [
+            'required_area' => 500, // Minimum required area (e.g., 500 sq. meters)
+            'allowed_zones' => ['residential', 'commercial', 'industrial'], // Allowed zoning types
+            'minimum_lot_area' => 100, // Minimum lot area in square meters for certain uses
+            'acceptable_land_rights' => [1, 3], // Only 'Own' (1) and 'Inherited' (3) land rights are allowed
+            'setback_compliance_required' => true, // Setback compliance is mandatory
         ];
     
-        // Check if the dataset file exists
-        if (!file_exists($datasetPath)) {
-            $logData['error'] = 'Training dataset not found';
-            $this->logData($logData);
-            return response()->json(['message' => 'Training dataset not found. Check logs for details'], 500);
+        // Initialize log data
+        $logData = [
+            'timestamp' => now()->toDateTimeString(),
+            'status' => 3, // Denied by default
+            'message' => 'Test'
+        ];
+    
+        // Initialize an empty array to store reasons for denial
+        $reasons = [];
+    
+        // Rule 1: Check if the land right is valid
+        if (!in_array($data['right_over_land'], $rules['acceptable_land_rights'])) {
+            $reasons[] = 'Invalid land right';
         }
     
-        try {
-            // Load the training dataset
-            $dataset = new CsvDataset($datasetPath, 16, true);
-    
-            // Create a new classifier or load the existing model
-            $classifier = new DecisionTree();
-    
-            // Check if a previous model exists and train accordingly
-            if (file_exists($this->modelPath)) {
-                // Optionally load and continue training (this part is for fine-tuning)
-                $classifier = unserialize(file_get_contents($this->modelPath)); 
-            } else {
-                // If no model exists, train from scratch
-                $classifier->train($dataset->getSamples(), $dataset->getTargets());
-            }
-    
-            // Save the trained model (either new or retrained model)
-            file_put_contents($this->modelPath, serialize($classifier));
-    
-            // Log the success and details
-            $logData['status'] = 'Training successful';
-            $logData['dataset'] = $datasetPath;
-            $logData['samples_count'] = count($dataset->getSamples());
-            $logData['features_count'] = count($dataset->getSamples()[0]); // Assuming the first sample defines the number of features
-    
-        } catch (\Exception $e) {
-            $logData['error'] = 'Training failed: ' . $e->getMessage();
+        // Rule 2: Check if the lot area is large enough
+        if ($data['lot_area'] < $rules['required_area']) {
+            $reasons[] = 'Lot area too small';
         }
     
-        // Log the status and training details
+        // Rule 3: Check if the proposed use matches zoning district
+        if (!in_array(strtolower($data['zoning_district']), $rules['allowed_zones'])) {
+            $reasons[] = 'Zoning district does not allow proposed use';
+        }
+    
+        // Rule 4: Check setback compliance
+        if ($rules['setback_compliance_required'] && !$data['setback_compliance']) {
+            $reasons[] = 'Setback non-compliant';
+        }
+    
+        // Rule 5: Check if the proposed use is allowed in the zoning district
+        if ($data['zoning_district'] == 'residential' && in_array(strtolower($data['proposed_use']), ['retail', 'office', 'mixed-use'])) {
+            $reasons[] = 'Proposed use not allowed in residential zone';
+        }
+    
+        // Rule 6: Ensure the proposed use fits zoning requirements (optional additional rule)
+        if ($data['zoning_district'] == 'commercial' && $data['proposed_use'] == 'single-family') {
+            $reasons[] = 'Single-family use not allowed in commercial zone';
+        }
+    
+        // If there are reasons for denial, append them
+        if (count($reasons) > 0) {
+            $logData['message'] = 'Denied: ' . implode(', ', $reasons);
+        } else {
+            // If no reasons for denial, approve the permit
+            $logData['message'] = 'Approved';
+            $logData['status'] = 2; // Approved status
+        }
+    
+        // Log the decision and the reasons
         $this->logData($logData);
     
-        // Return the success response with detailed information
-        return response()->json([
-            'message' => 'Model trained successfully.',
-            'status' => 'Success',
-            'training_details' => [
-                'dataset' => $datasetPath,
-                'samples_count' => count($dataset->getSamples()),
-                'features_count' => count($dataset->getSamples()[0]),
-                'model_path' => $this->modelPath,
-            ]
-        ]);
-    }    
-    
-    // Function to make predictions using the trained model
-    public function predict($data)
-    {
-        if (!file_exists($this->modelPath)) {
-            return response()->json(['message' => 'Model not trained yet'], 500);
-        }
-    
-        $classifier = unserialize(file_get_contents($this->modelPath));
-    
-        if (!$classifier instanceof DecisionTree) {
-            return response()->json(['message' => 'Invalid model data'], 500);
-        }
-    
-        $sample = array_values($data);
-    
-        try {
-            $prediction = $classifier->predict([$sample])[0];
-    
-            $this->logData([
-                'timestamp' => now()->toDateTimeString(),
-                'input' => $sample,
-                'prediction' => $prediction
-            ]);
-    
-            return $prediction;
-        } catch (\Exception $e) {
-            $this->logData([
-                'timestamp' => now()->toDateTimeString(),
-                'error' => 'Prediction failed: ' . $e->getMessage()
-            ]);
-            return response()->json(['message' => 'Prediction failed', 'error' => $e->getMessage()], 500);
-        }
+        return $logData;
     }
+    
 }

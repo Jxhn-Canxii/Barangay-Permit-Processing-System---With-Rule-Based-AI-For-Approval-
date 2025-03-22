@@ -29,8 +29,9 @@ return new class extends Migration {
             $table->integer('proposed_use'); // Added
             $table->boolean('existing_structures')->default(false); // Added
             $table->boolean('setback_compliance')->default(false); // Added
-            
+
             // Status and tracking
+            $table->text('rejection_reason')->nullable();
             $table->integer('status_id')->default(1);
             $table->string('uploaded_file')->nullable();
             $table->integer('inputted_by')->nullable();
