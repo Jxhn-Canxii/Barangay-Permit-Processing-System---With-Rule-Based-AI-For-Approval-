@@ -42,7 +42,7 @@
                                 <td class="border-b border-gray-200 px-5 text-right py-5 text-sm">
                                     {{ rule.minimum_lot_area ?? 'N/A' }}<sub>sqm</sub>
                                 </td>
-                                <td class="border-b border-gray-200 px-5 text-left py-5 text-sm">
+                                <td class="border-b border-gray-200 px-5 text-left text-wrap py-5 text-sm">
                                     {{ rule.acceptable_land_rights }}
                                 </td>
                                 <td class="border-b border-gray-200 px-5 text-left py-5 text-sm">
