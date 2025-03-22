@@ -31,7 +31,7 @@ return new class extends Migration {
             $table->boolean('setback_compliance')->default(false); // Added
 
             // Status and tracking
-            $table->text('rejection_reason')->nullable();
+            $table->text('rejection_reason')->default('None'); // Added
             $table->integer('status_id')->default(1);
             $table->string('uploaded_file')->nullable();
             $table->integer('inputted_by')->nullable();

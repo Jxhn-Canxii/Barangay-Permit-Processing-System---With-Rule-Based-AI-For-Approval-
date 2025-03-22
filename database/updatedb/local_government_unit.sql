@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2025 at 03:40 AM
+-- Generation Time: Mar 22, 2025 at 04:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -161,13 +161,19 @@ CREATE TABLE `rules` (
   `name` varchar(255) NOT NULL,
   `zoning_district` int(11) NOT NULL,
   `required_area` int(11) DEFAULT 500,
-  `allowed_zones` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '{"residential", "commercial", "industrial"}' CHECK (json_valid(`allowed_zones`)),
   `minimum_lot_area` int(11) DEFAULT 100,
   `acceptable_land_rights` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '[1, 3]' CHECK (json_valid(`acceptable_land_rights`)),
   `setback_compliance_required` tinyint(1) DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rules`
+--
+
+INSERT INTO `rules` (`id`, `name`, `zoning_district`, `required_area`, `minimum_lot_area`, `acceptable_land_rights`, `setback_compliance_required`, `created_at`, `updated_at`) VALUES
+(1, 'Industrial', 3, 78, 58, '[1]', 1, '2025-03-21 18:44:32', '2025-03-21 18:44:32');
 
 -- --------------------------------------------------------
 
@@ -224,7 +230,7 @@ CREATE TABLE `zoning_permits` (
   `existing_structures` tinyint(1) DEFAULT NULL,
   `setback_compliance` tinyint(1) DEFAULT NULL,
   `uploaded_file` varchar(255) DEFAULT NULL,
-  `rejection_reason` longtext NOT NULL,
+  `rejection_reason` longtext NOT NULL DEFAULT 'None',
   `status_id` int(11) NOT NULL,
   `inputted_by` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -236,7 +242,7 @@ CREATE TABLE `zoning_permits` (
 --
 
 INSERT INTO `zoning_permits` (`id`, `date_of_application`, `or_date`, `official_receipt_no`, `first_name`, `middle_name`, `last_name`, `address`, `zip`, `owner_name`, `contact_number`, `email`, `location_of_lot`, `right_over_land`, `lot_area`, `proposed_use`, `zoning_district`, `existing_structures`, `setback_compliance`, `uploaded_file`, `rejection_reason`, `status_id`, `inputted_by`, `created_at`, `updated_at`) VALUES
-(1, '1989-10-15', '1991-07-03', 'Quia vel omnis ea te', 'Fugiat non quasi co', 'Animi eos maxime co', 'Neque odio commodi n', 'Aut dolorem lorem co', '4422', 'Fugiat id ut sequi', 'Consectetur fugiat a', 'fyjytavo@mailinator.com', 'Quisquam anim id su', 1, '35', 5, 2, 0, 0, 'zoning_permits/XcaBezooZ3caXd7LEEZxyjeHwHV7R0qECDotQ2XF.png', '', 1, 1, '2025-03-20 22:42:27', '2025-03-20 22:42:27'),
+(1, '1989-10-15', '1991-07-03', 'Quia vel omnis ea te', 'Fugiat non quasi co', 'Animi eos maxime co', 'Neque odio commodi n', 'Aut dolorem lorem co', '4422', 'Fugiat id ut sequi', 'Consectetur fugiat a', 'fyjytavo@mailinator.com', 'Quisquam anim id su', 1, '35', 5, 2, 0, 0, 'zoning_permits/XcaBezooZ3caXd7LEEZxyjeHwHV7R0qECDotQ2XF.png', 'Zoning district not found in the rules table', 3, 1, '2025-03-20 22:42:27', '2025-03-21 18:59:31'),
 (2, '1990-11-02', '2025-08-07', 'Voluptatibus ut sunt', 'Voluptatem accusanti', 'Dolorem distinctio', 'Tempore deserunt ni', 'Ad tempore alias au', '2560', 'Nam omnis est ration', 'Aute quis esse eius', 'gyjyjinu@mailinator.com', 'Anim consectetur el', 2, '90', 4, 2, 1, 1, 'zoning_permits/8UJ23jGERAyK7eh9rMRtbKzLjLAXn9vpCbFtbaWw.png', 'Denied: Invalid land right, Lot area too small, Zoning district does not allow proposed use', 3, 1, '2025-03-20 23:11:07', '2025-03-21 17:02:43'),
 (3, '2009-06-27', '2016-07-28', 'Alias impedit ipsam', 'Dolor omnis itaque n', 'Nisi facere itaque r', 'Unde sapiente ea omn', 'Numquam velit aperia', '9819', 'Quia et animi exerc', 'Et mollitia qui at i', 'syxuhabu@mailinator.com', 'Qui ut nulla culpa q', 3, '57', 2, 1, 1, 1, 'zoning_permits/C1qOZeXk1GjYqTgYzJNIfMwd5p63NCLmMVReyfk0.png', 'Denied: Lot area too small, Zoning district does not allow proposed use', 3, 1, '2025-03-20 23:26:21', '2025-03-21 17:01:08'),
 (4, '2013-12-04', '1991-12-23', 'Incidunt et excepte', 'Consequuntur esse do', 'Explicabo Rerum qua', 'Dolorum pariatur Qu', 'Sint numquam ipsa c', '4138', 'Earum mollitia dolor', 'Quas rerum blanditii', 'roxogyho@mailinator.com', 'Eu nemo amet facili', 2, '23', 4, 1, 1, 1, 'zoning_permits/qGxWOUKFnUUuQzLCjCvUTcB0FqlGKos2siuyHule.png', '', 3, 1, '2025-03-20 23:29:11', '2025-03-21 00:16:22'),
@@ -324,7 +330,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `rules`
 --
 ALTER TABLE `rules`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`

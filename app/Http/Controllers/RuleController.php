@@ -17,32 +17,54 @@ class RuleController extends Controller
         ]);
     }
 
-    // Display a single rule
-    // Fetch user list separately (API response)
     public function list(Request $request)
     {
         $search = $request->input('search', '');
         $itemsPerPage = $request->input('itemsperpage', 10);
         $page = $request->input('page_num', 1);
         $offset = ($page - 1) * $itemsPerPage;
-    
+
         // Get authenticated user
         $user = auth()->user();
-    
+
+        // Map of land right values to labels
+        $landRightLabels = [
+            1 => 'Own',
+            2 => 'Rent',
+            3 => 'Inherited',
+        ];
+
         // Query logs with user name from users table
         $query = DB::table('rules')
             ->where('name', 'LIKE', "%$search%");
-    
-    
+
         // Fetch paginated results
         $rules = $query->orderBy('id', 'desc')
             ->offset($offset)
             ->limit($itemsPerPage)
             ->get();
-    
+
+        // Convert acceptable_land_rights to labels
+        $rules = $rules->map(function ($rule) use ($landRightLabels) {
+            // Decode the JSON string into an array
+            $landRightsArray = json_decode($rule->acceptable_land_rights, true);
+
+            // If the decoded value is an array, map each number to its label
+            if (is_array($landRightsArray)) {
+                $rule->acceptable_land_rights = implode(', ', array_map(function ($right) use ($landRightLabels) {
+                    return $landRightLabels[$right] ?? 'Unknown'; // Fallback to 'Unknown' if no label found
+                }, $landRightsArray));
+            } else {
+                // In case it's not a valid array (fallback to 'Unknown')
+                $rule->acceptable_land_rights = 'Unknown';
+            }
+
+            return $rule;
+        });
+
         // Get total count
         $total = $query->count();
-    
+
         return response()->json([
             'rules' => $rules,
             'total' => $total,

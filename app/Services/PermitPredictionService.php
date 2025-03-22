@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 
 ///rule based AI
 class PermitPredictionService
@@ -24,16 +24,21 @@ class PermitPredictionService
     }
 
     // Function to define rules and predict zoning permit approval
-    public function predict(array $data)
+    public function predict(array $data) 
     {
-        // Define the rules for zoning permit approval
-        $rules = [
-            'required_area' => 500, // Minimum required area (e.g., 500 sq. meters)
-            'allowed_zones' => ['residential', 'commercial', 'industrial'], // Allowed zoning types
-            'minimum_lot_area' => 100, // Minimum lot area in square meters for certain uses
-            'acceptable_land_rights' => [1, 3], // Only 'Own' (1) and 'Inherited' (3) land rights are allowed
-            'setback_compliance_required' => true, // Setback compliance is mandatory
-        ];
+        // Retrieve the relevant rule from the database based on the zoning district
+        $rule = DB::table('rules')
+            ->where('zoning_district', $data['zoning_district'])
+            ->first();
+    
+        // Check if the rule exists
+        if (!$rule) {
+            // If no rule found for the given zoning district, deny the permit
+            return [
+                'status' => 3,
+                'message' => 'Zoning district not found in the rules table'
+            ];
+        }
     
         // Initialize log data
         $logData = [
@@ -46,36 +51,36 @@ class PermitPredictionService
         $reasons = [];
     
         // Rule 1: Check if the land right is valid
-        if (!in_array($data['right_over_land'], $rules['acceptable_land_rights'])) {
+        if (!in_array($data['right_over_land'], explode(',', $rule->acceptable_land_rights))) {
             $reasons[] = 'Invalid land right';
         }
     
         // Rule 2: Check if the lot area is large enough
-        if ($data['lot_area'] < $rules['required_area']) {
+        if ($data['lot_area'] < $rule->required_area) {
             $reasons[] = 'Lot area too small';
         }
     
         // Rule 3: Check if the proposed use matches zoning district
-        if (!in_array(strtolower($data['zoning_district']), $rules['allowed_zones'])) {
-            $reasons[] = 'Zoning district does not allow proposed use';
-        }
+        // if (!in_array(strtolower($data['zoning_district']), explode(',', $rule->allowed_zones))) {
+        //     $reasons[] = 'Zoning district does not allow the proposed use';
+        // }
     
-        // Rule 4: Check setback compliance
-        if ($rules['setback_compliance_required'] && !$data['setback_compliance']) {
+        // Rule 4: Check setback compliance if required
+        if ($rule->setback_compliance_required && !$data['setback_compliance']) {
             $reasons[] = 'Setback non-compliant';
         }
     
-        // Rule 5: Check if the proposed use is allowed in the zoning district
+        // Rule 5: Ensure proposed use matches the zoning district (specific for residential zone)
         if ($data['zoning_district'] == 'residential' && in_array(strtolower($data['proposed_use']), ['retail', 'office', 'mixed-use'])) {
             $reasons[] = 'Proposed use not allowed in residential zone';
         }
     
-        // Rule 6: Ensure the proposed use fits zoning requirements (optional additional rule)
+        // Rule 6: Ensure proposed use fits zoning district (specific for commercial zone)
         if ($data['zoning_district'] == 'commercial' && $data['proposed_use'] == 'single-family') {
             $reasons[] = 'Single-family use not allowed in commercial zone';
         }
     
-        // If there are reasons for denial, append them
+        // If there are reasons for denial, update the log message
         if (count($reasons) > 0) {
             $logData['message'] = 'Denied: ' . implode(', ', $reasons);
         } else {
@@ -89,5 +94,6 @@ class PermitPredictionService
     
         return $logData;
     }
+    
     
 }

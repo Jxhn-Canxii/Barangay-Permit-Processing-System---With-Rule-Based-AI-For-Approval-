@@ -24,10 +24,10 @@
                         <thead>
                             <tr class="border-b bg-green-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
                                 <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Name</th>
-                                <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Required Lot Area</th>
-                                <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Minimum Lot Area</th>
-                                <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Acceptable Land Rights</th>
-                                <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Setback Compliant</th>
+                                <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Required Lot Area</th>
+                                <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Minimum Lot Area</th>
+                                <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Acceptable Land</th>
+                                <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Setback Compliant</th>
                                 <th class="border-b-2 border-gray-200 px-5 py-3 text-center">Action</th>
                             </tr>
                         </thead>
@@ -42,10 +42,10 @@
                                 <td class="border-b border-gray-200 px-5 text-right py-5 text-sm">
                                     {{ rule.minimum_lot_area ?? 'N/A' }}<sub>sqm</sub>
                                 </td>
-                                <td class="border-b border-gray-200 px-5 text-left py-5 text-sm text-right">
+                                <td class="border-b border-gray-200 px-5 text-left py-5 text-sm">
                                     {{ rule.acceptable_land_rights }}
                                 </td>
-                                <td class="border-b border-gray-200 px-5 text-left py-5 text-sm text-right">
+                                <td class="border-b border-gray-200 px-5 text-left py-5 text-sm">
                                     {{ rule.setback_compliance ?? 'Yes' }}
                                 </td>
                                 <td class="border-b border-gray-200 px-5 py-5 text-sm text-center">
