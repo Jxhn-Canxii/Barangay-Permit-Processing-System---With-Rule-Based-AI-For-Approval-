@@ -17,22 +17,22 @@
                         <input type="number" v-model="form.year" class="mt-1 p-2 border rounded-md w-full bg-gray-200" disabled />
                     </div>
 
-                    <div class="grid grid-cols-3 gap-4 mb-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Households</label>
-                            <input type="number" v-model="form.households" class="mt-1 p-2 border rounded-md w-full" required @input="calculatePopulation" />
-                            <p v-if="errors.households" class="text-red-500 text-xs mt-1">{{ errors.households[0] }}</p>
-                        </div>
-
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700"># of Households</label>
+                        <input type="number" v-model="form.households" placeholder="Enter number of households" class="mt-1 p-2 border rounded-md w-full"  @input="calculatePopulation" />
+                        <p v-if="errors.households" class="text-red-500 text-xs mt-1">{{ errors.households[0] }}</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Male Population</label>
-                            <input type="number" v-model="form.male" class="mt-1 p-2 border rounded-md w-full" required @input="calculatePopulation" />
+                            <input type="number" v-model="form.male" placeholder="Enter male population" class="mt-1 p-2 border rounded-md w-full"  @input="calculatePopulation" />
                             <p v-if="errors.male" class="text-red-500 text-xs mt-1">{{ errors.male[0] }}</p>
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Female Population</label>
-                            <input type="number" v-model="form.female" class="mt-1 p-2 border rounded-md w-full" required @input="calculatePopulation" />
+                            <input type="number" v-model="form.female" placeholder="Enter female population" class="mt-1 p-2 border rounded-md w-full"  @input="calculatePopulation" />
                             <p v-if="errors.female" class="text-red-500 text-xs mt-1">{{ errors.female[0] }}</p>
                         </div>
                     </div>

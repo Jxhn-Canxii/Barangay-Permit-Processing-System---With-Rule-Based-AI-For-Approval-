@@ -9,10 +9,12 @@
                     <path d="M4 6H20M4 12H20M4 18H11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
             </button>
-            <p class="">
-                <h2 class="text-md md:text-xl font-semibold text-start text-white">{{ $page.props.auth.user.name }}</h2>
-                <small class="text-slate-200">{{ roleFormatter($page.props.auth.user.role) }}</small>
-            </p>
+            <div class="">
+                <p class="">
+                    <h2 class="text-md md:text-xl font-semibold text-start text-white">{{ $page.props.auth.user.name }}</h2>
+                    <small class="text-slate-200">{{ roleFormatter($page.props.auth.user.role) }}</small>
+                </p>
+            </div>
         </div>
         <div class="flex justify-end items-center space-x-1">
             <!-- Logout button -->
@@ -30,3 +32,8 @@ import NavLink from '@/Components/NavLink.vue';
 import { roleFormatter } from "@/Utility/Formatter.js";
 
 </script>
+<style scoped>
+.trapezoid {
+  clip-path: polygon(0% 20%, 100% 0%, 100% 80%, 0% 100%);
+}
+</style>

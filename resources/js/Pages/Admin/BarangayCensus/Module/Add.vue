@@ -17,14 +17,12 @@
                         <input type="number" v-model="form.year" placeholder="Enter census year" class="mt-1 p-2 border rounded-md w-full"  />
                         <p v-if="errors.year" class="text-red-500 text-xs mt-1">{{ errors.year[0] }}</p>
                     </div>
-
-                    <div class="grid grid-cols-3 gap-4 mb-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Households</label>
-                            <input type="number" v-model="form.households" placeholder="Enter number of households" class="mt-1 p-2 border rounded-md w-full"  @input="calculatePopulation" />
-                            <p v-if="errors.households" class="text-red-500 text-xs mt-1">{{ errors.households[0] }}</p>
-                        </div>
-
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700"># of Households</label>
+                        <input type="number" v-model="form.households" placeholder="Enter number of households" class="mt-1 p-2 border rounded-md w-full"  @input="calculatePopulation" />
+                        <p v-if="errors.households" class="text-red-500 text-xs mt-1">{{ errors.households[0] }}</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Male Population</label>
                             <input type="number" v-model="form.male" placeholder="Enter male population" class="mt-1 p-2 border rounded-md w-full"  @input="calculatePopulation" />
@@ -75,7 +73,7 @@ const form = useForm({
 });
 
 const calculatePopulation = () => {
-    form.population = (parseInt(form.male) || 0) + (parseInt(form.female) || 0) + (parseInt(form.households) || 0);
+    form.population = (parseInt(form.male) || 0) + (parseInt(form.female) || 0);
 };
 
 const addCensus = async () => {
