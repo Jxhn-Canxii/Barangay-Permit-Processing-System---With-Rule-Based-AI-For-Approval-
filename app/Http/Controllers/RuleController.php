@@ -80,7 +80,7 @@ class RuleController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string',
-            'zoning_district' => 'required|integer|min:1|unique:zoning_permits,zoning_district', // Make zoning_district unique
+            'zoning_district' => 'required|integer|min:1|unique:rules', // Make zoning_district unique
             'required_area' => 'required|integer',
             'minimum_lot_area' => 'required|integer',
             'acceptable_land_rights' => 'required|array',
