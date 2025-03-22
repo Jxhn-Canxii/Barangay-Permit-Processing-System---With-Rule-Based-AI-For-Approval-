@@ -82,7 +82,7 @@ class UserController extends Controller
         // Validate the incoming request
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email', // Ensure unique email but ignore current user
+            'email' => 'required|email', // Ensure unique email but ignore current user
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()], // Password is optional on update
             'role' => 'required|integer|in:1,2,3', // Adjust roles as needed
         ]);
