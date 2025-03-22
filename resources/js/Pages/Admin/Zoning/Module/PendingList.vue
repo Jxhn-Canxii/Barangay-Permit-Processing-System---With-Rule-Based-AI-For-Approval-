@@ -232,11 +232,7 @@ const approvePermit = async (id) => {
 
         if (result.isConfirmed) {
             const response = await axios.put(route("zoning.approve", id));
-            if (response.data.status == 2) {
-                Swal.fire("Approved!", response.data.message, "success");
-            } else {
-                Swal.fire("Rejected!", response.data.message, "warning");
-            }
+            Swal.fire("Approved!", response.data.message, "success");
             fetchData();
         }
     } catch (error) {
