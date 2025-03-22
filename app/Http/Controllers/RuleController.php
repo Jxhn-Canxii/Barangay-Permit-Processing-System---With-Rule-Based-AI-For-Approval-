@@ -118,7 +118,7 @@ class RuleController extends Controller
             'required_area' => 'required|integer',
             'minimum_lot_area' => 'required|integer',
             'acceptable_land_rights' => 'required|array',
-            'setback_compliance_required' => 'required|boolean',
+            'setback_compliance' => 'required|boolean',
         ]);
 
         // Update the rule data in 'rules' table using DB facade
@@ -126,7 +126,7 @@ class RuleController extends Controller
             'required_area' => $validated['required_area'],
             'minimum_lot_area' => $validated['minimum_lot_area'],
             'acceptable_land_rights' => json_encode($validated['acceptable_land_rights']),
-            'setback_compliance_required' => $validated['setback_compliance_required'],
+            'setback_compliance_required' => $validated['setback_compliance'],
             'updated_at' => now(),
         ]);
 

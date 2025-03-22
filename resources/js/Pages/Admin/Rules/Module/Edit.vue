@@ -55,11 +55,11 @@
                         <!-- Setback Compliance Required -->
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700">Setback Compliance Required</label>
-                            <select v-model="form.setback_compliance_required" class="mt-1 p-2 w-full border rounded-md">
+                            <select v-model="form.setback_compliance" class="mt-1 p-2 w-full border rounded-md">
                                 <option :value="true">Yes</option>
                                 <option :value="false">No</option>
                             </select>
-                            <p v-if="errors.setback_compliance_required" class="text-red-500 text-xs mt-1">{{ errors.setback_compliance_required[0] }}</p>
+                            <p v-if="errors.setback_compliance" class="text-red-500 text-xs mt-1">{{ errors.setback_compliance[0] }}</p>
                         </div>
                     </div>
 
@@ -96,7 +96,7 @@ const form = useForm({
     minimum_lot_area: 0,
     required_area: 0,
     acceptable_land_rights: '',
-    setback_compliance_required: true,
+    setback_compliance: true,
 });
 
 const landRights = ref([
@@ -114,7 +114,7 @@ const editBehavior = () => {
     form.minimum_lot_area = data.minimum_lot_area;
     form.required_area = data.required_area;
     form.acceptable_land_rights = data.acceptable_land_rights;
-    form.setback_compliance_required = data.setback_compliance_required == 1 ? true : false;
+    form.setback_compliance = data.setback_compliance_required == 1 ? true : false;
 
     isEditZoningRules.value = true;
 }

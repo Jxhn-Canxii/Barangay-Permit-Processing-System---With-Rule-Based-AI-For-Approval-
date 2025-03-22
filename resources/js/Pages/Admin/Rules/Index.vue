@@ -46,7 +46,7 @@
                                     {{ rule.acceptable_land_rights_name }}
                                 </td>
                                 <td class="border-b border-gray-200 px-5 text-left py-5 text-sm">
-                                    {{ rule.setback_compliance ?? 'Yes' }}
+                                    {{ rule.setback_compliance_required == 1 ? 'Yes' : 'No' }}
                                 </td>
                                 <td class="border-b border-gray-200 px-5 py-5 text-sm text-center">
                                     <div class="flex justify-center items-center">
