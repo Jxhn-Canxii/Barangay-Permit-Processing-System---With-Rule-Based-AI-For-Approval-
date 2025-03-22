@@ -10,7 +10,7 @@
                 <!-- Add Permit Button -->
                 <div class="flex justify-end gap-4">
                     <!-- <TrainModel v-if="sessionRole == 1" @transaction_id="handleTransaction()" /> -->
-                    <Add v-if="sessionRole != 3" @transaction_id="handleTransaction()" />
+                    <Add @transaction_id="handleTransaction()" />
                 </div>
                 <!-- Tabs Navigation -->
                 <div class="flex flex-wrap px-3">
