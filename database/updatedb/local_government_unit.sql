@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2025 at 02:03 AM
+-- Generation Time: Mar 22, 2025 at 03:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -153,6 +153,25 @@ CREATE TABLE `registerlanding` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `rules`
+--
+
+CREATE TABLE `rules` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `zoning_district` int(11) NOT NULL,
+  `required_area` int(11) DEFAULT 500,
+  `allowed_zones` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '{"residential", "commercial", "industrial"}' CHECK (json_valid(`allowed_zones`)),
+  `minimum_lot_area` int(11) DEFAULT 100,
+  `acceptable_land_rights` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '[1, 3]' CHECK (json_valid(`acceptable_land_rights`)),
+  `setback_compliance_required` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -255,6 +274,12 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `rules`
+--
+ALTER TABLE `rules`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -294,6 +319,12 @@ ALTER TABLE `logs`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `rules`
+--
+ALTER TABLE `rules`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`

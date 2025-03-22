@@ -7,6 +7,7 @@ use App\Http\Controllers\ZoningController;
 use App\Http\Controllers\LogsController;
 use App\Http\Controllers\BarangayCensusController;
 use App\Http\Controllers\LandmarkController;
+use App\Http\Controllers\RuleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -84,6 +85,15 @@ Route::middleware('auth')->group(function () {
         Route::get('train', [ZoningController::class, 'trainModel'])->name('zoning.train'); // Add new zoning permit with file upload
         
     });
+
+    Route::prefix('rules')->group(function () {
+        Route::get('/', [RuleController::class, 'index'])->name('rules.index');
+        Route::get('list-rules', [RuleController::class, 'list'])->name('rules.list');
+        Route::post('/', [RuleController::class, 'add'])->name('rules.add');
+        Route::put('{id}', [RuleController::class, 'update'])->name('rules.update');
+        Route::delete('{id}', [RuleController::class, 'deleteRules'])->name('rules.delete');
+    });
+
     Route::prefix('landmark/')->group(function(){
         Route::get('', [LandMarkController::class, 'index'])->name('landmark.index');
     });
