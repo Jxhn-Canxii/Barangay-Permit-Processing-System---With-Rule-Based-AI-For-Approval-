@@ -88,7 +88,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('rules')->group(function () {
         Route::get('/', [RuleController::class, 'index'])->name('rules.index');
-        Route::get('list-rules', [RuleController::class, 'list'])->name('rules.list');
+        Route::post('list-rules', [RuleController::class, 'list'])->name('rules.list');
         Route::post('/', [RuleController::class, 'add'])->name('rules.add');
         Route::put('{id}', [RuleController::class, 'update'])->name('rules.update');
         Route::delete('{id}', [RuleController::class, 'deleteRules'])->name('rules.delete');
