@@ -54,7 +54,7 @@
           </template>
           Landmarks
         </nav-link>
-        <nav-link :href="route('barangay.census.index')" :active="route().current('barangay.census.index')">
+        <nav-link  :href="route('barangay.census.index')" :active="route().current('barangay.census.index')">
           <template #icon>
             <i class="fa fa-chart-line"></i>
           </template>
@@ -70,13 +70,13 @@
 
       <!-- System Logs Section -->
       <p class="px-4 text-xs text-gray-400 uppercase mt-4">System</p>
-      <nav-link :href="route('rules.index')" :active="route().current('rules.index')">
+      <nav-link v-if="sessionRole != 3" :href="route('rules.index')" :active="route().current('rules.index')">
         <template #icon>
           <i class="fa fa-list"></i>
         </template>
         Rules
       </nav-link>
-      <nav-link :href="route('users.index')" :active="route().current('users.index')">
+      <nav-link v-if="sessionRole == 1" :href="route('users.index')" :active="route().current('users.index')">
         <template #icon>
           <i class="fa fa-users"></i>
         </template>
