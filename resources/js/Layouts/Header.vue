@@ -18,9 +18,9 @@
         </div>
         <div class="flex justify-end items-center space-x-1">
             <!-- Logout button -->
-            <dropdown-link class=" text-left text-white border p-2 rounded hover:bg-red-300" :href="route('logout')" method="post" as="button">
+            <button @click.prevent="logOut()" class=" text-left text-white border p-2 rounded hover:bg-red-300" :href="route('logout')" method="post" as="button">
                 <i class="fa fa-power-off text-red-500"></i> Logout
-            </dropdown-link>
+            </button>
         </div>
     </header>
 </template>
@@ -30,6 +30,47 @@ import { ref } from 'vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import { roleFormatter } from "@/Utility/Formatter.js";
+import axios from "axios";
+import Swal from "sweetalert2";
+
+const logOut = async () => {
+    try {
+        const confirmLogout = await Swal.fire({
+            title: "Are you sure?",
+            text: "You will be logged out of your account.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, log me out"
+        });
+
+        if (!confirmLogout.isConfirmed) return; // Exit if user cancels
+
+        // Send logout request
+        const response = await axios.post(route('logout'),{id: 0});
+        if (response) {
+            // clear all storage
+            localStorage.clear();
+            sessionStorage.clear();
+
+            // Show success message
+            await Swal.fire({
+                title: "Logged Out",
+                text: "You have been successfully logged out.",
+                icon: "success",
+                timer: 2000,
+                showConfirmButton: false
+            });
+
+            // Reload the page to reflect changes
+            location.reload();
+        }
+    } catch (error) {
+        console.error("Error logging out:", error);
+        Swal.fire("Error", "Something went wrong. Please try again!", "error");
+    }
+};
 
 </script>
 <style scoped>
