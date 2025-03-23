@@ -26,9 +26,9 @@
                     <div class="grid grid-cols-1 gap-6 p-1">
                         <!-- Required Area -->
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700">Required Area (sq. meters)</label>
-                            <input type="number" v-model="form.required_area" class="mt-1 p-2 border rounded-md w-full" />
-                            <p v-if="errors.required_area" class="text-red-500 text-xs mt-1">{{ errors.required_area[0] }}</p>
+                            <label class="block text-sm font-medium text-gray-700">Maximum Lot Area  (sq. meters)</label>
+                            <input type="number" v-model="form.maximum_lot_area" class="mt-1 p-2 border rounded-md w-full" />
+                            <p v-if="errors.maximum_lot_area" class="text-red-500 text-xs mt-1">{{ errors.maximum_lot_area[0] }}</p>
                         </div>
 
                         <!-- Minimum Lot Area -->
@@ -94,7 +94,7 @@ const form = useForm({
     id: 0,
     zoning_district: 0,
     minimum_lot_area: 0,
-    required_area: 0,
+    maximum_lot_area: 0,
     acceptable_land_rights: '',
     setback_compliance: true,
 });
@@ -112,7 +112,7 @@ const editBehavior = () => {
     form.id = data.id;
     form.zoning_district = data.zoning_district;
     form.minimum_lot_area = data.minimum_lot_area;
-    form.required_area = data.required_area;
+    form.maximum_lot_area = data.maximum_lot_area;
     form.acceptable_land_rights = data.acceptable_land_rights;
     form.setback_compliance = data.setback_compliance_required == 1 ? true : false;
 

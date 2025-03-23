@@ -24,7 +24,7 @@
                         <thead>
                             <tr class="border-b bg-green-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
                                 <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Name</th>
-                                <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Required Lot Area</th>
+                                <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Maximum Lot Area</th>
                                 <th class="border-b-2 border-gray-200 px-5 py-3 text-right">Minimum Lot Area</th>
                                 <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Acceptable Land Rights</th>
                                 <th class="border-b-2 border-gray-200 px-5 py-3 text-left">Setback Compliant</th>
@@ -37,7 +37,7 @@
                                     {{ rule.name }}
                                 </td>
                                 <td class="border-b border-gray-200 px-5 text-right py-5 text-sm">
-                                    {{ rule.required_area ?? 'N/A' }} <sub>sqm</sub>
+                                    {{ rule.maximum_lot_area ?? 'N/A' }} <sub>sqm</sub>
                                 </td>
                                 <td class="border-b border-gray-200 px-5 text-right py-5 text-sm">
                                     {{ rule.minimum_lot_area ?? 'N/A' }}<sub>sqm</sub>

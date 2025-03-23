@@ -26,9 +26,9 @@
                     <div v-if="form.zoning_district" class="grid grid-cols-1 gap-6 p-1">
                         <!-- Required Area -->
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700">Required Area (sq. meters)</label>
-                            <input type="number" v-model="form.required_area" class="mt-1 p-2 border rounded-md w-full" />
-                            <p v-if="errors.required_area" class="text-red-500 text-xs mt-1">{{ errors.required_area[0] }}</p>
+                            <label class="block text-sm font-medium text-gray-700">Maximum Lot Area (sq. meters)</label>
+                            <input type="number" v-model="form.maximum_lot_area" class="mt-1 p-2 border rounded-md w-full" />
+                            <p v-if="errors.maximum_lot_area" class="text-red-500 text-xs mt-1">{{ errors.maximum_lot_area[0] }}</p>
                         </div>
 
                         <!-- Minimum Lot Area -->
@@ -89,7 +89,7 @@ const errors = ref({}); // To store validation errors
 const form = useForm({
     zoning_district: 0,
     minimum_lot_area: 0,
-    required_area: 0,
+    maximum_lot_area: 0,
     setback_compliance_required: true,
 });
 

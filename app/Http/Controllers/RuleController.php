@@ -81,7 +81,7 @@ class RuleController extends Controller
         $validated = $request->validate([
             'name' => 'required|string',
             'zoning_district' => 'required|integer|min:1|unique:rules', // Make zoning_district unique
-            'required_area' => 'required|integer',
+            'maximum_lot_area' => 'required|integer',
             'minimum_lot_area' => 'required|integer',
             'acceptable_land_rights' => 'required|array',
             'setback_compliance_required' => 'required|boolean',
@@ -91,7 +91,7 @@ class RuleController extends Controller
         $inserted = DB::table('rules')->insert([
             'name' => $validated['name'],
             'zoning_district' => $validated['zoning_district'],
-            'required_area' => $validated['required_area'],
+            'maximum_lot_area' => $validated['maximum_lot_area'],
             'minimum_lot_area' => $validated['minimum_lot_area'],
             'acceptable_land_rights' => json_encode($validated['acceptable_land_rights']),
             'setback_compliance_required' => $validated['setback_compliance_required'],
@@ -115,7 +115,7 @@ class RuleController extends Controller
         }
 
         $validated = $request->validate([
-            'required_area' => 'required|integer',
+            'maximum_lot_area' => 'required|integer',
             'minimum_lot_area' => 'required|integer',
             'acceptable_land_rights' => 'required|array',
             'setback_compliance' => 'required|boolean',
@@ -123,7 +123,7 @@ class RuleController extends Controller
 
         // Update the rule data in 'rules' table using DB facade
         $updated = DB::table('rules')->where('id', $id)->update([
-            'required_area' => $validated['required_area'],
+            'maximum_lot_area' => $validated['maximum_lot_area'],
             'minimum_lot_area' => $validated['minimum_lot_area'],
             'acceptable_land_rights' => json_encode($validated['acceptable_land_rights']),
             'setback_compliance_required' => $validated['setback_compliance'],

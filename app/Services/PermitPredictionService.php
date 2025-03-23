@@ -50,20 +50,24 @@ class PermitPredictionService
         // Initialize an empty array to store reasons for denial
         $reasons = [];
     
+        // Remove brackets and convert the string into an array
+        $acceptableLandRights = explode(',', trim($rule->acceptable_land_rights, '[]'));
+
         // Rule 1: Check if the land right is valid
-        if (!in_array($data['right_over_land'], explode(',', $rule->acceptable_land_rights))) {
+        if (!in_array($data['right_over_land'], $acceptableLandRights, true)) {
             $reasons[] = 'Invalid land right';
         }
+
     
-        // Rule 2: Check if the lot area is large enough
-        if ($data['lot_area'] < $rule->required_area) {
-            $reasons[] = 'Lot area too small';
+        // Rule 2: Check if the lot area is large enough to the required max area
+        if ($data['lot_area'] > $rule->maximum_lot_area) {
+            $reasons[] = 'Lot area too big';
         }
     
-        // Rule 3: Check if the proposed use matches zoning district
-        // if (!in_array(strtolower($data['zoning_district']), explode(',', $rule->allowed_zones))) {
-        //     $reasons[] = 'Zoning district does not allow the proposed use';
-        // }
+        // Rule 3: Check if the lot area is less enough to the required min area
+        if ($data['lot_area'] < $rule->minimum_lot_area) {
+            $reasons[] = 'Lot area too small';
+        }
     
         // Rule 4: Check setback compliance if required
         if ($rule->setback_compliance_required && !$data['setback_compliance']) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2025 at 04:03 AM
+-- Generation Time: Mar 23, 2025 at 07:26 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -122,7 +122,16 @@ INSERT INTO `logs` (`id`, `user_id`, `action`, `module`, `ip_address`, `details`
 (19, 1, 'Added zoning permit for Voluptatibus ipsum i Exercitationem tempo', 'Zoning Application', NULL, NULL, '2025-03-20 23:33:26', '2025-03-21 07:33:26'),
 (20, 1, 'Added zoning permit for Consequuntur sed sed Nisi id ut do aut e', 'Zoning Application', NULL, NULL, '2025-03-20 23:51:35', '2025-03-21 07:51:35'),
 (21, 1, 'Added zoning permit for Id est sit occaecat Optio ipsam ut temp', 'Zoning Application', NULL, NULL, '2025-03-20 23:52:37', '2025-03-21 07:52:37'),
-(22, 1, 'Added zoning permit for Quam labore ad aperi Ratione reiciendis q', 'Zoning Application', NULL, NULL, '2025-03-21 00:36:56', '2025-03-21 08:36:56');
+(22, 1, 'Added zoning permit for Quam labore ad aperi Ratione reiciendis q', 'Zoning Application', NULL, NULL, '2025-03-21 00:36:56', '2025-03-21 08:36:56'),
+(23, 1, 'Added zoning permit for Totam occaecat dolor Nobis minim aut cupi', 'Zoning Application', NULL, NULL, '2025-03-21 20:46:17', '2025-03-22 04:46:17'),
+(24, 1, 'Added zoning permit for Neque fuga Deleniti Est magnam ex volupt', 'Zoning Application', NULL, NULL, '2025-03-21 20:46:47', '2025-03-22 04:46:47'),
+(25, 1, 'Added zoning permit for Nulla quidem assumen Et et illo necessita', 'Zoning Application', NULL, NULL, '2025-03-21 20:50:06', '2025-03-22 04:50:06'),
+(26, 1, 'Added zoning permit for Ut deleniti voluptat A est recusandae La', 'Zoning Application', NULL, NULL, '2025-03-22 08:30:27', '2025-03-22 16:30:27'),
+(27, 11, 'Added zoning permit for Ipsum quam dicta qu Quae dolore maiores', 'Zoning Application', NULL, NULL, '2025-03-22 21:42:47', '2025-03-23 05:42:47'),
+(28, 1, 'Added zoning permit for Illo repellendus Al Odio dignissimos ad', 'Zoning Application', NULL, NULL, '2025-03-22 21:54:06', '2025-03-23 05:54:06'),
+(29, 1, 'Added zoning permit for Est cillum aperiam Incidunt et assumen', 'Zoning Application', NULL, NULL, '2025-03-22 21:55:44', '2025-03-23 05:55:44'),
+(30, 11, 'Added zoning permit for Necessitatibus iste Quia porro cillum sa', 'Zoning Application', NULL, NULL, '2025-03-22 22:01:18', '2025-03-23 06:01:18'),
+(31, 11, 'Added zoning permit for Voluptatem Labore s Inventore do tempora', 'Zoning Application', NULL, NULL, '2025-03-22 22:25:37', '2025-03-23 06:25:37');
 
 -- --------------------------------------------------------
 
@@ -160,7 +169,7 @@ CREATE TABLE `rules` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `zoning_district` int(11) NOT NULL,
-  `required_area` int(11) DEFAULT 500,
+  `maximum_lot_area` int(11) DEFAULT NULL,
   `minimum_lot_area` int(11) DEFAULT 100,
   `acceptable_land_rights` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '[1, 3]' CHECK (json_valid(`acceptable_land_rights`)),
   `setback_compliance_required` tinyint(1) DEFAULT 1,
@@ -172,8 +181,9 @@ CREATE TABLE `rules` (
 -- Dumping data for table `rules`
 --
 
-INSERT INTO `rules` (`id`, `name`, `zoning_district`, `required_area`, `minimum_lot_area`, `acceptable_land_rights`, `setback_compliance_required`, `created_at`, `updated_at`) VALUES
-(1, 'Industrial', 3, 78, 58, '[1]', 1, '2025-03-21 18:44:32', '2025-03-21 18:44:32');
+INSERT INTO `rules` (`id`, `name`, `zoning_district`, `maximum_lot_area`, `minimum_lot_area`, `acceptable_land_rights`, `setback_compliance_required`, `created_at`, `updated_at`) VALUES
+(1, 'Industrial', 3, 78, 58, '[1]', 0, '2025-03-21 18:44:32', '2025-03-22 07:35:55'),
+(2, 'Residential', 1, 5000, 5000, '[1,2,3]', 0, '2025-03-21 20:49:30', '2025-03-22 07:38:15');
 
 -- --------------------------------------------------------
 
@@ -199,9 +209,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `role`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Hernan John Canciller', 1, 'greygreygrey35@gmail.com', NULL, '$2y$12$i5rzyoRK3x7IKP7SsJdymuF1B1vWBm0M2u8wV0PynTB0VgiIEM64W', NULL, '2025-03-13 03:07:21', '2025-03-13 03:07:21'),
-(8, 'Recusandae Velit r', 3, 'kejej@mailinator.com', NULL, '$2y$12$tm8D6XwEV9X8EyypfgZlaeB7Crz7gxfF5brZFKgggspo47nbwhfTW', NULL, '2025-03-18 07:49:11', '2025-03-18 07:49:11'),
+(8, 'Recusandae Velit r', 3, 'kASDASDejeASj@mailinator.com', NULL, '$2y$12$tm8D6XwEV9X8EyypfgZlaeB7Crz7gxfF5brZFKgggspo47nbwhfTW', NULL, '2025-03-18 07:49:11', '2025-03-22 08:11:54'),
 (9, 'Suscipit aut tempori', 2, 'tyqe@mailinator.com', NULL, '$2y$12$hn1QNXKlAPeTgwKN8lr1tuAoT6L7lth0phfCEM0a.uOwgR1AfByfa', NULL, '2025-03-18 07:52:27', '2025-03-18 07:52:27'),
-(10, 'Sed do officia quia', 2, 'nymu@mailinator.com', NULL, '$2y$12$KjJYJYqKC2Zu0CDmLxJiXuNeucoBon2LGUK40b4m8HyaiQlNLyNju', NULL, '2025-03-18 07:53:06', '2025-03-18 07:53:06');
+(10, 'Sed do officia quia', 2, 'nymu@mailinator.com', NULL, '$2y$12$KjJYJYqKC2Zu0CDmLxJiXuNeucoBon2LGUK40b4m8HyaiQlNLyNju', NULL, '2025-03-18 07:53:06', '2025-03-18 07:53:06'),
+(11, 'Hernan John Canciller', 3, 'greygreygrey323235@gmail.com', NULL, '$2y$12$4sBMJIpfHICRxr90.kwuk.VOT7jahAfS2h3J1rePY6h2gdh4ZtXOi', NULL, '2025-03-22 21:41:12', '2025-03-22 21:41:12');
 
 -- --------------------------------------------------------
 
@@ -249,7 +260,16 @@ INSERT INTO `zoning_permits` (`id`, `date_of_application`, `or_date`, `official_
 (5, '1974-03-17', '2010-07-28', 'Sed unde repudiandae', 'Voluptatibus ipsum i', 'Quaerat eos qui et o', 'Exercitationem tempo', 'Qui quia nisi culpa', '1036', 'Distinctio Labore o', 'Excepturi rerum corp', 'miwuq@mailinator.com', 'Esse porro pariatur', 1, '82', 3, 2, 0, 0, 'zoning_permits/jHI9s2dZZCWfetjnxjFufnbr11zvNjWgGyjuFCF9.png', '', 3, 1, '2025-03-20 23:33:26', '2025-03-21 00:16:31'),
 (6, '1990-01-11', '2024-02-10', 'Rerum et dolore qui', 'Consequuntur sed sed', 'Ipsam pariatur Dolo', 'Nisi id ut do aut e', 'Odio in debitis et c', '6063', 'Consequuntur deserun', 'Est non ut veniam', 'gahiz@mailinator.com', 'Aliquid in iste eius', 3, '94', 1, 3, 1, 0, 'zoning_permits/wndGzNUXo1Tg8qgG6rUhb4hRiDTdiXBzNSyxqYe5.png', '', 3, 1, '2025-03-20 23:51:35', '2025-03-21 00:16:14'),
 (7, '2022-10-13', '1993-11-27', 'In est quo consequat', 'Id est sit occaecat', 'Aliquam consectetur', 'Optio ipsam ut temp', 'Nihil vel natus enim', '9957', 'Vel quia nihil eu el', 'Totam voluptatem vol', 'nedu@mailinator.com', 'Quia et consequat S', 1, '40', 5, 3, 1, 1, 'zoning_permits/gY6QwIn1LdLm49LomLVEwDEiEmplhGBtL0L24uB6.png', '', 3, 1, '2025-03-20 23:52:37', '2025-03-21 00:12:56'),
-(8, '1988-02-26', '2025-08-21', 'Non voluptates incid', 'Quam labore ad aperi', 'Optio sunt cumque', 'Ratione reiciendis q', 'Eum corporis Nam sed', '6636', 'Voluptate in veniam', 'Sunt soluta quia am', 'jeneli@mailinator.com', 'Ex nostrud aspernatu', 3, '67', 2, 3, 1, 0, 'zoning_permits/8jIfghj2caXqDK48dHI1TMlEsqrff6FytagUqQzl.png', 'Denied: Lot area too small, Zoning district does not allow proposed use, Setback non-compliant', 3, 1, '2025-03-21 00:36:56', '2025-03-21 16:57:45');
+(8, '1988-02-26', '2025-08-21', 'Non voluptates incid', 'Quam labore ad aperi', 'Optio sunt cumque', 'Ratione reiciendis q', 'Eum corporis Nam sed', '6636', 'Voluptate in veniam', 'Sunt soluta quia am', 'jeneli@mailinator.com', 'Ex nostrud aspernatu', 3, '67', 2, 3, 1, 0, 'zoning_permits/8jIfghj2caXqDK48dHI1TMlEsqrff6FytagUqQzl.png', 'Denied: Lot area too small, Zoning district does not allow proposed use, Setback non-compliant', 3, 1, '2025-03-21 00:36:56', '2025-03-21 16:57:45'),
+(9, '2016-04-21', '2002-10-17', 'Magna veritatis ea f', 'Totam occaecat dolor', 'Odio dolorem quaerat', 'Nobis minim aut cupi', 'Quod enim id archite', '60', 'Voluptas fugit mole', 'Voluptates amet obc', 'caxusobaza@mailinator.com', 'Culpa quis sit qua', 2, '17', 3, 3, 0, 0, NULL, 'Denied: Invalid land right, Lot area too small, Setback non-compliant', 3, 1, '2025-03-21 20:46:17', '2025-03-21 20:46:20'),
+(10, '2012-05-08', '2014-12-06', 'Culpa accusamus plac', 'Neque fuga Deleniti', 'Tempore dolor optio', 'Est magnam ex volupt', 'Quia eaque eos veli', '9898', 'Eius inventore conse', 'Qui distinctio Qui', 'mohi@mailinator.com', 'Qui sunt itaque sed', 3, '96', 5, 1, 0, 0, NULL, 'Zoning district not found in the rules table', 3, 1, '2025-03-21 20:46:47', '2025-03-21 20:46:50'),
+(11, '1988-09-18', '1977-02-01', 'Dolore ut cumque vol', 'Nulla quidem assumen', 'Non consequatur Nis', 'Et et illo necessita', 'Sequi provident a p', '925', 'Non est asperiores c', 'Aliqua Laborum recu', 'pezityleb@mailinator.com', 'Ut nostrum aliquip s', 1, '95', 3, 3, 1, 0, NULL, 'Denied: Invalid land right, Setback non-compliant', 3, 1, '2025-03-21 20:50:06', '2025-03-21 20:50:10'),
+(12, '1997-10-04', '1976-06-10', 'Aliquip minima aute', 'Ut deleniti voluptat', 'Dignissimos quos ull', 'A est recusandae La', 'Sint minus veritatis', '515', 'Reprehenderit labori', 'Tempora est do volup', 'coqubad@mailinator.com', 'Et enim eaque saepe', 2, '24', 1, 2, 1, 0, NULL, 'Zoning district not found in the rules table', 3, 1, '2025-03-22 08:30:27', '2025-03-22 08:30:32'),
+(13, '2006-05-20', '2013-06-10', 'Nemo facere vitae ad', 'Ipsum quam dicta qu', 'Vero ut sint reprehe', 'Quae dolore maiores', 'Labore ea tempora so', '6466', 'Aut soluta et in eli', 'Voluptate sit quas', 'bafonur@mailinator.com', 'Harum atque veniam', 3, '71', 4, 1, 1, 1, NULL, 'Denied: Invalid land right, Lot area too small', 3, 11, '2025-03-22 21:42:47', '2025-03-22 21:51:04'),
+(14, '1997-06-07', '2025-08-10', 'Quis quam eius venia', 'Illo repellendus Al', 'Deserunt tempore eo', 'Odio dignissimos ad', 'Nisi et excepteur vo', '7558', 'Ea autem voluptate f', 'Dignissimos ducimus', 'vilokeryg@mailinator.com', 'Officia in est illum', 1, '8', 1, 2, 1, 1, NULL, 'Zoning district not found in the rules table', 3, 1, '2025-03-22 21:54:06', '2025-03-22 21:54:09'),
+(15, '1993-09-02', '1984-12-07', 'Ut magni repudiandae', 'Est cillum aperiam', 'Quasi voluptas sit q', 'Incidunt et assumen', 'Modi sint adipisici', '9745', 'Quia ipsam quas dolo', 'Amet culpa nihil si', 'lywyd@mailinator.com', 'Ut quos sit providen', 2, '10', 5, 2, 1, 1, NULL, 'Zoning district not found in the rules table', 3, 1, '2025-03-22 21:55:44', '2025-03-22 21:55:47'),
+(16, '1972-08-15', '1976-04-03', 'Et id ut obcaecati q', 'Necessitatibus iste', 'Nam fugiat delectus', 'Quia porro cillum sa', 'Sunt qui dignissimo', '5465', 'Sed laboris autem ad', 'Rem ipsa quis asper', 'wojadomu@mailinator.com', 'Id autem labore cons', 2, '16', 1, 2, 1, 0, NULL, 'None', 1, 11, '2025-03-22 22:01:18', '2025-03-22 22:01:18'),
+(17, '2019-12-23', '1986-11-18', 'Qui debitis lorem op', 'Voluptatem Labore s', 'Nemo obcaecati non d', 'Inventore do tempora', 'Laboriosam non ut i', '948', 'Laboriosam dignissi', 'In autem laboris lor', 'hitopy@mailinator.com', 'Corrupti ut harum c', 3, '36', 2, 1, 1, 0, NULL, 'None', 1, 11, '2025-03-22 22:25:37', '2025-03-22 22:25:37');
 
 --
 -- Indexes for dumped tables
@@ -318,7 +338,7 @@ ALTER TABLE `landmarks`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -330,19 +350,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `rules`
 --
 ALTER TABLE `rules`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `zoning_permits`
 --
 ALTER TABLE `zoning_permits`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
