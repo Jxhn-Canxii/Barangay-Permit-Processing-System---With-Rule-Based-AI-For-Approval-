@@ -52,7 +52,7 @@ class ZoningController extends Controller
         $offset = ($page - 1) * $itemsPerPage;
     
         $userId = $userId = $request->user()->id; // Get session user ID
-        $userRole = DB::table('users')->where('id', $userId)->value('role'); // Get user role
+        $userRole = $request->user()->role; // Get session user ID
     
         $query = DB::table('zoning_permits')
             ->where('status_id', 2)
@@ -105,7 +105,7 @@ class ZoningController extends Controller
         $offset = ($page - 1) * $itemsPerPage;
     
         $userId = $userId = $request->user()->id; // Get session user ID
-        $userRole = DB::table('users')->where('id', $userId)->value('role'); // Get user role
+        $userRole = $request->user()->role; // Get session user ID
     
         $query = DB::table('zoning_permits')
             ->where('status_id', 1)
@@ -157,7 +157,7 @@ class ZoningController extends Controller
         $offset = ($page - 1) * $itemsPerPage;
     
         $userId = $userId = $request->user()->id; // Get session user ID
-        $userRole = DB::table('users')->where('id', $userId)->value('role'); // Get user role
+        $userRole = $request->user()->role; // Get session user ID
     
         $query = DB::table('zoning_permits')
             ->where('status_id', 3)

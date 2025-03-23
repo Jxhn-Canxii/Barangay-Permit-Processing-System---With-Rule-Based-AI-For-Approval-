@@ -185,8 +185,8 @@ const decideByAi = async (id) => {
             const response = await axios.put(route("zoning.decide", id));
             if (response.data.status == 2) {
                 Swal.fire("Approved!", response.data.message, "success");
-            } else {
-                Swal.fire("Approved!", response.data.message, "warning");
+            } if (response.data.status == 3) {
+                Swal.fire("Rejected!", response.data.message, "warning");
             }
             fetchData();
         } else {
