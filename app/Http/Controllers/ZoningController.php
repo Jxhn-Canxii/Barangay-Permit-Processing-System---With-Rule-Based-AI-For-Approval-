@@ -379,7 +379,7 @@ class ZoningController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'status' => $status,
-                'message' => "Zoning permit {$message}, but email notification failed.",
+                'message' => "Zoning permit {$message}, Email notification failed.",
                 'error' => $e->getMessage(),
             ], 200);
         }
