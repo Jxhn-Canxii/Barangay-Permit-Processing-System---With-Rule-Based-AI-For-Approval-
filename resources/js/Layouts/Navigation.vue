@@ -46,27 +46,25 @@
       </nav-link>
 
       <!-- Barangay Management Section (Visible only for non-role 3 users) -->
-      <template>
-        <p class="px-4 text-xs text-gray-400 uppercase mt-4">Barangay Management</p>
-        <nav-link v-if="sessionRole != 3" :href="route('landmarks.index')" :active="route().current('landmarks.index')">
-          <template #icon>
-            <i class="fa fa-landmark"></i>
-          </template>
-          Landmarks
-        </nav-link>
-        <nav-link v-if="sessionRole != 3"  :href="route('barangay.census.index')" :active="route().current('barangay.census.index')">
-          <template #icon>
-            <i class="fa fa-chart-line"></i>
-          </template>
-          Census
-        </nav-link>
-        <nav-link :href="route('maps.index')" :active="route().current('maps.index')">
-          <template #icon>
-            <i class="fa fa-map"></i>
-          </template>
-          Zonal Map
-        </nav-link>
-      </template>
+      <p class="px-4 text-xs text-gray-400 uppercase mt-4">Barangay Management</p>
+      <nav-link v-if="sessionRole != 3" :href="route('landmarks.index')" :active="route().current('landmarks.index')">
+        <template #icon>
+          <i class="fa fa-landmark"></i>
+        </template>
+        Landmarks
+      </nav-link>
+      <nav-link v-if="sessionRole != 3"  :href="route('barangay.census.index')" :active="route().current('barangay.census.index')">
+        <template #icon>
+          <i class="fa fa-chart-line"></i>
+        </template>
+        Census
+      </nav-link>
+      <nav-link :href="route('maps.index')" :active="route().current('maps.index')">
+        <template #icon>
+          <i class="fa fa-map"></i>
+        </template>
+        Zonal Map
+      </nav-link>
 
       <!-- System Logs Section -->
       <p class="px-4 text-xs text-gray-400 uppercase mt-4">System</p>
