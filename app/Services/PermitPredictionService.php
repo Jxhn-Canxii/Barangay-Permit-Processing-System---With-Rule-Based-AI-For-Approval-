@@ -78,16 +78,41 @@ class PermitPredictionService
             $reasons[] = 'Setback non-compliant';
         }
     
-        // Rule 5: Ensure proposed use matches the zoning district (specific for residential zone)
-        if ($data['zoning_district'] == 'residential' && in_array(strtolower($data['proposed_use']), ['retail', 'office', 'mixed-use'])) {
+       // Mapping of zoning district values
+        $zoningDistricts = [
+            1 => 'residential',
+            2 => 'commercial',
+            3 => 'industrial'
+        ];
+
+        // Mapping of proposed use values
+        $proposedUses = [
+            1 => 'single-family',
+            2 => 'multi-family',
+            3 => 'retail',
+            4 => 'office',
+            5 => 'mixed-use'
+        ];
+
+        // Convert zoning district and proposed use to their respective labels
+        $zoningDistrict = $zoningDistricts[$data['zoning_district']] ?? null;
+        $proposedUse = $proposedUses[$data['proposed_use']] ?? null;
+
+        // Rule 5: Ensure proposed use matches the zoning district (for residential zone)
+        if ($zoningDistrict === 'residential' && in_array($proposedUse, ['retail', 'office', 'mixed-use'])) {
             $reasons[] = 'Proposed use not allowed in residential zone';
         }
-    
-        // Rule 6: Ensure proposed use fits zoning district (specific for commercial zone)
-        if ($data['zoning_district'] == 'commercial' && $data['proposed_use'] == 'single-family') {
+
+        // Rule 6: Ensure proposed use fits zoning district (for commercial zone)
+        if ($zoningDistrict === 'commercial' && $proposedUse === 'single-family') {
             $reasons[] = 'Single-family use not allowed in commercial zone';
         }
-    
+
+        // Rule 7: Restrict residential and commercial uses in industrial zones
+        if ($zoningDistrict === 'industrial' && in_array($proposedUse, ['single-family', 'multi-family', 'retail', 'office'])) {
+            $reasons[] = 'Proposed use not allowed in industrial zone';
+        }
+        
         // If there are reasons for denial, update the log message
         if (count($reasons) > 0) {
             $logData['message'] = 'Denied: ' . implode(', ', $reasons);
