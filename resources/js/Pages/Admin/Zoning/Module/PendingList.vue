@@ -186,7 +186,7 @@ const decideByAi = async (id) => {
             if (response.data.status == 2) {
                 Swal.fire("Approved!", response.data.message, "success");
             } else {
-                Swal.fire("Approved!", response.data.message, "success");
+                Swal.fire("Approved!", response.data.message, "warning");
             }
             fetchData();
         } else {
