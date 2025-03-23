@@ -50,13 +50,17 @@ class PermitPredictionService
         // Initialize an empty array to store reasons for denial
         $reasons = [];
     
-        // Remove brackets and convert the string into an array
-        $acceptableLandRights = explode(',', trim($rule->acceptable_land_rights, '[]'));
+       // Remove brackets and convert the string into an array of integers
+        $acceptableLandRights = array_map('intval', explode(',', trim($rule->acceptable_land_rights, '[]')));
+
+        // Ensure right_over_land is an integer for comparison
+        $rightOverLand = (int) $data['right_over_land'];
 
         // Rule 1: Check if the land right is valid
-        if (!in_array($data['right_over_land'], $acceptableLandRights, true)) {
+        if (!in_array($rightOverLand, $acceptableLandRights, true)) {
             $reasons[] = 'Invalid land right';
         }
+
 
     
         // Rule 2: Check if the lot area is large enough to the required max area
