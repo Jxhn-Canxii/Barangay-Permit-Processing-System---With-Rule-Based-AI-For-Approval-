@@ -16,7 +16,7 @@
                 <div class="flex flex-wrap px-3">
                     <!-- Tab Buttons (Responsive) -->
                     <button
-                        v-for="tab in filteredTabs"
+                        v-for="tab in tabs"
                         :key="tab"
                         @click="activeTab = tab"
                         class="px-4 py-2 hover:bg-gray-200 focus:outline-none text-center w-full sm:w-auto"
