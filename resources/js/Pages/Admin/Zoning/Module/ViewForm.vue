@@ -13,14 +13,14 @@
                     <label class="font-bold">Date of Application:</label>
                     <p class="border px-2 py-1 rounded">{{ data.date_of_application }}</p>
                 </div>
-                <div>
+                <!-- <div>
                     <label class="font-bold">O.R. Date:</label>
                     <p class="border px-2 py-1 rounded">{{ data.or_date || 'N/A' }}</p>
                 </div>
                 <div>
                     <label class="font-bold">Official Receipt No.:</label>
                     <p class="border px-2 py-1 rounded">{{ data.official_receipt_no || 'N/A' }}</p>
-                </div>
+                </div> -->
                 <div>
                     <label class="font-bold">Status:</label>
                     <p class="border px-2 py-1 rounded">{{ statusText }}</p>

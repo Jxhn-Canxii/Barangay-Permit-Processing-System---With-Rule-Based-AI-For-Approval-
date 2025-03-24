@@ -212,8 +212,8 @@ class ZoningController extends Controller
         
         $request->validate([
             'date_of_application' => 'required|date',
-            'or_date' => 'required|date',
-            'official_receipt_no' => 'required|string|max:255|unique:zoning_permits',
+            'or_date' => 'date',
+            'official_receipt_no' => 'string|max:255',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',

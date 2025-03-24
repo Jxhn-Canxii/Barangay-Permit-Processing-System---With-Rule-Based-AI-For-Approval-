@@ -19,18 +19,18 @@
                             <p v-if="errors.or_date" class="text-red-500 text-xs mt-1">{{ errors.date_of_application[0] }}</p>
                         </div>
 
-                        <div>
+                        <!-- <div>
                             <label class="block text-sm font-medium text-gray-700">OR Date</label>
                             <input type="date" v-model="form.or_date" class="mt-1 p-2 border rounded-md w-full" />
                             <p v-if="errors.or_date" class="text-red-500 text-xs mt-1">{{ errors.or_date[0] }}</p>
-                        </div>
+                        </div> -->
                     </div>
 
-                    <div class="mb-4">
+                    <!-- <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Official Receipt No.</label>
                         <input type="text" v-model="form.official_receipt_no" placeholder="Enter receipt number" class="mt-1 p-2 border rounded-md w-full" />
                         <p v-if="errors.official_receipt_no" class="text-red-500 text-xs mt-1">{{ errors.official_receipt_no[0] }}</p>
-                    </div>
+                    </div> -->
 
                     <div class="grid grid-cols-3 gap-4 mb-4">
                         <div>
@@ -138,7 +138,7 @@ const isAddModalOpen = ref(false);
 const form = useForm({
     date_of_application: "",
     or_date: "",
-    official_receipt_no: "",
+    official_receipt_no: "0000",
     first_name: "",
     middle_name: "",
     last_name: "",

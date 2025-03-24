@@ -14,15 +14,15 @@
                 <form class="mt-4" @submit.prevent="addPermit">
                     <!-- Date and Receipt Information Section -->
                     <div class="mb-6">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Date and Receipt Information</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Date Information</h3>
+                        <div class="grid grid-cols-1 gap-4 mb-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Date of Application</label>
                                 <input type="date" v-model="form.date_of_application" class="mt-1 p-2 border rounded-md w-full" />
                                 <p v-if="errors.date_of_application" class="text-red-500 text-xs mt-1">{{ errors.date_of_application[0] }}</p>
                             </div>
 
-                            <div>
+                            <!-- <div>
                                 <label class="block text-sm font-medium text-gray-700">OR Date</label>
                                 <input type="date" v-model="form.or_date" class="mt-1 p-2 border rounded-md w-full" />
                                 <p v-if="errors.or_date" class="text-red-500 text-xs mt-1">{{ errors.or_date[0] }}</p>
@@ -32,7 +32,7 @@
                                 <label class="block text-sm font-medium text-gray-700">Official Receipt No.</label>
                                 <input type="text" v-model="form.official_receipt_no" placeholder="Enter receipt number" class="mt-1 p-2 border rounded-md w-full" />
                                 <p v-if="errors.official_receipt_no" class="text-red-500 text-xs mt-1">{{ errors.official_receipt_no[0] }}</p>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
@@ -213,7 +213,7 @@ const errors = ref({});
 const form = useForm({
     date_of_application: "",
     or_date: "",
-    official_receipt_no: "",
+    official_receipt_no: "0000",
     first_name: "",
     middle_name: "",
     last_name: "",
