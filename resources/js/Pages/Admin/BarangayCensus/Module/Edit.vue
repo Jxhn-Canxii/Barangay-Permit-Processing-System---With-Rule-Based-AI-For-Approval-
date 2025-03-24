@@ -100,7 +100,7 @@ const openModal = () => {
 
 // Calculate total population
 const calculatePopulation = () => {
-    form.population = (parseInt(form.male) || 0) + (parseInt(form.female) || 0) + (parseInt(form.households) || 0);
+    form.population = (parseInt(form.male) || 0) + (parseInt(form.female) || 0);
 };
 
 // Update census record
