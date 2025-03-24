@@ -95,14 +95,15 @@ onMounted(async () => {
   try {
     const response = await axios.get(route('landmarks.list.all'));
     const landmarks = response.data.landmarks;
-    console.log("Fetched landmarks:", landmarks);
+    // console.log("Fetched landmarks:", landmarks);
 
     landmarks.forEach(landmark => {
       if (landmark.latitude && landmark.longitude) {
         const mercatorPoints = convertWebMercatorToLatLng(landmark.latitude, landmark.longitude);
 
-        // L.marker(mercatorPoints, { icon: landmarkIcon }) // Use custom icon
-        L.marker(mercatorPoints) // Use defualt icon
+        // console.log(mercatorPoints);
+        L.marker(mercatorPoints, { icon: landmarkIcon }) // Use custom icon
+        //L.marker(mercatorPoints) // Use defualt icon
           .addTo(map)
           .bindPopup(`<strong>${landmark.name}</strong><br>${landmark.building_type ?? 'Not available'}<br><br>${landmark.description ?? 'No description'}`);
       }
