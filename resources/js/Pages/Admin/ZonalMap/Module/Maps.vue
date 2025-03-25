@@ -1,13 +1,13 @@
 <template>
-  <div id="map" class="map-container"></div>
+  <div id="map-container"></div>
 </template>
 
 <script setup>
 import { onMounted } from 'vue';
 import L from 'leaflet';
-import axios from 'axios';
+import 'leaflet/dist/leaflet.css';
 import { convertWebMercatorToLatLng } from "@/Utility/Formatter.js";
-// Custom Icon for Landmarks
+
 const landmarkIcon = L.icon({
   iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png', // Ensure this URL is accessible
   iconSize: [25, 41], 
@@ -17,113 +17,535 @@ const landmarkIcon = L.icon({
   shadowSize: [41, 41]
 });
 
-
-onMounted(async () => {
-
-  const brgySanAgustin = {
-    "type": "Feature",
-    "properties": {
-      "name": "San Agustin, Quezon City"
-    },
-    "geometry": {
-      "type": "MultiPolygon",
-      "coordinates": [
-        [
+const brgySanAgustin = {
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2025-03-25T11:04:45Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "relation/1751066",
+        "admin_level": "10",
+        "boundary": "administrative",
+        "name": "San Agustin",
+        "postal_code": "1117",
+        "ref": "137404095",
+        "type": "boundary"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
           [
-            [121.06915, 14.68450], [121.06917, 14.68431], [121.06984, 14.68426],
-            [121.07007, 14.68462], [121.07165, 14.68372], [121.07176, 14.68371],
-            [121.07242, 14.68372], [121.07256, 14.68366], [121.07268, 14.68357],
-            [121.07277, 14.68328], [121.07279, 14.68265], [121.07274, 14.68247],
-            [121.07272, 14.68226], [121.07280, 14.68215], [121.07298, 14.68227],
-            [121.07306, 14.68233], [121.07339, 14.68258], [121.07362, 14.68298],
-            [121.07398, 14.68296], [121.07419, 14.68290], [121.07436, 14.68276],
-            [121.07446, 14.68251], [121.07450, 14.68242], [121.07512, 14.68243],
-            [121.07503, 14.68387], [121.07507, 14.68392], [121.07530, 14.68430],
-            [121.07545, 14.68449], [121.07564, 14.68482], [121.07673, 14.68492],
-            [121.07690, 14.68461], [121.07700, 14.68446], [121.07728, 14.68453],
-            [121.07750, 14.68459], [121.07776, 14.68494], [121.07822, 14.68501],
-            [121.07855, 14.68512], [121.07868, 14.68504], [121.07915, 14.68529],
-            [121.07947, 14.68566], [121.07932, 14.68581], [121.07896, 14.68578],
-            [121.07897, 14.68598], [121.07896, 14.68641], [121.07891, 14.68655],
-            [121.07884, 14.68668], [121.07859, 14.68757], [121.07835, 14.68752],
-            [121.07816, 14.68750], [121.07835, 14.68815], [121.07843, 14.68827],
-            [121.07862, 14.68830], [121.07865, 14.68852], [121.07856, 14.68908],
-            [121.07852, 14.68913], [121.07798, 14.68983], [121.07785, 14.68999],
-            [121.07670, 14.69054], [121.07784, 14.69112], [121.07874, 14.69212],
-            [121.07845, 14.69262], [121.07836, 14.69340], [121.07751, 14.69376],
-            [121.07726, 14.69400], [121.07701, 14.69403], [121.07705, 14.69421],
-            [121.07712, 14.69426], [121.07741, 14.69460], [121.07778, 14.69461],
-            [121.07755, 14.69487], [121.07807, 14.69499], [121.07802, 14.69608],
-            [121.07902, 14.69607], [121.07903, 14.69830], [121.07902, 14.70053],
-            [121.07880, 14.70054], [121.07845, 14.70082], [121.07801, 14.70121],
-            [121.07551, 14.69861], [121.07061, 14.69063], [121.07075, 14.69027],
-            [121.07045, 14.68968], [121.07030, 14.68947], [121.07126, 14.68945],
-            [121.07196, 14.68918], [121.07184, 14.68870], [121.07131, 14.68841],
-            [121.07155, 14.68823], [121.07188, 14.68798], [121.07201, 14.68753],
-            [121.07188, 14.68710], [121.07180, 14.68672], [121.07169, 14.68578],
-            [121.07134, 14.68538], [121.07049, 14.68486], [121.07066, 14.68457],
-            [121.07069, 14.68366], [121.06915, 14.68450]
+            [
+              121.0397334,
+              14.7268438
+            ],
+            [
+              121.039594,
+              14.7269708
+            ],
+            [
+              121.0392642,
+              14.7269442
+            ],
+            [
+              121.0392783,
+              14.7271199
+            ],
+            [
+              121.0392635,
+              14.7274917
+            ],
+            [
+              121.0392253,
+              14.7276168
+            ],
+            [
+              121.039177,
+              14.7277309
+            ],
+            [
+              121.0389531,
+              14.7284975
+            ],
+            [
+              121.0387346,
+              14.7284522
+            ],
+            [
+              121.0385628,
+              14.7284417
+            ],
+            [
+              121.0387385,
+              14.7290053
+            ],
+            [
+              121.0388126,
+              14.7291038
+            ],
+            [
+              121.0389827,
+              14.7291367
+            ],
+            [
+              121.0390071,
+              14.7293253
+            ],
+            [
+              121.038925,
+              14.7298116
+            ],
+            [
+              121.0388874,
+              14.7298568
+            ],
+            [
+              121.0384023,
+              14.7303893
+            ],
+            [
+              121.0382884,
+              14.730555
+            ],
+            [
+              121.0372535,
+              14.7310267
+            ],
+            [
+              121.0383709,
+              14.7315364
+            ],
+            [
+              121.0391779,
+              14.7324043
+            ],
+            [
+              121.0389137,
+              14.7328398
+            ],
+            [
+              121.0388367,
+              14.7335077
+            ],
+            [
+              121.0380761,
+              14.7338206
+            ],
+            [
+              121.037854,
+              14.7340211
+            ],
+            [
+              121.0376321,
+              14.7340467
+            ],
+            [
+              121.0376692,
+              14.7342024
+            ],
+            [
+              121.0377287,
+              14.73424
+            ],
+            [
+              121.0379938,
+              14.7345354
+            ],
+            [
+              121.0383244,
+              14.7345512
+            ],
+            [
+              121.0381155,
+              14.7347706
+            ],
+            [
+              121.0385801,
+              14.7348807
+            ],
+            [
+              121.038535,
+              14.7358244
+            ],
+            [
+              121.0394341,
+              14.7358148
+            ],
+            [
+              121.0394351,
+              14.737755
+            ],
+            [
+              121.0394248,
+              14.739706
+            ],
+            [
+              121.039221,
+              14.7397119
+            ],
+            [
+              121.038909,
+              14.739963
+            ],
+            [
+              121.0385103,
+              14.740294
+            ],
+            [
+              121.0362582,
+              14.7380574
+            ],
+            [
+              121.0308457,
+              14.732682
+            ],
+            [
+              121.0309747,
+              14.7323659
+            ],
+            [
+              121.0307054,
+              14.7318569
+            ],
+            [
+              121.0305727,
+              14.731678
+            ],
+            [
+              121.0315264,
+              14.731661
+            ],
+            [
+              121.0321517,
+              14.7314315
+            ],
+            [
+              121.0320408,
+              14.731012
+            ],
+            [
+              121.0314789,
+              14.7307667
+            ],
+            [
+              121.0316926,
+              14.7306084
+            ],
+            [
+              121.0320171,
+              14.7303947
+            ],
+            [
+              121.0321358,
+              14.7301731
+            ],
+            [
+              121.0319854,
+              14.7298011
+            ],
+            [
+              121.0319221,
+              14.7294766
+            ],
+            [
+              121.031843,
+              14.7287485
+            ],
+            [
+              121.0315027,
+              14.7284002
+            ],
+            [
+              121.0307429,
+              14.7275929
+            ],
+            [
+              121.0308932,
+              14.7273476
+            ],
+            [
+              121.030917,
+              14.726564
+            ],
+            [
+              121.0305371,
+              14.7259071
+            ],
+            [
+              121.0305529,
+              14.7257488
+            ],
+            [
+              121.0311666,
+              14.7257024
+            ],
+            [
+              121.0313704,
+              14.7260136
+            ],
+            [
+              121.03278,
+              14.7251615
+            ],
+            [
+              121.0328827,
+              14.7251584
+            ],
+            [
+              121.0334697,
+              14.7251677
+            ],
+            [
+              121.0335915,
+              14.7251149
+            ],
+            [
+              121.0336986,
+              14.7250318
+            ],
+            [
+              121.0337791,
+              14.7247737
+            ],
+            [
+              121.0337986,
+              14.7242198
+            ],
+            [
+              121.0337475,
+              14.7240648
+            ],
+            [
+              121.0337262,
+              14.7238841
+            ],
+            [
+              121.0337991,
+              14.7237829
+            ],
+            [
+              121.0339548,
+              14.7238923
+            ],
+            [
+              121.0340238,
+              14.7239494
+            ],
+            [
+              121.0343209,
+              14.7241666
+            ],
+            [
+              121.0345247,
+              14.7245091
+            ],
+            [
+              121.0348466,
+              14.7244987
+            ],
+            [
+              121.0350397,
+              14.7244468
+            ],
+            [
+              121.0351899,
+              14.7243223
+            ],
+            [
+              121.0352766,
+              14.7241053
+            ],
+            [
+              121.0353129,
+              14.7240297
+            ],
+            [
+              121.0358589,
+              14.7240308
+            ],
+            [
+              121.0357821,
+              14.7252793
+            ],
+            [
+              121.0358157,
+              14.7253211
+            ],
+            [
+              121.0360202,
+              14.7256467
+            ],
+            [
+              121.0361597,
+              14.7258101
+            ],
+            [
+              121.0363294,
+              14.7260979
+            ],
+            [
+              121.0373104,
+              14.7261798
+            ],
+            [
+              121.0374644,
+              14.7259099
+            ],
+            [
+              121.0375542,
+              14.7257789
+            ],
+            [
+              121.0378052,
+              14.725845
+            ],
+            [
+              121.0380048,
+              14.7258975
+            ],
+            [
+              121.0382155,
+              14.7262017
+            ],
+            [
+              121.0386285,
+              14.7262665
+            ],
+            [
+              121.0389222,
+              14.7263639
+            ],
+            [
+              121.0390348,
+              14.7262977
+            ],
+            [
+              121.0394521,
+              14.7265209
+            ],
+            [
+              121.0397334,
+              14.7268438
+            ]
           ]
         ]
-      ]
+      },
+      "id": "relation/1751066"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/251004902",
+        "@relations": [
+          {
+            "role": "label",
+            "rel": 1751066,
+            "reltags": {
+              "admin_level": "10",
+              "boundary": "administrative",
+              "name": "San Agustin",
+              "postal_code": "1117",
+              "ref": "137404095",
+              "type": "boundary"
+            }
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0386039,
+          14.7295595
+        ]
+      },
+      "id": "node/251004902"
     }
-  };
+  ]
+};
 
-  // Initialize the map (Ensure map is properly initialized)
-  const map = L.map('map').setView([121.07357, 14.68908], 16); // Center map on an initial point
+let map = null;
 
-  // Add tile layer (required for map background)
+const loadSanAgustinBorderMap = async () => {
+  // Initialize the map without a fixed center
+  map = L.map('map-container');
+
+  // Add tile layer
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  // Extract the correct polygon coordinates (first set in MultiPolygon)
-  const brgyCoordinates = brgySanAgustin.geometry.coordinates[0][0].map(coord => [coord[1], coord[0]]);
-
-  // Create polygon
-  const brgyArea = L.polygon(brgyCoordinates, {
-      color: "red",
-      fillColor: "#ff4d4d",
-      fillOpacity: 0.5
-  }).bindPopup("<strong>San Agustin, 5th District, Quezon City, Eastern Manila District, Metro Manila, 1117, Philippines</strong>").addTo(map);
-
-  // Adjust map to fit bounds of polygon
-  map.fitBounds(brgyArea.getBounds());
-
-  // Fetch landmarks from API
-  try {
-    const response = await axios.get(route('landmarks.list.all'));
-    const landmarks = response.data.landmarks;
-    // console.log("Fetched landmarks:", landmarks);
-
-    landmarks.forEach(landmark => {
-      if (landmark.latitude && landmark.longitude) {
-        const mercatorPoints = convertWebMercatorToLatLng(landmark.latitude, landmark.longitude);
-
-        // console.log(mercatorPoints);
-        L.marker(mercatorPoints, { icon: landmarkIcon }) // Use custom icon
-        //L.marker(mercatorPoints) // Use defualt icon
-          .addTo(map)
-          .bindPopup(`<strong>${landmark.name}</strong><br>${landmark.building_type ?? 'Not available'}<br><br>${landmark.description ?? 'No description'}`);
+  // Add GeoJSON layer
+  const geoJsonLayer = L.geoJSON(brgySanAgustin, {
+    style: {
+      color: "#ff0000",
+      weight: 2,
+      opacity: 0.8,
+      fillOpacity: 0.2
+    },
+    onEachFeature: function (feature, layer) {
+      if (feature.properties) {
+        let popupContent = `<strong>${feature.properties.name ?? "Unknown Area"}</strong><br>
+                            <b>Admin Level:</b> ${feature.properties.admin_level ?? "N/A"}<br>
+                            <b>Boundary:</b> ${feature.properties.boundary ?? "N/A"}<br>
+                            <b>Postal Code:</b> ${feature.properties.postal_code ?? "N/A"}`;
+        layer.bindPopup(popupContent);
       }
-    });
+    }
+  }).addTo(map);
 
-  } catch (error) {
-    console.error("Error fetching landmarks:", error);
-  }
+  map.fitBounds(geoJsonLayer.getBounds());
+}
+
+const loadLandMarks = async () => {
+    // Fetch landmarks from API
+    try {
+      const response = await axios.get(route('landmarks.list.all'));
+      const landmarks = response.data.landmarks;
+      // console.log("Fetched landmarks:", landmarks);
+  
+      landmarks.forEach(landmark => {
+        if (landmark.latitude && landmark.longitude) {
+          const mercatorPoints = convertWebMercatorToLatLng(landmark.latitude, landmark.longitude);
+  
+          // console.log(mercatorPoints);
+          L.marker(mercatorPoints, { icon: landmarkIcon }) // Use custom icon
+          //L.marker(mercatorPoints) // Use defualt icon
+            .addTo(map)
+            .bindPopup(`<strong>${landmark.name}</strong><br>${landmark.building_type ?? 'Not available'}<br><br>${landmark.description ?? 'No description'}`);
+        }
+      });
+  
+    } catch (error) {
+      console.error("Error fetching landmarks:", error);
+    }
+
+}
+onMounted(() => {
+  loadSanAgustinBorderMap();
+  loadLandMarks();
 
   window.addEventListener('resize', () => {
     setTimeout(() => {
       map.invalidateSize();
     }, 400);
   });
-
 });
 </script>
 
 <style scoped>
-#map {
-  height: 100vh;
+#map-container {
+  height: 1000px;
   width: 100%;
+  margin: 20px 0;
+  border-radius: 8px;
+  z-index: 0;
+}
+
+/* Fix Leaflet icon paths */
+:deep(.leaflet-default-icon-path) {
+  background-image: url(https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png);
 }
 </style>
