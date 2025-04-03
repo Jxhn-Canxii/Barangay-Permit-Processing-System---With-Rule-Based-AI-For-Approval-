@@ -59,6 +59,12 @@
         </template>
         Census
       </nav-link>
+      <nav-link v-if="sessionRole != 3"  :href="route('residents.index')" :active="route().current('residents.index')">
+        <template #icon>
+          <i class="fa fa-users"></i>
+        </template>
+        Residents
+      </nav-link>
       <nav-link :href="route('maps.index')" :active="route().current('maps.index')">
         <template #icon>
           <i class="fa fa-map"></i>

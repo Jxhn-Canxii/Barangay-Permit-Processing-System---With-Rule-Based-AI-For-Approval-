@@ -275,6 +275,23 @@ class ZoningController extends Controller
 
         return response()->json(['message' => 'Zoning permit submitted successfully'], 201);
     }
+
+    // Delete a permit
+    public function deletePermit($id)
+    {
+        $rule = DB::table('zoning_permits')->where('id', $id)->first(); // Get the existing rule by ID
+        if (!$rule) {
+            return response()->json(['message' => 'Zoning permit application not found'], 404);
+        }
+
+        // Delete the rule using DB facade
+        $deleted = DB::table('zoning_permits')->where('id', $id)->delete();
+        if ($deleted) {
+            return response()->json(['message' => 'Zoning permit application deleted successfully']);
+        }
+
+        return response()->json(['message' => 'Failed to delete zoning permit application'], 500);
+    }
     public function trainModel() {
 
        $trainModel = $this->predictionService->trainModel();

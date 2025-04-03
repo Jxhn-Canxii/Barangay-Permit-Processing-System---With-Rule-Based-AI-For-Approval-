@@ -34,7 +34,7 @@
                                 placeholder="Input password"
                                 autocomplete="current-password"
                             />
-                            <button @click.prevent="togglePasswordVisibility" type="button" class="absolute font-extrabold text-rose-500 inset-y-0 right-0 px-4 rounded-r shadow">
+                            <button @click.prevent="togglePasswordVisibility" type="button" class="absolute font-extrabold text-lime-500 inset-y-0 right-0 px-4 rounded-r shadow">
                                 <i :class="form.show ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
                             </button>
                         </div>

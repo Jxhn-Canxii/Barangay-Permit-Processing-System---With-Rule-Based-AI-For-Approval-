@@ -51,6 +51,9 @@
                             <td class="border-b border-gray-200 px-5 py-5 text-sm">
                                 <div class="flex justify-center space-x-2">
                                     <ViewForm :key="permit.id" :data="permit" />
+                                    <button v-if="sessionRole == 1" @click="deletePermit(permit.id)" class="px-3 py-2 bg-gray-500 text-white rounded">
+                                        <i class="fa fa-trash"></i> Delete
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -139,6 +142,30 @@ const handlePagination = (page_num) => {
 // Refresh data after any transaction
 const handleTransaction = () => {
     fetchData();
+};
+
+// Delete Zoning Permit
+const deletePermit = async (id) => {
+    try {
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "You are about to delete this zoning permit.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!",
+        });
+
+        if (result.isConfirmed) {
+            await axios.delete(route("zoning.delete", id));
+            Swal.fire("Deleted!", "The zoning permit has been deleted.", "success");
+            fetchData();
+        }
+    } catch (error) {
+        console.error("Error deleting zoning permit:", error);
+        Swal.fire("Error!", error.response?.data?.message || "Something went wrong.", "error");
+    }
 };
 
 const statusFormatter = (status_id) => {

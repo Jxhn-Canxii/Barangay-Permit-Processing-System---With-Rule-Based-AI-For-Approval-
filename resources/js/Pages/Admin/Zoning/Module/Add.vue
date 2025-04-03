@@ -239,32 +239,45 @@ const handleFileUpload = (event) => {
 
 const addPermit = async () => {
     try {
-        const formData = new FormData();
-        const formValues = form.data(); // Extract only necessary data
-
-        Object.keys(formValues).forEach((key) => {
-            if (formValues[key]) {
-                formData.append(key, formValues[key]);
-            }
+        // Show confirmation before proceeding
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to submit this zoning permit application?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, submit!',
+            cancelButtonText: 'No, cancel!',
         });
 
+        // If the user confirms, proceed with the API call
+        if (result.isConfirmed) {
+            const formData = new FormData();
+            const formValues = form.data(); // Extract only necessary data
 
-        const response = await axios.post(route("zoning.add"), formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-        });
+            Object.keys(formValues).forEach((key) => {
+                if (formValues[key]) {
+                    formData.append(key, formValues[key]);
+                }
+            });
 
-        Swal.fire("Success!", "Zoning permit added successfully.", "success");
-        form.reset();
-        form.file = null;
-        errors.value = {};
-        isAddModalOpen.value = false;
-        emits("transaction_id", Math.random());
+            const response = await axios.post(route("zoning.add"), formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+
+            Swal.fire("Success!", "Zoning permit added successfully.", "success");
+            form.reset();
+            form.file = null;
+            errors.value = {};
+            isAddModalOpen.value = false;
+            emits("transaction_id", Math.random());
+        }
     } catch (error) {
-       if (error.response && error.response.data.errors) {
+        if (error.response && error.response.data.errors) {
             errors.value = error.response.data.errors; // Laravel returns errors as an object of arrays
         } else {
             Swal.fire("Error!", error.response?.data?.message || "Something went wrong.", "error");
         }
     }
 };
+
 </script>

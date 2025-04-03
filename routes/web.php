@@ -8,6 +8,7 @@ use App\Http\Controllers\LogsController;
 use App\Http\Controllers\BarangayCensusController;
 use App\Http\Controllers\LandmarkController;
 use App\Http\Controllers\RuleController;
+use App\Http\Controllers\ResidentController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -81,9 +82,28 @@ Route::middleware('auth')->group(function () {
         Route::put('decide/{id}', [ZoningController::class, 'decideByAI'])->name('zoning.decide'); // Approve permit
         Route::put('approve/{id}', [ZoningController::class, 'approve'])->name('zoning.approve'); // Approve permit
         Route::put('reject/{id}', [ZoningController::class, 'reject'])->name('zoning.reject'); // Reject permit
+        Route::delete('{id}', [ZoningController::class, 'deletePermit'])->name('zoning.delete'); // Delete zoning permit
 
         Route::get('train', [ZoningController::class, 'trainModel'])->name('zoning.train'); // Add new zoning permit with file upload
         
+    });
+    Route::prefix('residents/')->group(function(){
+                // Home page or index
+        Route::get('', [ResidentController::class, 'index'])->name('residents.index');
+
+        Route::post('list-residents', [ResidentController::class, 'list'])->name('residents.list');
+
+        // Add Resident (submit form)
+        Route::post('add', [ResidentController::class, 'add'])->name('residents.add');
+
+        // View Resident (show details)
+        Route::get('{id}', [ResidentController::class, 'show'])->name('residents.show');
+
+        // Update Resident (submit edit form)
+        Route::patch('{id}', [ResidentController::class, 'update'])->name('residents.update');
+
+        // Delete Resident
+        Route::delete('{id}', [ResidentController::class, 'deleteResident'])->name('residents.delete');
     });
 
     Route::prefix('rules')->group(function () {
