@@ -1,5 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
@@ -9,10 +14,9 @@ use App\Http\Controllers\BarangayCensusController;
 use App\Http\Controllers\LandmarkController;
 use App\Http\Controllers\RuleController;
 use App\Http\Controllers\ResidentController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
+use App\Mail\ZoningPermitApproved;
+use App\Mail\ZoningPermitRejected;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +34,40 @@ Route::get('login', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
+});
+
+
+Route::get('/test-email', function () {
+    // Sample permit data
+    $permit = (object) [
+        'first_name' => 'John',
+        'last_name' => 'Doe',
+        'email' => 'test@example.com'
+    ];
+    $predictionStatus = 2;
+    $status = ($predictionStatus === 2) ? 'approved' : 'rejected';
+
+    try {
+        // Set the recipient email manually for testing
+        $permit->email = 'greygreygrey35@gmail.com';  // Override the permit's email to the test email
+    
+    
+        // Send the email (approved or rejected)
+        $emailClass = ($predictionStatus === 2) ? ZoningPermitApproved::class : ZoningPermitRejected::class;
+        Mail::to($permit->email)->send(new $emailClass($permit));
+    
+        return response()->json([
+            'status' => $status,
+            'message' => "Zoning permit {$status}, email notification sent successfully."
+        ], 200);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => $status,
+            'message' => "Zoning permit {$status}, but email notification failed.",
+            'error' => $e->getMessage(),
+        ], 200);
+    }
+    
 });
 
 Route::get('/register', function () { return Inertia::render('Auth/Register'); })->name('register');
