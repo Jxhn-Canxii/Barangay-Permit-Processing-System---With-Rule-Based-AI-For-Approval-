@@ -1,7 +1,7 @@
 name: Deploy Laravel App
 
 on:
-  workflow_dispatch:  # This creates a "Run workflow" (Deploy button) in GitHub Actions
+  workflow_dispatch: # This creates a "Run workflow" (Deploy button) in GitHub Actions
 
 jobs:
   deploy:
@@ -28,7 +28,8 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/laravel-app:latest
 
-      - name: Deploy via SSH
+      - name: Deploy via SSH (Optional)
+        if: ${{ secrets.SERVER_HOST != '' && secrets.SERVER_USER != '' && secrets.SERVER_SSH_KEY != '' }}
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_HOST }}
